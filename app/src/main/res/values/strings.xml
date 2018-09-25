@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name" translatable="false">ConnectPlus</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="discovery_searching">Searching&#8230;</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_flash_dfu">Flash DFU</string>
+    <string name="menu_connect_plus" translatable="false">JBL Connect+</string>
+
+    <string name="dashboard_battery_level" translatable="false">%1$d%%</string>
+    <string name="dashboard_battery_level_charging">%1$d%%, charging</string>
+
+    <string name="dialog_rename_device_title">Rename device</string>
+    <string name="dialog_rename_device_message">Enter new name for your device (up to 16 bytes)</string>
+    <string name="dialog_rename_device_rename">RENAME</string>
+    <string name="dialog_rename_device_cancel">CANCEL</string>
+
+    <string name="dashboard_device_name">Device name:</string>
+    <string name="dashboard_firmware">Firmware version:</string>
+    <string name="dashboard_feedback_sounds">Feedback sounds:</string>
+    <string name="dashboard_battery">Battery state:</string>
+    <string name="dashboard_feedback_sounds_disabled">Feedback sounds are disabled</string>
+
+    <string name="dfu_connect_charger_error">Please, connect device to the charger</string>
+
+    <string name="dialog_dfu_warning_title">Warning!</string>
+    <string name="dialog_dfu_warning_text">The process of flashing DFU firmware is not official and may void your warranty! There is a chance to brick your device! No one is responsible for possible problems! Do everything at your own peril!</string>
+    <string name="dialog_dfu_warning_agree">I agree</string>
+    <string name="dialog_dfu_warning_do_not_agree">I don\'t agree</string>
+
+    <string name="dfu_file_not_selected">File not selected</string>
+    <string name="dfu_file_loading">Loading file&#8230;</string>
+
+    <string name="dfu_flash_ready">Ready to flash</string>
+    <string name="dfu_flash_initializing">Initializing&#8230;</string>
+    <string name="dfu_flash_flashing">Flashing…</string>
+    <string name="dfu_flash_done">Done. Your device will automatically reboot in a few minutes. Don\'t turn it off manually, otherwise you will brick it!</string>
+    <string name="dfu_flash_error">Error! Don\'t worry, your device will automatically reboot, nothing bad will happen</string>
+
+    <string name="dfu_info_size">Firmware size:</string>
+    <string name="dfu_info_checksum">Firmware CRC32:</string>
+
+    <string name="setting_privacy">Privacy</string>
+    <string name="settings_send_speaker_data_title">Send anonymous speaker data</string>
+    <string name="settings_send_speaker_data_summary">Includes speaker model, color and firmware version</string>
+    <string name="settings_send_app_data_summary">Uses Google Crashlytics and Google Analytics</string>
+    <string name="settings_send_app_data_title">Send anonymous app usage data</string>
+    <string name="settings_developers">Developers</string>
+    <string name="settings_main_developer_title">Main developer</string>
+    <string name="settings_main_developer_summary" translatable="false">\@andreww7985</string>
+    <string name="settings_testers_title">Thanks for testing!</string>
+    <string name="settings_testers_summary" translatable="false">\@AKladkov, @Alex62ru, @weisib</string>
+    <string name="dfu_button_flash">FLASH</string>
+    <string name="dfu_button_cancel">CANCEL</string>
+    <string name="dfu_button_open_file">OPEN FILE</string>
+</resources>
