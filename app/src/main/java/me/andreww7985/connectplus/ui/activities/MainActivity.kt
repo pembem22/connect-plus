@@ -1,10 +1,9 @@
 package me.andreww7985.connectplus.ui.activities
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_main.*
 import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper

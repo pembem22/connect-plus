@@ -3,13 +3,12 @@ package me.andreww7985.connectplus.ui.fragments
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.edit
-import kotlinx.android.synthetic.main.fragment_dfu.*
 import me.andreww7985.connectplus.ConnectPlusApp
 import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R

@@ -1,8 +1,8 @@
 package me.andreww7985.connectplus.helpers
 
 import android.content.Intent
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import android.util.Log
 import android.widget.Toast
 import me.andreww7985.connectplus.ConnectPlusApp
@@ -42,7 +42,7 @@ object UIHelper {
         app.startActivity(intent)
     }
 
-    fun showFragment(activity: FragmentActivity, fragment: Fragment) {
+    fun showFragment(activity: androidx.fragment.app.FragmentActivity, fragment: androidx.fragment.app.Fragment) {
         Log.d(TAG, "showFragment fragment name = ${fragment.javaClass.simpleName}")
         activity.supportFragmentManager.beginTransaction().replace(R.id.main_fragment, fragment).commitAllowingStateLoss()
     }

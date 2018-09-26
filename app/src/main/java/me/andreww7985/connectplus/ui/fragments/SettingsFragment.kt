@@ -1,7 +1,7 @@
 package me.andreww7985.connectplus.ui.fragments
 
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import me.andreww7985.connectplus.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
