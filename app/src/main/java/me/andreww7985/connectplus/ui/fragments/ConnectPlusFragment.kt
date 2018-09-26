@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_connect_plus.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.speakers.SpeakerManager
 import me.andreww7985.connectplus.ui.SpeakersAdapter
 
-class ConnectPlusFragment : androidx.fragment.app.Fragment() {
+class ConnectPlusFragment : Fragment() {
     companion object {
         private const val TAG = "ConnectPlusFragment"
     }

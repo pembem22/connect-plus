@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.edit
+import kotlinx.android.synthetic.main.fragment_dfu.*
 import me.andreww7985.connectplus.ConnectPlusApp
 import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
