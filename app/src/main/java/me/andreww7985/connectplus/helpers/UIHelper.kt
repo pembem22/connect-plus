@@ -30,7 +30,7 @@ object UIHelper {
         return if (imageID != 0) imageID else null
     }
 
-    fun showToast(text: String, duration: Int) {
+    fun showToast(text: String, duration: Int = Toast.LENGTH_LONG) {
         ConnectPlusApp.instance.let {
             Toast.makeText(app, text, duration).show()
         }

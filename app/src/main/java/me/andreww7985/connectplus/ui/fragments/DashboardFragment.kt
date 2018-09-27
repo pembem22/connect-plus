@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.controller.FragmentController
+import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
+import me.andreww7985.connectplus.feature.presenter.BatteryNameFeaturePresenter
+import me.andreww7985.connectplus.feature.view.BatteryNameFeatureView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.speakers.SpeakerManager
 import me.andreww7985.connectplus.ui.IUpdatableFragment
@@ -59,6 +62,13 @@ class DashboardFragment : IUpdatableFragment() {
                 BluetoothProtocol.renameSpeaker(speaker, textEdit.text.toString())
             }.setMessage(R.string.dialog_rename_device_message).setNeutralButton(R.string.dialog_rename_device_cancel) { _, _ -> }.show()
         }
+
+        // TODO: MVP Test
+        val test = BatteryNameFeaturePresenter(BatteryNameFeatureModel(speaker))
+        val testview = BatteryNameFeatureView(context!!, this)
+        test.attachView(testview)
+        testview.initView()
+        test.onViewReady()
     }
 
     override fun update() {

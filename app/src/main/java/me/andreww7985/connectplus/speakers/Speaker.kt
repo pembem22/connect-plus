@@ -24,13 +24,13 @@ class Speaker(val model: SpeakerModel, val color: SpeakerColor, val bluetoothDev
 
     var index: Int? = 0
     var activeChannel: ActiveChannel = ActiveChannel.BOTH
-    var name: String? = null
+    var name: String = "Test"
         set(value) {
             field = value
             FragmentController.update()
         }
 
-    var batteryCharging: Boolean? = null
+    var batteryCharging: Boolean = false
         set(value) {
             field = value
             FragmentController.update()
@@ -43,7 +43,7 @@ class Speaker(val model: SpeakerModel, val color: SpeakerColor, val bluetoothDev
             FragmentController.update()
         }
 
-    var batteryLevel: Int? = null
+    var batteryLevel: Int = -1
         set(value) {
             field = value
             FragmentController.update()
