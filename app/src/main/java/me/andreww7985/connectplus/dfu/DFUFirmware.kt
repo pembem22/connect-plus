@@ -6,7 +6,6 @@ import android.provider.OpenableColumns
 import android.widget.Toast
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.bluetooth.PacketType
-import me.andreww7985.connectplus.controller.FragmentController
 import me.andreww7985.connectplus.helpers.ChecksumHelper
 import me.andreww7985.connectplus.helpers.HexHelper
 import me.andreww7985.connectplus.helpers.UIHelper
@@ -37,7 +36,7 @@ class DFUFirmware(private val file: Uri) {
         this.size = size
         checksum = HexHelper.intToBytes(ChecksumHelper.crc(bytes).toInt())
 
-        FragmentController.model!!.dfuState = DFUState.FILE_LOADED
+        //FragmentController.model!!.dfuState = DFUState.FILE_LOADED
     }
 
     fun startFlashing() {
@@ -45,7 +44,7 @@ class DFUFirmware(private val file: Uri) {
         val sizeBytes = HexHelper.intToBytes(size)
         currentChunk = 0
 
-        FragmentController.model!!.dfuState = DFUState.INITIALIZING_FLASHING
+        //FragmentController.model!!.dfuState = DFUState.INITIALIZING_FLASHING
         BluetoothProtocol.sendPacket(BluetoothProtocol.makePacket(PacketType.REQ_DFU_START,
                 byteArrayOf(crcBytes[2], crcBytes[3], crcBytes[0], crcBytes[1], *sizeBytes)))
     }

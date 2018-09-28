@@ -1,31 +1,22 @@
-package me.andreww7985.connectplus.ui.fragments
+package me.andreww7985.connectplus.speaker.view
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import kotlinx.android.synthetic.main.fragment_dfu.*
-import me.andreww7985.connectplus.ConnectPlusApp
-import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
-import me.andreww7985.connectplus.bluetooth.PacketType
 import me.andreww7985.connectplus.controller.FragmentController
 import me.andreww7985.connectplus.core.App
-import me.andreww7985.connectplus.dfu.DFUFirmware
-import me.andreww7985.connectplus.dfu.DFUState
-import me.andreww7985.connectplus.helpers.HexHelper
-import me.andreww7985.connectplus.speakers.SpeakerManager
 import me.andreww7985.connectplus.ui.IUpdatableFragment
 
-class DFUFragment : IUpdatableFragment() {
+class SpeakerDFUView : IUpdatableFragment() {
     companion object {
-        const val TAG = "DFUFragment"
+        const val TAG = "SpeakerDFUView"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,19 +48,19 @@ class DFUFragment : IUpdatableFragment() {
 
         dfu_flash_button.setOnClickListener {
             Log.w(TAG, "dfu_flash_button on click")
-            if (FragmentController.model!!.dfuState == DFUState.FILE_LOADED) {
+            /*if (FragmentController.model!!.dfuState == DFUState.FILE_LOADED) {
                 ConnectPlusApp.logFirebaseEvent("dfu_start")
                 FragmentController.model!!.dfu.startFlashing()
             } else {
                 ConnectPlusApp.logFirebaseEvent("dfu_cancel")
                 BluetoothProtocol.sendPacket(BluetoothProtocol.makePacket(PacketType.REQ_DFU_CANCEL))
-            }
+            }*/
         }
     }
 
     override fun update() {
         activity?.runOnUiThread {
-            val speaker = FragmentController.model!!
+            /*val speaker = FragmentController.model!!
             val dfuState = speaker.dfuState
 
             // DFU Battery warning card
@@ -144,11 +135,12 @@ class DFUFragment : IUpdatableFragment() {
                     dfu_flash_text.text = getString(R.string.dfu_flash_error)
                 }
             }
+        }*/
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data == null) return
+        /*if (data == null) return
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Thread {
                 val speaker = SpeakerManager.mainSpeaker!!
@@ -163,6 +155,6 @@ class DFUFragment : IUpdatableFragment() {
                 speaker.dfu = dfu
                 dfu.check(context!!)
             }.start()
-        }
+        }*/
     }
 }

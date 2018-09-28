@@ -1,14 +1,6 @@
 package me.andreww7985.connectplus.feature.presenter
 
-import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
-import me.andreww7985.connectplus.feature.view.BaseFeatureView
+import me.andreww7985.connectplus.feature.model.BaseFeatureModel
+import me.andreww7985.connectplus.mvp.BasePresenter
 
-abstract class BaseFeaturePresenter (val model: BatteryNameFeatureModel) {
-    var view: BaseFeatureView? = null
-
-    fun attachView(view: BaseFeatureView) {
-        this.view = view
-    }
-
-    abstract fun onViewReady()
-}
+abstract class BaseFeaturePresenter (model: BaseFeatureModel) : BasePresenter(model)

@@ -1,12 +1,7 @@
 package me.andreww7985.connectplus.feature.view
 
-import android.view.View
+import android.content.Context
+import android.widget.FrameLayout
+import me.andreww7985.connectplus.mvp.BaseView
 
-abstract class BaseFeatureView {
-    var view: View? = null
-
-    abstract fun initView()
-    fun destroyView() {
-        view = null
-    }
-}
+abstract class BaseFeatureView(context: Context) : BaseView, FrameLayout(context)

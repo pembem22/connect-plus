@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.speakers.Speaker
+import me.andreww7985.connectplus.speaker.SpeakerModel
 
-class SpeakersAdapter(context: Context, speakers: ArrayList<Speaker>) : ArrayAdapter<Speaker>(context, 0, speakers) {
+class SpeakersAdapter(context: Context, speakers: ArrayList<SpeakerModel>) : ArrayAdapter<SpeakerModel>(context, 0, speakers) {
     companion object {
         const val TAG = "SpeakerAdapter"
     }

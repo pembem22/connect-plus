@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.andreww7985.connectplus.ui.fragments.DashboardFragment">
+    tools:context="me.andreww7985.connectplus.speaker.SpeakerView">
 
     <LinearLayout
         android:id="@+id/dashboard_list"
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/battery_value"
@@ -147,7 +147,8 @@
             android:id="@+id/card_firmware"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,7 +177,8 @@
             android:id="@+id/card_feedback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

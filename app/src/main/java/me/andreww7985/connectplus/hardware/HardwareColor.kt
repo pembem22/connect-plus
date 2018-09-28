@@ -1,8 +1,8 @@
-package me.andreww7985.connectplus.speakers
+package me.andreww7985.connectplus.hardware
 
 import me.andreww7985.connectplus.bluetooth.b
 
-enum class SpeakerColor {
+enum class HardwareColor {
     BLACK,
     BLUE,
     DESERT,
@@ -24,9 +24,9 @@ enum class SpeakerColor {
 
 
     companion object {
-        fun from(speakerModel: SpeakerModel, speakerColor: Byte): SpeakerColor {
+        fun from(speakerModel: HardwareModel, speakerColor: Byte): HardwareColor {
             return when (speakerModel) {
-                SpeakerModel.CHARGE3 -> when (speakerColor) {
+                HardwareModel.CHARGE3 -> when (speakerColor) {
                     0.b, 1.b -> BLACK
                     2.b -> RED
                     3.b -> TEAL
@@ -38,7 +38,7 @@ enum class SpeakerColor {
                     9.b -> MALTA
                     else -> UNKNOWN
                 }
-                SpeakerModel.FLIP3 -> when (speakerColor) {
+                HardwareModel.FLIP3 -> when (speakerColor) {
                     2.b -> RED
                     3.b -> ORANGE
                     4.b -> PINK
@@ -48,7 +48,7 @@ enum class SpeakerColor {
                     8.b -> TEAL
                     else -> UNKNOWN
                 }
-                SpeakerModel.FLIP4 -> when (speakerColor) {
+                HardwareModel.FLIP4 -> when (speakerColor) {
                     0.b, 1.b -> BLACK
                     2.b -> RED
                     3.b -> BLUE
@@ -64,25 +64,25 @@ enum class SpeakerColor {
                     0x0B.b -> MOSAIC
                     else -> UNKNOWN
                 }
-                SpeakerModel.BOOMBOX -> when (speakerColor) {
+                HardwareModel.BOOMBOX -> when (speakerColor) {
                     0.b, 1.b -> BLACK
                     2.b -> GREEN
                     8.b -> SQUAD
                     else -> UNKNOWN
                 }
-                SpeakerModel.PULSE3 -> when (speakerColor) {
+                HardwareModel.PULSE3 -> when (speakerColor) {
                     1.b -> BLACK
                     2.b -> WHITE
                     else -> UNKNOWN
                 }
-                SpeakerModel.XTREME2 -> when (speakerColor) {
+                HardwareModel.XTREME2 -> when (speakerColor) {
                     0.b, 1.b -> BLACK
                     2.b -> RED
                     3.b -> BLUE
                     4.b -> TEAL
                     else -> UNKNOWN
                 }
-                SpeakerModel.CHARGE4 -> when (speakerColor) {
+                HardwareModel.CHARGE4 -> when (speakerColor) {
                     0.b, 1.b -> BLACK
                     2.b -> RED
                     3.b -> BLUE

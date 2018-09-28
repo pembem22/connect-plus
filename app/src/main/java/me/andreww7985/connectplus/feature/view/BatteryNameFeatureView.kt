@@ -1,42 +1,48 @@
 package me.andreww7985.connectplus.feature.view
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.battery_name_feature.*
+import android.text.Editable
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.battery_name_feature.view.*
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.ui.fragments.DashboardFragment
+import me.andreww7985.connectplus.feature.presenter.BatteryNameFeaturePresenter
 
-class BatteryNameFeatureView(val context: Context, val dashboardFragment: DashboardFragment) : BaseFeatureView() {
-    private lateinit var nameLabel: TextView
-    private lateinit var batteryLabel: TextView
-    private lateinit var editNameButton: ImageButton
+@SuppressLint("ViewConstructor")
+class BatteryNameFeatureView(context: Context, private val presenter: BatteryNameFeaturePresenter) : BaseFeatureView(context) {
+    init {
+        addView(inflate(context, R.layout.battery_name_feature, null))
 
-    override fun initView() {
-        val view = LayoutInflater.from(context).inflate(R.layout.battery_name_feature, null)
-
-        nameLabel = view.findViewById(R.id.dashboard_name_value)
-        batteryLabel = view.findViewById(R.id.dashboard_battery_value)
-        editNameButton = view.findViewById(R.id.dashboard_name_edit)
-
-        editNameButton.setOnClickListener {
-            UIHelper.showToast("TEST")
+        dashboard_name_edit.setOnClickListener {
+            presenter.onEditNamePressed()
         }
 
-        dashboardFragment.dashboard_list.addView(view)
+        presenter.attachView(this)
     }
 
     fun setName(name: String) {
-        nameLabel.text = name
+        dashboard_name_value.text = name
+    }
+
+    fun showRenameDialog(currentName: String) {
+        val dialogView = inflate(context, R.layout.dialog_rename, null)
+        val textEdit = dialogView.findViewById<TextInputEditText>(R.id.rename_input)
+        textEdit.text = Editable.Factory.getInstance().newEditable(currentName)
+
+        AlertDialog.Builder(context!!)
+                .setCancelable(true)
+                .setView(dialogView)
+                .setTitle(R.string.dialog_rename_device_title)
+                .setMessage(R.string.dialog_rename_device_message)
+                .setPositiveButton(R.string.dialog_rename_device_rename) { _, _ ->
+                    presenter.onEditDialogRenamePressed(textEdit.text.toString())
+                }.setNeutralButton(R.string.dialog_rename_device_cancel) { _, _ -> }
+                .show()
     }
 
     fun setBatteryState(level: Int, charging: Boolean) {
-        batteryLabel.text = if (charging == true)
+        dashboard_battery_value.text = if (charging == true)
             context.getString(R.string.dashboard_battery_level_charging, level)
         else
             context.getString(R.string.dashboard_battery_level, level)

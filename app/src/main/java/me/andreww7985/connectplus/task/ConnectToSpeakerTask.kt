@@ -6,11 +6,11 @@ import android.os.Handler
 import android.util.Log
 import me.andreww7985.connectplus.ConnectPlusApp
 import me.andreww7985.connectplus.Logger
-import me.andreww7985.connectplus.speakers.Speaker
-import me.andreww7985.connectplus.speakers.SpeakerManager
+import me.andreww7985.connectplus.speaker.SpeakerManager
+import me.andreww7985.connectplus.speaker.SpeakerModel
 import java.util.*
 
-class ConnectToSpeakerTask(val speaker: Speaker) : ITask {
+class ConnectToSpeakerTask(val speaker: SpeakerModel) : ITask {
     companion object {
         private const val TAG = "ConnectToSpeakerTask"
         private const val GATT_REQUEST_MTU_TIMEOUT = 500L
@@ -44,7 +44,7 @@ class ConnectToSpeakerTask(val speaker: Speaker) : ITask {
     private val bluetoothGattCallback = object : BluetoothGattCallback() {
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
-            Logger.print(Speaker.TAG, "onConnectionStateChange newState = $newState, status = $status")
+            Logger.print(TAG, "onConnectionStateChange newState = $newState, status = $status")
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 requestMtuRunnable.run()
@@ -54,7 +54,7 @@ class ConnectToSpeakerTask(val speaker: Speaker) : ITask {
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            Log.d(Speaker.TAG, "onServicesDiscovered status = $status")
+            Log.d(TAG, "onServicesDiscovered status = $status")
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 val bluetoothRxTxService = bluetoothGatt.getService(UUID_RX_TX_SERVICE)
 
@@ -81,7 +81,7 @@ class ConnectToSpeakerTask(val speaker: Speaker) : ITask {
         }
 
         override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
-            Log.d(Speaker.TAG, "onMtuChanged mtu = $mtu status = $status")
+            Log.d(TAG, "onMtuChanged mtu = $mtu status = $status")
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 handler.removeCallbacks(requestMtuRunnable)
                 discoverServicesRunnable.run()

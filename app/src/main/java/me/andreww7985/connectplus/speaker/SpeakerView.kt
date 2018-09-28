@@ -1,47 +1,61 @@
-package me.andreww7985.connectplus.ui.fragments
+package me.andreww7985.connectplus.speaker
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import androidx.appcompat.app.AlertDialog
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
-import me.andreww7985.connectplus.controller.FragmentController
-import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
-import me.andreww7985.connectplus.feature.presenter.BatteryNameFeaturePresenter
-import me.andreww7985.connectplus.feature.view.BatteryNameFeatureView
-import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.speakers.SpeakerManager
-import me.andreww7985.connectplus.ui.IUpdatableFragment
+import me.andreww7985.connectplus.feature.view.BaseFeatureView
+import me.andreww7985.connectplus.mvp.BaseView
+import me.andreww7985.connectplus.mvp.PresenterManager
 
-class DashboardFragment : IUpdatableFragment() {
+class SpeakerView : BaseView, Fragment() {
     companion object {
-        const val TAG = "DashboardFragment"
+        const val TAG = "SpeakerView"
     }
 
-    private val speaker = SpeakerManager.mainSpeaker!!
+    private val speakerPresenter = PresenterManager.getPresenter(SpeakerPresenter::class.java) as SpeakerPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
+    fun setMac(mac: String) {
+        mac_value.text = mac
+    }
+
+    fun setData(data: String) {
+        data_value.text = data
+    }
+
+    fun setColor(color: String) {
+        color_value.text = color
+    }
+
+    fun setModel(model: String) {
+        model_value.text = model
+    }
+
+    fun setSpeakerImage(drawable: Int) {
+        product_image.setImageResource(drawable)
+    }
+
+    fun setLogoImage(drawable: Int) {
+        product_logo.setImageResource(drawable)
+    }
+
+    fun showFeatureView(featureView: BaseFeatureView) {
+        dashboard_list.addView(featureView, dashboard_list.size - 1)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        FragmentController.view = this
+        product_audio_button.setOnClickListener { speakerPresenter.onPlaySoundPressed() }
+        speakerPresenter.attachView(this)
 
-        mac_value.text = speaker.mac
-        data_value.text = speaker.scanRecord
-        color_value.text = speaker.color.name
-        model_value.text = speaker.model.name
-
-        UIHelper.getSpeakerImage(speaker)?.let { product_image.setImageResource(it) }
-        UIHelper.getLogoImage(speaker)?.let { product_logo.setImageResource(it) }
-
-        feedback_switch.setOnCheckedChangeListener { _, isChecked ->
+        /*feedback_switch.setOnCheckedChangeListener { _, isChecked ->
             speaker.audioFeedback = isChecked
         }
 
@@ -61,18 +75,20 @@ class DashboardFragment : IUpdatableFragment() {
             AlertDialog.Builder(context!!).setCancelable(true).setView(dialogView).setTitle(R.string.dialog_rename_device_title).setPositiveButton(R.string.dialog_rename_device_rename) { _, _ ->
                 BluetoothProtocol.renameSpeaker(speaker, textEdit.text.toString())
             }.setMessage(R.string.dialog_rename_device_message).setNeutralButton(R.string.dialog_rename_device_cancel) { _, _ -> }.show()
-        }
-
-        // TODO: MVP Test
-        val test = BatteryNameFeaturePresenter(BatteryNameFeatureModel(speaker))
-        val testview = BatteryNameFeatureView(context!!, this)
-        test.attachView(testview)
-        testview.initView()
-        test.onViewReady()
+        }*/
     }
 
-    override fun update() {
-        activity!!.runOnUiThread {
+    override fun onDestroy() {
+        super.onDestroy()
+
+        speakerPresenter.detachView()
+
+        if (isRemoving)
+            PresenterManager.destroyPresenter(SpeakerPresenter::class.java)
+    }
+
+    fun update() {
+        /*activity!!.runOnUiThread {
             val audioFeedback = speaker.audioFeedback
             card_feedback?.let {
                 it.visibility = if (audioFeedback == null) View.GONE else View.VISIBLE
@@ -106,6 +122,6 @@ class DashboardFragment : IUpdatableFragment() {
                         getString(R.string.dashboard_battery_level, batteryLevel)
                 }
             }
-        }
+        }*/
     }
 }

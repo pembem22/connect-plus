@@ -8,7 +8,7 @@
     android:divider="?android:attr/listDivider"
     android:orientation="vertical"
     android:showDividers="middle|end"
-    tools:context=".ui.fragments.DFUFragment">
+    tools:context=".speaker.view.SpeakerDFUView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card_dfu_charge"

@@ -1,4 +1,4 @@
-package me.andreww7985.connectplus.speakers
+package me.andreww7985.connectplus.speaker
 
 import android.util.Log
 import me.andreww7985.connectplus.ConnectPlusApp
@@ -8,14 +8,21 @@ import me.andreww7985.connectplus.helpers.UIHelper
 
 object SpeakerManager {
     private const val TAG = "SpeakerManager"
-    var mainSpeaker: Speaker? = null
-    //val connectPlusEnabled = false
-    val speakers = ArrayList<Speaker>()
-    val leftSpeakers = ArrayList<Speaker>()
-    val rightSpeakers = ArrayList<Speaker>()
-    val stereoSpeakers = ArrayList<Speaker>()
+    var mainSpeaker: SpeakerModel? = null
+    var selectedSpeaker: SpeakerModel? = null
+        set(value) {
+            Log.d(TAG, "setSelectedSpeaker $value")
+            field = value
+        }
 
-    fun onSpeakerFound(speaker: Speaker) {
+    //val connectPlusEnabled = false
+
+    val speakers = ArrayList<SpeakerModel>()
+    val leftSpeakers = ArrayList<SpeakerModel>()
+    val rightSpeakers = ArrayList<SpeakerModel>()
+    val stereoSpeakers = ArrayList<SpeakerModel>()
+
+    fun onSpeakerFound(speaker: SpeakerModel) {
         Log.d(TAG, "onSpeakerFound")
         ConnectPlusApp.logSpeakerEvent("speaker_connected") {
             putString("speaker_model", speaker.model.name)
@@ -28,6 +35,7 @@ object SpeakerManager {
         if (speakers.size == 1) {
             Log.d(TAG, "onSpeakerFound found main speaker MAC = ${speaker.mac}")
             mainSpeaker = speaker
+            selectedSpeaker = speaker
             FragmentController.model = mainSpeaker
             BluetoothScanner.stopScan()
         }
@@ -35,7 +43,7 @@ object SpeakerManager {
         FragmentController.update()
     }
 
-    fun onSpeakerConnected(speaker: Speaker) {
+    fun onSpeakerConnected(speaker: SpeakerModel) {
         Log.d(TAG, "onSpeakerConnected")
 
         if (speaker == mainSpeaker) {
@@ -43,7 +51,7 @@ object SpeakerManager {
         }
     }
 
-    fun getSpeaker(index: Int): Speaker {
+    fun getSpeaker(index: Int): SpeakerModel {
         return speakers[index]
     }
 }

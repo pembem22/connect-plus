@@ -1,25 +1,26 @@
 package me.andreww7985.connectplus.ui.activities
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.ui.fragments.DFUFragment
-import me.andreww7985.connectplus.ui.fragments.DashboardFragment
+import me.andreww7985.connectplus.speaker.SpeakerPresenter
+import me.andreww7985.connectplus.speaker.SpeakerView
+import me.andreww7985.connectplus.speaker.view.SpeakerDFUView
 import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
         private const val TAG = "MainActivity"
         private const val KEY_SELECTED_ITEM = "selectedItem"
-        //lateinit var instance: MainActivity
     }
 
     var selectedItem: Int = 0
+    val speakerPresenter = SpeakerPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         }
 
-
         nav_menu.setOnNavigationItemSelectedListener(this)
     }
 
@@ -49,15 +49,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         /*
          with (supportFragmentManager) {
             val tag = when (selectedItemId) {
-                R.id.nav_dashboard -> DashboardFragment.TAG
-                R.id.nav_dfu_update -> DFUFragment.TAG
+                R.id.nav_dashboard -> SpeakerView.TAG
+                R.id.nav_dfu_update -> SpeakerDFUView.TAG
                 R.id.nav_settings -> SettingsFragment.TAG
                 else -> throw IllegalArgumentException("Wrong selectedItemId")
             }
 
             val fragment = findFragmentByTag(tag) ?: when (selectedItemId) {
-                R.id.nav_dashboard -> DashboardFragment()
-                R.id.nav_dfu_update -> DFUFragment()
+                R.id.nav_dashboard -> SpeakerView()
+                R.id.nav_dfu_update -> SpeakerDFUView()
                 R.id.nav_settings -> SettingsFragment()
                 else -> throw IllegalArgumentException("Wrong selectedItemId")
             }
@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
          */
 
         val fragment = when (selectedItemId) {
-            R.id.nav_dashboard -> DashboardFragment()
-            R.id.nav_dfu_update -> DFUFragment()
+            R.id.nav_dashboard -> SpeakerView()
+            R.id.nav_dfu_update -> SpeakerDFUView()
             R.id.nav_settings -> SettingsFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }

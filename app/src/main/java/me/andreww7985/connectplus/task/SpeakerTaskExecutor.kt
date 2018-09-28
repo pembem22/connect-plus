@@ -1,7 +1,7 @@
 package me.andreww7985.connectplus.task
 
 import android.util.Log
-import me.andreww7985.connectplus.speakers.Speaker
+import me.andreww7985.connectplus.speaker.SpeakerModel
 
 object SpeakerTaskExecutor {
     const val TAG = "SpeakerTaskExecutor"
@@ -23,5 +23,5 @@ object SpeakerTaskExecutor {
     fun onPacket(packet: ByteArray) = currentTask?.onPacket() ?: false
 
     /* Returns true if speaker needs to be processed using SpeakerManager */
-    fun onSpeakerFound(speaker: Speaker): Boolean = currentTask?.onSpeakerFound() ?: false
+    fun onSpeakerFound(speaker: SpeakerModel): Boolean = currentTask?.onSpeakerFound() ?: false
 }
