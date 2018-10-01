@@ -6,17 +6,12 @@ import me.andreww7985.connectplus.feature.view.BatteryNameFeatureView
 
 class BatteryNameFeaturePresenter(model: BatteryNameFeatureModel) : BaseFeaturePresenter(model) {
     override fun onViewAttached() {
-        loadModelData(false)
-    }
-
-    fun loadModelData(force: Boolean) {
         val model = getModel()
+        val view = getView()
 
-        model.loadData(force) {
-            val view = getView()
-
-            view.setName(model.name)
+        model.setDataChangedListener {
             view.setBatteryState(model.batteryLevel, model.batteryCharging)
+            view.setName(model.name)
         }
     }
 

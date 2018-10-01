@@ -21,10 +21,10 @@
     <string name="dfu_flash_flashing">Прошивка…</string>
     <string name="dfu_flash_done">Готово. Ваше устройство автоматически перезагрузится через несколько минут. Не выключайте его вручную, иначе вы его окирпичите!</string>
     <string name="dfu_flash_error">Ошибка! Не волнуйтесь, ваше устройство автоматически перезагрузится, ничего плохого не произойдет</string>
-    <string name="settings_send_speaker_data_title">Отправлять анонимные данные о колонке</string>
-    <string name="settings_send_speaker_data_summary">Включает модель колонки, цвет и версию прошивки</string>
-    <string name="settings_send_app_data_title">Отправлять анонимные данные об использовании приложения</string>
-    <string name="settings_send_app_data_summary">Используются Google Crashlytics и Google Analytics</string>
+    <string name="settings_send_speaker_data_title">Отправлять данные о колонке</string>
+    <string name="settings_send_speaker_data_summary">Полностью анонимно, включает модель колонки, цвет и версию прошивки</string>
+    <string name="settings_send_app_data_title">Отправлять данные об использовании приложения</string>
+    <string name="settings_send_app_data_summary">Полностью анонимно, используются Google Crashlytics и Google Analytics</string>
     <string name="setting_privacy">"Конфиденциальность "</string>
     <string name="dialog_dfu_warning_text">Процесс прошивки DFU не является официальным и может аннулировать вашу гарантию! Есть шанс окирпичить ваше устройство! Никто не несет ответственность за возможные проблемы! Делайте все на свой страх и риск!</string>
     <string name="dialog_dfu_warning_agree">Я согласен (согласна)</string>
@@ -36,8 +36,9 @@
     <string name="dashboard_feedback_sounds_disabled">Звуковой отклик отключен</string>
     <string name="settings_developers">Разработчики</string>
     <string name="settings_main_developer_title">Главный разработчик</string>
-    <string name="settings_testers_title">Спасибо за тестирование!</string>
+    <string name="settings_testers_title">Тестировщики</string>
     <string name="dfu_button_flash">ПРОШИТЬ</string>
     <string name="dfu_button_cancel">ОТМЕНА</string>
     <string name="dfu_button_open_file">ОТКРЫТЬ ФАЙЛ</string>
+    <string name="discovery_connecting">Подключение&#8230;</string>
 </resources>

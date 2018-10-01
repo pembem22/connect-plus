@@ -7,14 +7,11 @@ class BatteryNameFeatureModel(speaker: SpeakerModel) : BaseFeatureModel(speaker)
     var batteryLevel = -1
     var batteryCharging = false
 
-    fun loadData(forceLoad: Boolean, callback: (() -> Unit)) {
-        if (batteryLevel == -1 || forceLoad) {
-            // TODO: Load REAL data
-            batteryLevel = 100
-            batteryCharging = true
-            name = "JBL name"
-        }
+    fun setData(batteryCharging: Boolean, batteryLevel: Int, name: String) {
+        this.batteryCharging = batteryCharging
+        this.batteryLevel = batteryLevel
+        this.name = name
 
-        callback()
+        dataChanged()
     }
 }

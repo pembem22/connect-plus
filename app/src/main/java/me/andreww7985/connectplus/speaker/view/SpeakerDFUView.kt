@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import kotlinx.android.synthetic.main.fragment_dfu.*
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.controller.FragmentController
 import me.andreww7985.connectplus.core.App
 import me.andreww7985.connectplus.ui.IUpdatableFragment
 
@@ -24,8 +23,6 @@ class SpeakerDFUView : IUpdatableFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        FragmentController.view = this
-
         if (!App.sharedPreferences.getBoolean("dfu_warning_accepted", false)) {
             AlertDialog.Builder(context!!).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
                     .setMessage(getString(R.string.dialog_dfu_warning_text))

@@ -13,7 +13,7 @@ import me.andreww7985.connectplus.mvp.BaseModel
 class SpeakerModel(val model: HardwareModel, val color: HardwareColor, val bluetoothDevice: BluetoothDevice, val scanRecord: String): BaseModel {
     val mac = bluetoothDevice.address.toUpperCase().replace(":", "")
     var index = 0
-    val featureModules = HashMap<Feature, BaseFeatureModel>()
+    val featureModels = HashMap<Feature, BaseFeatureModel>()
 
     lateinit var readCharacteristic: BluetoothGattCharacteristic
     lateinit var writeCharacteristic: BluetoothGattCharacteristic
@@ -27,7 +27,7 @@ class SpeakerModel(val model: HardwareModel, val color: HardwareColor, val bluet
 
     fun onPacket(packet: ByteArray) {
         // TODO: Change to reactive
-        BluetoothProtocol.onPacket(packet)
+        BluetoothProtocol.onPacket(this, packet)
     }
 
     fun sendPacket(bytes: ByteArray) {
@@ -35,12 +35,12 @@ class SpeakerModel(val model: HardwareModel, val color: HardwareColor, val bluet
         bluetoothGatt.writeCharacteristic(writeCharacteristic)
     }
 
-    fun getFeature(feature: Feature): BaseFeatureModel {
-        var featureModel = featureModules[feature]
+    fun getOrCreateFeatureModel(feature: Feature): BaseFeatureModel {
+        var featureModel = featureModels[feature]
 
         if (featureModel == null) {
             featureModel = Feature.Factory.makeFeatureModel(feature, this)
-            featureModules[feature] = featureModel
+            featureModels[feature] = featureModel
 
             // TODO: Change to reactive
             onFeatureAddedCallback?.invoke(feature, featureModel)
@@ -48,4 +48,6 @@ class SpeakerModel(val model: HardwareModel, val color: HardwareColor, val bluet
 
         return featureModel
     }
+
+    fun getFeatureModel(feature: Feature) = featureModels[feature]
 }

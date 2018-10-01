@@ -37,6 +37,7 @@ object UIHelper {
     fun openMainActivity() {
         Log.d(TAG, "openMainActivity")
         val intent = Intent(app, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         app.startActivity(intent)
     }
 

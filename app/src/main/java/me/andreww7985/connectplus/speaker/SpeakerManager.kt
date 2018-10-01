@@ -2,6 +2,7 @@ package me.andreww7985.connectplus.speaker
 
 import android.util.Log
 import me.andreww7985.connectplus.ConnectPlusApp
+import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.bluetooth.BluetoothScanner
 import me.andreww7985.connectplus.controller.FragmentController
 import me.andreww7985.connectplus.helpers.UIHelper
@@ -49,6 +50,8 @@ object SpeakerManager {
         if (speaker == mainSpeaker) {
             UIHelper.openMainActivity()
         }
+
+        BluetoothProtocol.requestSpeakerInfo(speaker)
     }
 
     fun getSpeaker(index: Int): SpeakerModel {

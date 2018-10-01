@@ -48,34 +48,14 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun showFeatureView(featureView: BaseFeatureView) {
-        dashboard_list.addView(featureView, dashboard_list.size - 1)
+        activity!!.runOnUiThread { dashboard_list.addView(featureView, dashboard_list.size - 1) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         product_audio_button.setOnClickListener { speakerPresenter.onPlaySoundPressed() }
         speakerPresenter.attachView(this)
-
-        /*feedback_switch.setOnCheckedChangeListener { _, isChecked ->
-            speaker.audioFeedback = isChecked
-        }
-
-        product_audio_button.setOnClickListener {
-            val audioFeedback = speaker.audioFeedback
-            if (audioFeedback != false)
-                BluetoothProtocol.playSound(speaker)
-            else
-                Snackbar.make(view, getString(R.string.dashboard_feedback_sounds_disabled), Snackbar.LENGTH_SHORT).show()
-        }
-
-        name_edit_button.setOnClickListener {
-            val dialogView = View.inflate(context, R.layout.dialog_rename, null)
-            val textEdit = dialogView.findViewById<TextInputEditText>(R.id.rename_input)
-            textEdit.text = Editable.Factory.getInstance().newEditable(speaker.name)
-
-            AlertDialog.Builder(context!!).setCancelable(true).setView(dialogView).setTitle(R.string.dialog_rename_device_title).setPositiveButton(R.string.dialog_rename_device_rename) { _, _ ->
-                BluetoothProtocol.renameSpeaker(speaker, textEdit.text.toString())
-            }.setMessage(R.string.dialog_rename_device_message).setNeutralButton(R.string.dialog_rename_device_cancel) { _, _ -> }.show()
-        }*/
     }
 
     override fun onDestroy() {

@@ -5,6 +5,7 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="discovery_searching">Searching&#8230;</string>
+    <string name="discovery_connecting">Connecting&#8230;</string>
 
     <string name="menu_settings">Settings</string>
     <string name="menu_dashboard">Dashboard</string>
@@ -18,7 +19,7 @@
     <string name="dialog_rename_device_title">Rename device</string>
     <string name="dialog_rename_device_message">Enter new name for your device (up to 16 bytes)</string>
     <string name="dialog_rename_device_rename">RENAME</string>
-    <string name="dialog_rename_device_cancel">CANCEL</string>
+    <string name="dialog_rename_device_cancel">@android:string/cancel</string>
 
     <string name="dashboard_device_name">Device name:</string>
     <string name="dashboard_firmware">Firmware version:</string>
@@ -46,14 +47,14 @@
     <string name="dfu_info_checksum">Firmware CRC32:</string>
 
     <string name="setting_privacy">Privacy</string>
-    <string name="settings_send_speaker_data_title">Send anonymous speaker data</string>
-    <string name="settings_send_speaker_data_summary">Includes speaker model, color and firmware version</string>
-    <string name="settings_send_app_data_summary">Uses Google Crashlytics and Google Analytics</string>
-    <string name="settings_send_app_data_title">Send anonymous app usage data</string>
+    <string name="settings_send_speaker_data_title">Send speaker data</string>
+    <string name="settings_send_speaker_data_summary">Completely anonymous, includes speaker model, color and firmware version</string>
+    <string name="settings_send_app_data_summary">Completely anonymous, using Google Crashlytics and Google Analytics</string>
+    <string name="settings_send_app_data_title">Send app usage data</string>
     <string name="settings_developers">Developers</string>
     <string name="settings_main_developer_title">Main developer</string>
     <string name="settings_main_developer_summary" translatable="false">\@andreww7985</string>
-    <string name="settings_testers_title">Thanks for testing!</string>
+    <string name="settings_testers_title">Testers</string>
     <string name="settings_testers_summary" translatable="false">\@AKladkov, @Alex62ru, @weisib</string>
     <string name="dfu_button_flash">FLASH</string>
     <string name="dfu_button_cancel">CANCEL</string>

@@ -3,9 +3,10 @@ package me.andreww7985.connectplus.bluetooth
 import android.bluetooth.le.ScanResult
 import android.util.Log
 import android.util.SparseArray
-import me.andreww7985.connectplus.controller.FragmentController
 import me.andreww7985.connectplus.feature.Feature
 import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
+import me.andreww7985.connectplus.feature.model.FeedbackSoundsFeatureModel
+import me.andreww7985.connectplus.feature.model.FirmwareVersionFeatureModel
 import me.andreww7985.connectplus.hardware.HardwareColor
 import me.andreww7985.connectplus.hardware.HardwareModel
 import me.andreww7985.connectplus.helpers.HexHelper
@@ -119,7 +120,7 @@ object BluetoothProtocol {
         return byteArrayOf(0xAA.toByte(), packetType.value, bytes.size.toByte(), *bytes)
     }
 
-    fun onPacket(bytes: ByteArray) {
+    fun onPacket(speaker: SpeakerModel, bytes: ByteArray) {
         Log.d(TAG, "onPacket ${HexHelper.bytesToHex(bytes)}")
 
         if (bytes[0] != 0xAA.b) {
@@ -129,12 +130,17 @@ object BluetoothProtocol {
         val length = bytes[2].toInt() and 0xFF
         val payload = ByteArray(length)
         System.arraycopy(bytes, 3, payload, 0, Math.min(length, bytes.size - 3))
+
         when (PacketType.from(bytes[1])) {
             PacketType.ACK -> {
+                Log.d(TAG, "Ack!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}")
             }
             PacketType.RES_SPEAKER_INFO -> {
-                val speaker = FragmentController.model!!
                 speaker.index = payload[0].toInt() and 0xFF
+
+                var name: String? = null
+                var batteryCharging: Boolean? = null
+                var batteryLevel: Int? = null
 
                 var pointer = 1
                 while (pointer < payload.size) {
@@ -149,10 +155,8 @@ object BluetoothProtocol {
                             val batteryStatus = payload[pointer + 1].toInt() and 0xFF
                             pointer += 2
 
-                            val feature = speaker.getFeature(Feature.BATTERY_NAME) as BatteryNameFeatureModel
-
-                            feature.batteryCharging = batteryStatus > 100
-                            feature.batteryLevel = batteryStatus % 128
+                            batteryCharging = batteryStatus > 100
+                            batteryLevel = batteryStatus % 128
                         }
                         DataToken.TOKEN_LINKED_DEVICE_COUNT -> {
                             val likedDeviceCount = payload[pointer + 1].toInt() and 0xFF
@@ -176,8 +180,7 @@ object BluetoothProtocol {
                             for (i in 0 until nameBytesLength) nameBytes[i] = payload[pointer + 2 + i]
                             pointer += 2 + nameBytesLength
 
-                            val feature = speaker.getFeature(Feature.BATTERY_NAME) as BatteryNameFeatureModel
-                            feature.name = String(nameBytes)
+                            name = String(nameBytes)
 
                         }
                         else -> {
@@ -187,24 +190,29 @@ object BluetoothProtocol {
                     }
                 }
 
-                // speaker.firmware ?: requestSpeakerFirmware(speaker)
+                if (name != null && batteryLevel != null && batteryCharging != null) {
+                    val feature = speaker.getOrCreateFeatureModel(Feature.BATTERY_NAME) as BatteryNameFeatureModel
+
+                    feature.setData(batteryCharging, batteryLevel, name)
+                }
+
+                requestSpeakerFirmware(speaker)
             }
             PacketType.RES_FIRMWARE_VERSION -> {
-                /*val speaker = FragmentController.model!!
-                speaker.firmware = "${payload[0].toInt() and 0xFF}.${payload[1].toInt() and 0xFF}.${payload[2].toInt() and 0xFF}"
+                val feature = speaker.getOrCreateFeatureModel(Feature.FIRMWARE_VERSION) as FirmwareVersionFeatureModel
 
-                ConnectPlusApp.logSpeakerEvent("speaker_firmware") {
-                    putString("speaker_firmware", speaker.firmware)
-                }
+                val firmwareMajor = payload[0].toInt() and 0xFF
+                val firmwareMinor = payload[1].toInt() and 0xFF
+                val firmwareBuild = if (payload.size >= 3) payload[2].toInt() and 0xFF else -1
+                feature.setData(firmwareMajor, firmwareMinor, firmwareBuild)
 
-                speaker.audioFeedback ?: requestAudioFeedback(speaker) */
+                requestAudioFeedback(speaker)
             }
             PacketType.RES_AUDIO_FEEDBACK -> {
-                if (payload.isEmpty()) {
-                    Log.w(TAG, "onPacket RES_AUDIO_FEEDBACK empty payload")
-                    return
-                }
-                // FragmentController.model!!.audioFeedback = payload[0].toInt() == 1
+                val feature = speaker.getOrCreateFeatureModel(Feature.FEEDBACK_SOUNDS) as FeedbackSoundsFeatureModel
+
+                val feedbackSounds = payload[0] == 1.b
+                feature.setData(feedbackSounds)
             }
             PacketType.RES_DFU_STATUS_CHANGE -> {
                 /* val speaker = SpeakerManager.mainSpeaker!!

@@ -5,14 +5,14 @@ import android.content.Context
 import android.text.Editable
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.battery_name_feature.view.*
+import kotlinx.android.synthetic.main.feature_battery_name.view.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.feature.presenter.BatteryNameFeaturePresenter
 
 @SuppressLint("ViewConstructor")
 class BatteryNameFeatureView(context: Context, private val presenter: BatteryNameFeaturePresenter) : BaseFeatureView(context) {
     init {
-        addView(inflate(context, R.layout.battery_name_feature, null))
+        addView(inflate(context, R.layout.feature_battery_name, null))
 
         dashboard_name_edit.setOnClickListener {
             presenter.onEditNamePressed()
