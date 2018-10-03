@@ -8,11 +8,11 @@
     <string name="dialog_rename_device_message">Введите новое имя для вашего устройства (до 16 байтов)</string>
     <string name="dialog_rename_device_cancel">ОТМЕНА</string>
     <string name="dialog_rename_device_rename">ПЕРЕИМЕНОВАТЬ</string>
-    <string name="dashboard_device_name">Название устройства:</string>
-    <string name="dashboard_battery">Состояние батареи:</string>
-    <string name="dashboard_feedback_sounds">Звуковой отклик:</string>
-    <string name="dashboard_firmware">Версия ПО:</string>
-    <string name="dfu_connect_charger_error">Пожалуйста, подключите устройство к зарядке</string>
+    <string name="dashboard_device_name">Название устройства</string>
+    <string name="dashboard_battery_state">Состояние батареи</string>
+    <string name="dashboard_feedback_sounds">Звуковой отклик</string>
+    <string name="dashboard_firmware">Версия ПО</string>
+    <string name="dfu_connect_charger_message">Пожалуйста, подключите устройство к зарядке</string>
     <string name="menu_flash_dfu">Прошить DFU</string>
     <string name="menu_refresh">Обновить</string>
     <string name="dfu_file_not_selected">Файл не выбран</string>

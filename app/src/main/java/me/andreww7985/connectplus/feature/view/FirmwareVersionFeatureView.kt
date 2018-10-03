@@ -7,7 +7,7 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.feature.presenter.FirmwareVersionFeaturePresenter
 
 @SuppressLint("ViewConstructor")
-class FirmwareVersionFeatureView(context: Context, private val presenter: FirmwareVersionFeaturePresenter) : BaseFeatureView(context) {
+class FirmwareVersionFeatureView(context: Context, private val presenter: FirmwareVersionFeaturePresenter) : BaseFeatureView(context, presenter) {
     init {
         addView(inflate(context, R.layout.feature_firmware_version, null))
 

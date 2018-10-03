@@ -10,7 +10,7 @@ class FeedbackSoundsFeaturePresenter(model: FeedbackSoundsFeatureModel) : BaseFe
         val view = getView()
 
         model.setDataChangedListener {
-            view.setFeedbackSoundsEnabled(model.feedbackSoundsEnabled!!)
+            view.setFeedbackSoundsEnabled(model.feedbackSoundsEnabled)
         }
     }
 

@@ -7,7 +7,7 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.feature.presenter.FeedbackSoundsFeaturePresenter
 
 @SuppressLint("ViewConstructor")
-class FeedbackSoundsFeatureView(context: Context, private val presenter: FeedbackSoundsFeaturePresenter) : BaseFeatureView(context) {
+class FeedbackSoundsFeatureView(context: Context, private val presenter: FeedbackSoundsFeaturePresenter) : BaseFeatureView(context, presenter) {
     init {
         addView(inflate(context, R.layout.feature_feedback_sounds, null))
 

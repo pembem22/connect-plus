@@ -21,16 +21,16 @@
     <string name="dialog_rename_device_rename">RENAME</string>
     <string name="dialog_rename_device_cancel">@android:string/cancel</string>
 
-    <string name="dashboard_device_name">Device name:</string>
-    <string name="dashboard_firmware">Firmware version:</string>
-    <string name="dashboard_feedback_sounds">Feedback sounds:</string>
-    <string name="dashboard_battery">Battery state:</string>
+    <string name="dashboard_device_name">Device name</string>
+    <string name="dashboard_firmware">Firmware version</string>
+    <string name="dashboard_feedback_sounds">Feedback sounds</string>
+    <string name="dashboard_battery_state">Battery state</string>
     <string name="dashboard_feedback_sounds_disabled">Feedback sounds are disabled</string>
 
-    <string name="dfu_connect_charger_error">Please, connect device to the charger</string>
+    <string name="dfu_connect_charger_message">Please, connect device to the charger</string>
 
     <string name="dialog_dfu_warning_title">Warning!</string>
-    <string name="dialog_dfu_warning_text">The process of flashing DFU firmware is not official and may void your warranty! There is a chance to brick your device! No one is responsible for possible problems! Do everything at your own peril!</string>
+    <string name="dialog_dfu_warning_text">The process of flashing DFU firmware is not official and may void your warranty! There is a chance to brick your device! No one is responsible for possible problems! Do everything at your own risk!</string>
     <string name="dialog_dfu_warning_agree">I agree</string>
     <string name="dialog_dfu_warning_do_not_agree">I don\'t agree</string>
 

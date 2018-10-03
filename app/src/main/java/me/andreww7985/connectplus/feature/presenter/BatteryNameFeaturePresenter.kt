@@ -1,5 +1,6 @@
 package me.andreww7985.connectplus.feature.presenter
 
+import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
 import me.andreww7985.connectplus.feature.view.BatteryNameFeatureView
@@ -8,9 +9,14 @@ class BatteryNameFeaturePresenter(model: BatteryNameFeatureModel) : BaseFeatureP
     override fun onViewAttached() {
         val model = getModel()
         val view = getView()
+        val context = view.context
 
         model.setDataChangedListener {
-            view.setBatteryState(model.batteryLevel, model.batteryCharging)
+            view.setBatteryStateValue(
+                    context.getString(if (model.batteryCharging)
+                        R.string.dashboard_battery_level_charging
+                    else
+                        R.string.dashboard_battery_level, model.batteryLevel))
             view.setName(model.name)
         }
     }

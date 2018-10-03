@@ -15,14 +15,14 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:text="@string/dashboard_firmware"
+        android:text="Speakerphone mode"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dashboard_firmware_version_value"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/dashboard_speakerphone_mode_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"

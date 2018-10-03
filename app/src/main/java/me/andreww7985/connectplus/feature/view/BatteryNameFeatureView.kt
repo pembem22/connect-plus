@@ -10,7 +10,7 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.feature.presenter.BatteryNameFeaturePresenter
 
 @SuppressLint("ViewConstructor")
-class BatteryNameFeatureView(context: Context, private val presenter: BatteryNameFeaturePresenter) : BaseFeatureView(context) {
+class BatteryNameFeatureView(context: Context, private val presenter: BatteryNameFeaturePresenter) : BaseFeatureView(context, presenter) {
     init {
         addView(inflate(context, R.layout.feature_battery_name, null))
 
@@ -23,6 +23,7 @@ class BatteryNameFeatureView(context: Context, private val presenter: BatteryNam
 
     fun setName(name: String) {
         dashboard_name_value.text = name
+
     }
 
     fun showRenameDialog(currentName: String) {
@@ -41,10 +42,7 @@ class BatteryNameFeatureView(context: Context, private val presenter: BatteryNam
                 .show()
     }
 
-    fun setBatteryState(level: Int, charging: Boolean) {
-        dashboard_battery_value.text = if (charging == true)
-            context.getString(R.string.dashboard_battery_level_charging, level)
-        else
-            context.getString(R.string.dashboard_battery_level, level)
+    fun setBatteryStateValue(value: String) {
+        dashboard_battery_value.text = value
     }
 }

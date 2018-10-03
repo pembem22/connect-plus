@@ -1,9 +1,15 @@
 package me.andreww7985.connectplus.feature.model
 
+import android.os.Handler
+import android.os.Looper
 import me.andreww7985.connectplus.mvp.BaseModel
 import me.andreww7985.connectplus.speaker.SpeakerModel
 
 abstract class BaseFeatureModel(val speaker: SpeakerModel) : BaseModel {
+    companion object {
+        val uiHandler = Handler(Looper.getMainLooper())
+    }
+
     private var onDataChangedCallback: (() -> Unit)? = null
     private var isDataInitialized = false
 
@@ -15,7 +21,10 @@ abstract class BaseFeatureModel(val speaker: SpeakerModel) : BaseModel {
 
     fun dataChanged() {
         isDataInitialized = true
-        onDataChangedCallback?.invoke()
+
+        uiHandler.post {
+            onDataChangedCallback?.invoke()
+        }
     }
 }
 

@@ -15,7 +15,7 @@ class ConnectToSpeakerTask(val speaker: SpeakerModel) : ITask {
         private const val TAG = "ConnectToSpeakerTask"
         private const val GATT_REQUEST_MTU_TIMEOUT = 500L
         private const val GATT_DISCOVER_SERVICES_TIMEOUT = 500L
-        private const val GATT_MTU_VALUE = 517 /* What does this value means??? */
+        private const val GATT_MTU_VALUE = 517 /* What does this id means??? */
 
         private val UUID_RX_TX_SERVICE = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0000")
         private val UUID_READ_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0002")
