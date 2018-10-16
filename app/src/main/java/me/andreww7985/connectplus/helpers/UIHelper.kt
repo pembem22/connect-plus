@@ -3,35 +3,16 @@ package me.andreww7985.connectplus.helpers
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import me.andreww7985.connectplus.ConnectPlusApp
+import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.speaker.SpeakerModel
 import me.andreww7985.connectplus.ui.activities.MainActivity
 
 object UIHelper {
     private const val TAG = "UIHelper"
-    private val app = ConnectPlusApp.instance
-    private val resources = app.resources
-    private val packageName = app.packageName
-
-    fun getSpeakerImage(speaker: SpeakerModel): Int? {
-        val imageName = String.format("img_%s_%s", speaker.model.toString().toLowerCase(), speaker.color.toString().toLowerCase())
-        Log.d(TAG, "getSpeakerImage image name = $imageName")
-        val imageID = resources.getIdentifier(imageName, "drawable", packageName)
-        return if (imageID != 0) imageID else null
-    }
-
-    fun getLogoImage(speaker: SpeakerModel): Int? {
-        val imageName = String.format("logo_%s", speaker.model.toString().toLowerCase())
-        Log.d(TAG, "getLogoImage image name = $imageName")
-        val imageID = resources.getIdentifier(imageName, "drawable", packageName)
-        return if (imageID != 0) imageID else null
-    }
+    private val app = App.instance
 
     fun showToast(text: String, duration: Int = Toast.LENGTH_LONG) {
-        ConnectPlusApp.instance.let {
-            Toast.makeText(app, text, duration).show()
-        }
+        Toast.makeText(app, text, duration).show()
     }
 
     fun openMainActivity() {

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.speaker.SpeakerModel
 
 class SpeakersAdapter(context: Context, speakers: ArrayList<SpeakerModel>) : ArrayAdapter<SpeakerModel>(context, 0, speakers) {
@@ -30,7 +29,7 @@ class SpeakersAdapter(context: Context, speakers: ArrayList<SpeakerModel>) : Arr
             return view
         }
 
-        UIHelper.getSpeakerImage(speaker)?.let { speakerImage.setImageResource(it) }
+        //UIHelper.getSpeakerImage(speaker)?.let { speakerImage.setImageResource(it) }
         return view
     }
 }

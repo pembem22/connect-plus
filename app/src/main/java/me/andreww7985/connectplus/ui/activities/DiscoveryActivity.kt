@@ -6,17 +6,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.bluetooth.BluetoothScanner
 import me.andreww7985.connectplus.helpers.UIHelper
+import me.andreww7985.connectplus.manager.BleScanManager
 
 class DiscoveryActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "DiscoveryActivity"
+        private const val REQUEST_CODE_PERMISSION = 1
+        private const val REQUEST_CODE_BLUETOOTH = 2
+        private const val REQUEST_CODE_LOCATION = 3
         //lateinit var instance: DiscoveryActivity
     }
 
@@ -35,40 +39,43 @@ class DiscoveryActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        BluetoothScanner.stopScan()
+        BleScanManager.stopScan()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        Logger.print(TAG, "onRequestPermissionsResult requestCode = $requestCode")
-        when (requestCode) {
-            1 -> checkPermissions()
-            2 -> checkBluetooth()
-        }
+        Log.d(TAG, "onRequestPermissionsResult requestCode = $requestCode")
+        checkPermissions()
     }
 
     private fun checkPermissions() {
-        Logger.print(TAG, "checkPermissions")
+        Log.d(TAG, "checkPermissions")
         val location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
         val files = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (location != PackageManager.PERMISSION_GRANTED || files != PackageManager.PERMISSION_GRANTED))
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_PERMISSION)
         else checkBluetooth()
     }
 
     private fun checkBluetooth() {
-        Logger.print(TAG, "checkBluetooth")
-        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+        Log.d(TAG, "checkBluetooth")
 
-        bluetoothAdapter ?: run {
+        if (!BleScanManager.isBleSupported()) {
             UIHelper.showToast("Bluetooth not supported", Toast.LENGTH_LONG)
-            Logger.print(TAG, "checkBluetooth bluetooth not supported")
+            Log.d(TAG, "checkBluetooth bluetooth not supported")
             finish()
             return
         }
 
-        if (!bluetoothAdapter.isEnabled) {
-            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 2)
-        } else BluetoothScanner.startScan()
+        if (!BleScanManager.isBluetoothEnabled()) {
+            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_BLUETOOTH)
+        } else checkLocation()
+    }
+
+    private fun checkLocation() {
+        if (!BleScanManager.isLocationEnabled())
+            startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CODE_LOCATION)
+        else
+            BleScanManager.startScan()
     }
 }

@@ -2,9 +2,8 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="56dp"
     android:height="8dp"
-    android:tint="?android:attr/colorControlNormal"
-    android:viewportHeight="8"
-    android:viewportWidth="56">
+    android:viewportWidth="56"
+    android:viewportHeight="8">
 
     <group android:translateY="-289">
         <path

@@ -1,16 +1,16 @@
 package me.andreww7985.connectplus.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import me.andreww7985.connectplus.Logger
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.speaker.SpeakerPresenter
 import me.andreww7985.connectplus.speaker.SpeakerView
-import me.andreww7985.connectplus.speaker.view.SpeakerDFUView
 import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -20,12 +20,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     var selectedItem: Int = 0
-    val speakerPresenter = SpeakerPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instance = this
-        Logger.print(TAG, "onCreate")
+        Log.d(TAG, "onCreate")
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -38,10 +37,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         nav_menu.setOnNavigationItemSelectedListener(this)
+
+        ad_view.loadAd(AdRequest.Builder().build())
     }
 
     fun updateCurrentFragment(selectedItemId: Int) {
-        Logger.print(TAG, "updateCurrentFragment")
+        Log.d(TAG, "updateCurrentFragment")
         if (this.selectedItem == selectedItemId) return
         this.selectedItem = selectedItemId
         nav_menu.selectedItemId = selectedItemId
@@ -50,14 +51,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
          with (supportFragmentManager) {
             val tag = when (selectedItemId) {
                 R.id.nav_dashboard -> SpeakerView.TAG
-                R.id.nav_dfu_update -> SpeakerDFUView.TAG
+                R.id.nav_dfu_update -> DfuView.TAG
                 R.id.nav_settings -> SettingsFragment.TAG
                 else -> throw IllegalArgumentException("Wrong selectedItemId")
             }
 
             val fragment = findFragmentByTag(tag) ?: when (selectedItemId) {
                 R.id.nav_dashboard -> SpeakerView()
-                R.id.nav_dfu_update -> SpeakerDFUView()
+                R.id.nav_dfu_update -> DfuView()
                 R.id.nav_settings -> SettingsFragment()
                 else -> throw IllegalArgumentException("Wrong selectedItemId")
             }
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val fragment = when (selectedItemId) {
             R.id.nav_dashboard -> SpeakerView()
-            R.id.nav_dfu_update -> SpeakerDFUView()
+            R.id.nav_dfu_update -> DfuView()
             R.id.nav_settings -> SettingsFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }

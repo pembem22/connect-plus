@@ -3,19 +3,12 @@ package me.andreww7985.connectplus.bluetooth
 import android.bluetooth.le.ScanResult
 import android.util.Log
 import android.util.SparseArray
-import me.andreww7985.connectplus.feature.Feature
-import me.andreww7985.connectplus.feature.model.BatteryNameFeatureModel
-import me.andreww7985.connectplus.feature.model.FeedbackSoundsFeatureModel
-import me.andreww7985.connectplus.feature.model.FirmwareVersionFeatureModel
-import me.andreww7985.connectplus.feature.model.SpeakerphoneModeFeatureModel
-import me.andreww7985.connectplus.hardware.HardwareColor
-import me.andreww7985.connectplus.hardware.HardwareModel
 import me.andreww7985.connectplus.helpers.HexHelper
-import me.andreww7985.connectplus.speaker.SpeakerManager
+import me.andreww7985.connectplus.manager.SpeakerManager
+import me.andreww7985.connectplus.speaker.Feature
+import me.andreww7985.connectplus.speaker.ProductColor
+import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerModel
-import me.andreww7985.connectplus.task.ConnectToSpeakerTask
-import me.andreww7985.connectplus.task.SpeakerTaskExecutor
-
 
 val Int.byte get() = this.toByte()
 
@@ -31,7 +24,7 @@ object BluetoothProtocol {
         }
 
         val scanRecordBytes = scanRecord.bytes
-        Log.d(TAG, "connect scanRecordBytes = ${HexHelper.bytesToHex(scanRecordBytes)}")
+        //Log.d(TAG, "connect scanRecordBytes = ${HexHelper.bytesToHex(scanRecordBytes)}")
 
         val manufacturerData = SparseArray<ByteArray>()
         var currentPos = 0
@@ -59,18 +52,16 @@ object BluetoothProtocol {
             return
         }
 
+        if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
+
         Log.d(TAG, "connect parsed = ${HexHelper.bytesToHex(speakerData)}")
-        val speakerModel = HardwareModel.from(HexHelper.bytesToHex(byteArrayOf(speakerData[1], speakerData[0])))
-        val speakerColor = HardwareColor.from(speakerModel, speakerData[2])
+        val speakerModel = ProductModel.from(HexHelper.bytesToHex(byteArrayOf(speakerData[1], speakerData[0])))
+        val speakerColor = ProductColor.from(speakerModel, speakerData[2].toInt() and 0xFF)
         //val speakerRole = speakerData[3]
 
         val speaker = SpeakerModel(speakerModel, speakerColor, scanResult.device, HexHelper.bytesToHex(speakerData))
 
-        if (SpeakerManager.speakers.size == 0 /* current task != wait until speaker reboot */) {
-            SpeakerTaskExecutor.startTask(ConnectToSpeakerTask(speaker))
-        }
-
-        SpeakerManager.onSpeakerFound(speaker)
+        SpeakerManager.speakerFound(speaker)
     }
 
     fun requestSpeakerInfo(speaker: SpeakerModel) {
@@ -86,7 +77,7 @@ object BluetoothProtocol {
     }
 
     fun requestAudioFeedback(speaker: SpeakerModel) {
-        sendPacket(makePacket(PacketType.REQ_AUDIO_FEEDBACK))
+        sendPacket(makePacket(PacketType.REQ_FEEDBACK_SOUNDS))
     }
 
     fun setSpeakerphoneMode(speaker: SpeakerModel, speakerphoneMode: Boolean) {
@@ -98,7 +89,7 @@ object BluetoothProtocol {
     }
 
     fun setAudioFeedback(speaker: SpeakerModel, audioFeedback: Boolean) {
-        sendPacket(makePacket(PacketType.SET_AUDIO_FEEDBACK, byteArrayOf(if (audioFeedback) 1 else 0)))
+        sendPacket(makePacket(PacketType.SET_FEEDBACK_SOUNDS, byteArrayOf(if (audioFeedback) 1 else 0)))
     }
 
     fun renameSpeaker(speaker: SpeakerModel, name: String) {
@@ -107,11 +98,11 @@ object BluetoothProtocol {
     }
 
     fun playSound(speaker: SpeakerModel) {
-        sendPacket(makePacket(PacketType.PLAY_SOUND, byteArrayOf(speaker.index.byte)))
+        sendPacket(makePacket(PacketType.PLAY_SOUND))
     }
 
     fun setSpeakerData(speaker: SpeakerModel, token: DataToken, bytes: ByteArray) {
-        sendPacket(makePacket(PacketType.SET_SPEAKER_INFO, byteArrayOf(speaker.index.byte, token.value, *bytes)))
+        sendPacket(makePacket(PacketType.SET_SPEAKER_INFO, byteArrayOf(speaker.index.byte, token.id.toByte(), *bytes)))
     }
 
     fun sendPacket(bytes: ByteArray) {
@@ -129,18 +120,14 @@ object BluetoothProtocol {
         return byteArrayOf(0xAA.byte, packetType.id.byte, bytes.size.byte, *bytes)
     }
 
-    fun onPacket(speaker: SpeakerModel, bytes: ByteArray) {
-        Log.d(TAG, "onPacket ${HexHelper.bytesToHex(bytes)}")
+    fun packetToBytes(bluetoothPacket: BluetoothPacket) = makePacket(bluetoothPacket.type, bluetoothPacket.payload)
 
-        if (bytes[0] != 0xAA.byte) {
-            throw IllegalArgumentException("Bad packet header")
-        }
+    fun onPacket(speaker: SpeakerModel, packet: BluetoothPacket) {
+        Log.d(TAG, "onPacket ${packet.type} ${HexHelper.bytesToHex(packet.payload)}")
 
-        val length = bytes[2].toInt() and 0xFF
-        val payload = ByteArray(length)
-        System.arraycopy(bytes, 3, payload, 0, Math.min(length, bytes.size - 3))
+        val payload = packet.payload
 
-        when (PacketType.from(bytes[1])) {
+        when (packet.type) {
             PacketType.ACK -> {
                 Log.d(TAG, "Ack!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}")
             }
@@ -153,7 +140,7 @@ object BluetoothProtocol {
 
                 var pointer = 1
                 while (pointer < payload.size) {
-                    when (DataToken.from(payload[pointer])) {
+                    when (DataToken.from(payload[pointer].toInt() and 0xFF)) {
                         DataToken.TOKEN_MODEL -> {
                             pointer += 3
                         }
@@ -200,36 +187,39 @@ object BluetoothProtocol {
                 }
 
                 if (name != null && batteryLevel != null && batteryCharging != null) {
-                    val feature = speaker.getOrCreateFeatureModel(Feature.BATTERY_NAME) as BatteryNameFeatureModel
+                    val feature = speaker.getOrCreateFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
 
-                    feature.setData(batteryCharging, batteryLevel, name)
+                    feature.batteryCharging = batteryCharging
+                    feature.batteryLevel = batteryLevel
+                    feature.deviceName = name
+                    speaker.featuresChanged()
                 }
 
                 requestSpeakerFirmware(speaker)
             }
             PacketType.RES_FIRMWARE_VERSION -> {
-                val feature = speaker.getOrCreateFeatureModel(Feature.FIRMWARE_VERSION) as FirmwareVersionFeatureModel
+                val feature = speaker.getOrCreateFeature(Feature.Type.FIRMWARE_VERSION) as Feature.FirmwareVersion
 
-                val firmwareMajor = payload[0].toInt() and 0xFF
-                val firmwareMinor = payload[1].toInt() and 0xFF
-                val firmwareBuild = if (payload.size >= 3) payload[2].toInt() and 0xFF else -1
-                feature.setData(firmwareMajor, firmwareMinor, firmwareBuild)
+                feature.major = payload[0].toInt() and 0xFF
+                feature.minor = payload[1].toInt() and 0xFF
+                feature.build = if (payload.size >= 3) payload[2].toInt() and 0xFF else -1
+                speaker.featuresChanged()
 
                 requestAudioFeedback(speaker)
             }
-            PacketType.RES_AUDIO_FEEDBACK -> {
-                val feature = speaker.getOrCreateFeatureModel(Feature.FEEDBACK_SOUNDS) as FeedbackSoundsFeatureModel
+            PacketType.RES_FEEDBACK_SOUNDS -> {
+                val feature = speaker.getOrCreateFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds
 
-                val feedbackSounds = payload[0] == 1.byte
-                feature.setData(feedbackSounds)
+                feature.enabled = payload[0] == 1.byte
+                speaker.featuresChanged()
 
                 requestSpeakerphoneMode(speaker)
             }
             PacketType.RES_SPEAKERPHONE_MODE -> {
-                val feature = speaker.getOrCreateFeatureModel(Feature.SPEAKERPHONE_MODE) as SpeakerphoneModeFeatureModel
+                val feature = speaker.getOrCreateFeature(Feature.Type.SPEAKERPHONE_MODE) as Feature.SpeakerphoneMode
 
-                val speakerphoneMode = payload[0] == 1.byte
-                feature.setData(speakerphoneMode)
+                feature.enabled = payload[0] == 1.byte
+                speaker.featuresChanged()
             }
             PacketType.RES_DFU_STATUS_CHANGE -> {
                 /* val speaker = SpeakerManager.mainSpeaker!!
@@ -238,22 +228,22 @@ object BluetoothProtocol {
 
                 when (status) {
                     0 -> {
-                        ConnectPlusApp.logFirebaseEvent("dfu_error")
-                        speaker.dfuState = DFUState.FLASHING_ERROR
+                        App.logFirebaseEvent("dfu_error")
+                        speaker.dfuState = DfuState.FLASHING_ERROR
                     }
                     1, 2 -> {
                         Log.d(TAG, "onPacket RES_DFU_STATUS_CHANGE sending ${dfu.currentChunk} chunk")
 
                         if (status == 1) {
-                            speaker.dfuState = DFUState.FLASHING
+                            speaker.dfuState = DfuState.FLASHING
                         }
 
                         sendPacket(makePacket(PacketType.SET_DFU_DATA, dfu.getNextChunk()))
                         FragmentController.update()
                     }
                     3 -> {
-                        ConnectPlusApp.logFirebaseEvent("dfu_done")
-                        speaker.dfuState = DFUState.FLASHING_DONE
+                        App.logFirebaseEvent("dfu_done")
+                        speaker.dfuState = DfuState.FLASHING_DONE
                     }
                 }*/
             }

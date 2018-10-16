@@ -19,9 +19,9 @@ enum class PacketType(val id: Int) {
     RES_DFU_STATUS_CHANGE(0x45),
     REQ_DFU_CANCEL(0x47),
 
-    REQ_AUDIO_FEEDBACK(0x65),
-    RES_AUDIO_FEEDBACK(0x66),
-    SET_AUDIO_FEEDBACK(0x67),
+    REQ_FEEDBACK_SOUNDS(0x65),
+    RES_FEEDBACK_SOUNDS(0x66),
+    SET_FEEDBACK_SOUNDS(0x67),
 
     REQ_SPEAKERPHONE_MODE(0x68),
     RES_SPEAKERPHONE_MODE(0x69),
@@ -31,9 +31,11 @@ enum class PacketType(val id: Int) {
     RES_BASS_VOLUME(0x78),
     SET_BASS_VOLUME(0x76),
 
-    REQ_ANALYTICS_DATA(0x81);
+    REQ_ANALYTICS_DATA(0x81),
+
+    UNKNOWN(-1);
 
     companion object {
-        fun from(value: Byte) = values().firstOrNull { it.id == value.toInt() and 0xFF }
+        fun from(value: Byte) = values().firstOrNull { it.id == value.toInt() and 0xFF } ?: UNKNOWN
     }
 }
