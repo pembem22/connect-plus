@@ -29,7 +29,6 @@ class App : Application() {
         instance = this
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        //MobileAds.initialize(this, "ca-app-pub-2165260103591907~4805567642")
 
         val sendUsageData = sharedPreferences.getBoolean("send_usage_data", true)
     }
