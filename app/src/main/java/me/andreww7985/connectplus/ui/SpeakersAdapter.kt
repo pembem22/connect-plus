@@ -1,7 +1,6 @@
 package me.andreww7985.connectplus.ui
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.speaker.SpeakerModel
+import timber.log.Timber
 
 class SpeakersAdapter(context: Context, speakers: ArrayList<SpeakerModel>) : ArrayAdapter<SpeakerModel>(context, 0, speakers) {
     companion object {
@@ -25,7 +25,7 @@ class SpeakersAdapter(context: Context, speakers: ArrayList<SpeakerModel>) : Arr
         val speaker = getItem(position)
 
         if (speaker == null) {
-            Log.e(TAG, "getView getItem = null")
+            Timber.e("getView getItem = null")
             return view
         }
 

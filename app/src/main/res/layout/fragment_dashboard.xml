@@ -25,7 +25,7 @@
             android:paddingBottom="@dimen/card_vertical_border">
 
             <ImageView
-                android:id="@+id/product_image"
+                android:id="@+id/dashboard_product_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -40,18 +40,18 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/product_info_button"
+                    android:id="@+id/dashboard_product_info_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     android:tint="?attr/colorControlNormal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/product_image"
+                    app:layout_constraintTop_toBottomOf="@+id/dashboard_product_image"
                     app:srcCompat="@drawable/ic_info" />
 
                 <ImageView
-                    android:id="@+id/product_logo"
+                    android:id="@+id/dashboard_product_logo"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
@@ -64,7 +64,7 @@
                     app:srcCompat="@drawable/ic_unknown" />
 
                 <ImageButton
-                    android:id="@+id/product_audio_button"
+                    android:id="@+id/dashboard_product_audio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -108,7 +108,7 @@
                     android:layout_marginEnd="8dp" />
 
                 <ImageButton
-                    android:id="@+id/dashboard_name_edit"
+                    android:id="@+id/dashboard_name_edit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -188,7 +188,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="Speakerphone mode"
+                android:text="@string/dashboard_speakerphone_mode"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -214,7 +214,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="@string/dashboard_firmware"
+                android:text="@string/dashboard_firmware_version"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView

@@ -2,14 +2,14 @@ package me.andreww7985.connectplus.bluetooth
 
 import android.bluetooth.*
 import android.os.Build
-import android.util.Log
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.manager.BleOperationManager
-import me.andreww7985.connectplus.manager.SpeakerManager
+import me.andreww7985.connectplus.manager.bleoperations.DisconnectOperation
 import me.andreww7985.connectplus.manager.bleoperations.DiscoverOperation
 import me.andreww7985.connectplus.manager.bleoperations.EnableNotificationOperation
 import me.andreww7985.connectplus.manager.bleoperations.RequestMtuOperation
 import me.andreww7985.connectplus.speaker.SpeakerModel
+import timber.log.Timber
 import java.util.*
 
 class BleConnection(private val bluetoothDevice: BluetoothDevice, private val speaker: SpeakerModel) {
@@ -17,18 +17,26 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         const val TAG = "BleConnection"
         const val GATT_MTU_VALUE = 517
 
-        val UUID_RX_TX_SERVICE = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0000")
-        val UUID_READ_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0002")
-        val UUID_WRITE_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0001")
+        val UUID_RX_TX_SERVICE = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0000")!!
+        val UUID_READ_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0002")!!
+        val UUID_WRITE_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0001")!!
     }
 
-    private var gatt: BluetoothGatt? = null
+    var gatt: BluetoothGatt? = null
     private val gattCallback = object : BluetoothGattCallback() {
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
-            Log.d(TAG, "onConnectionStateChange status = $status, newState = $newState")
+            Timber.d("onConnectionStateChange status = $status, newState = $newState")
+
+            if (status == 133) {
+                BleOperationManager.request(DisconnectOperation(this@BleConnection))
+            }
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 BleOperationManager.request(RequestMtuOperation(this@BleConnection, GATT_MTU_VALUE))
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                BleOperationManager.operationComplete()
+                gatt!!.close()
+                connect()
             }
         }
 
@@ -41,8 +49,6 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
 
             BleOperationManager.operationComplete()
             BleOperationManager.request(EnableNotificationOperation(this@BleConnection, speaker.readCharacteristic!!))
-
-            SpeakerManager.speakerConnected(speaker)
         }
 
         override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
@@ -51,7 +57,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         }
 
         override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
-            Log.d(TAG, "onCharacteristicWrite")
+            Timber.d("onCharacteristicWrite")
             BleOperationManager.operationComplete()
         }
 
@@ -63,15 +69,19 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
     }
 
     fun writeCharacteristic(characteristic: BluetoothGattCharacteristic, value: ByteArray) {
-        Log.d(TAG, "writeCharacteristic")
+        Timber.d("writeCharacteristic")
         val gatt = gatt ?: throw IllegalStateException("writeCharacteristic when gatt is null")
 
         characteristic.value = value
         gatt.writeCharacteristic(characteristic)
     }
 
+    fun reconnect() {
+
+    }
+
     fun connect() {
-        Log.d(TAG, "connect")
+        Timber.d("connect")
         gatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetoothDevice.connectGatt(App.instance, false, gattCallback, BluetoothDevice.TRANSPORT_LE)
         else bluetoothDevice.connectGatt(App.instance, false, gattCallback)
@@ -95,4 +105,6 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         gatt.setCharacteristicNotification(characteristic, value)
         BleOperationManager.operationComplete()
     }
+
+    fun getBluetoothName() = gatt!!.device.name
 }

@@ -1,17 +1,17 @@
 package me.andreww7985.connectplus.manager
 
-import android.util.Log
 import me.andreww7985.connectplus.manager.bleoperations.BleOperation
+import timber.log.Timber
 import java.util.*
 
+// https://www.youtube.com/watch?v=jDykHjn-4Ng
 object BleOperationManager {
-    private val TAG = "BleOperationManager"
     private val operationsQueue = LinkedList<BleOperation>()
     private var currentOperation: BleOperation? = null
 
     @Synchronized
     fun request(operation: BleOperation) {
-        Log.d(TAG, "request operation = ${operation.javaClass.simpleName}")
+        Timber.d("request operation ${operation.javaClass.simpleName}")
         operationsQueue.add(operation)
 
         if (currentOperation == null) {
@@ -22,8 +22,8 @@ object BleOperationManager {
 
     @Synchronized
     fun operationComplete() {
-        Log.d(TAG, "operationComplete")
-        currentOperation ?: Log.w(TAG, "operationComplete called when currentOperation is null")
+        Timber.d("operationComplete")
+        currentOperation ?: Timber.e("operationComplete called when currentOperation is null")
 
         currentOperation = null
 

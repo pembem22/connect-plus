@@ -17,8 +17,8 @@ class ConnectPlusFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val context = context!!
-        /*list_left.adapter = SpeakersAdapter(context, SpeakerManager.leftSpeakers)
+        /*val context = context!!
+        list_left.adapter = SpeakersAdapter(context, SpeakerManager.leftSpeakers)
         list_stereo.adapter = SpeakersAdapter(context, SpeakerManager.stereoSpeakers)
         list_right.adapter = SpeakersAdapter(context, SpeakerManager.rightSpeakers)*/
     }

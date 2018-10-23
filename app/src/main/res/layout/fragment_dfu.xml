@@ -15,13 +15,15 @@
         android:showDividers="middle|end">
 
         <LinearLayout
+            android:id="@+id/dfu_battery_warning_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingStart="16dp"
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
-            android:paddingBottom="@dimen/card_vertical_border">
+            android:paddingBottom="@dimen/card_vertical_border"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,6 +48,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="@string/dfu_connect_charger_message"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dfu_warning_image"
@@ -58,32 +61,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="Refresh" />
+                android:text="Refresh"
+                android:visibility="gone" />
 
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_dfu_file"
+            android:id="@+id/dfu_file_selector_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:visibility="visible">
 
             <TextView
-                android:id="@+id/dfu_file_text"
+                android:id="@+id/dfu_file_selector_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/dfu_file_button"
+                app:layout_constraintEnd_toStartOf="@+id/dfu_file_selector_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/dfu_file_button"
+                android:id="@+id/dfu_file_selector_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -97,14 +102,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_dfu_info"
+            android:id="@+id/dfu_file_info_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
-                android:id="@+id/card_dfu_info_size_value"
+                android:id="@+id/dfu_file_info_size_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -113,44 +118,46 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/card_dfu_info_checksum_value"
+                android:id="@+id/dfu_file_info_checksum_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_dfu_info_size_value" />
+                app:layout_constraintTop_toBottomOf="@+id/dfu_file_info_size_value" />
 
             <TextView
-                android:id="@+id/card_dfu_info_size"
+                android:id="@+id/dfu_file_info_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/dfu_info_size"
+                android:text="@string/dfu_file_info_size"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/card_dfu_info_checksum"
+                android:id="@+id/dfu_file_info_checksum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/dfu_info_checksum"
+                android:text="@string/dfu_file_info_checksum"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_dfu_info_size" />
+                app:layout_constraintTop_toBottomOf="@+id/dfu_file_info_size" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_dfu_flash"
+            android:id="@+id/dfu_flash_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/dfu_flash_text"
@@ -219,7 +226,6 @@
                 android:tint="?android:attr/textColorHint" />
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

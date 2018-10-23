@@ -2,20 +2,147 @@ package me.andreww7985.connectplus.dfu
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_dfu.*
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.helpers.HexHelper
+import me.andreww7985.connectplus.helpers.UIHelper
+import me.andreww7985.connectplus.manager.PresenterManager
+import me.andreww7985.connectplus.mvp.BaseView
 
-class DfuView : Fragment() {
+class DfuView : Fragment(), BaseView {
     companion object {
         const val TAG = "DfuView"
+    }
+
+    private val presenter = PresenterManager.getPresenter(DfuPresenter::class.java) as DfuPresenter
+
+    fun showFileBrowserError() {
+        activity?.runOnUiThread {
+            UIHelper.showToast("Failed to open file. Try another file manager!", Toast.LENGTH_LONG)
+        }
+    }
+
+    fun updateUi(dfu: DfuModel, isSpeakerCharging: Boolean) {
+        activity?.runOnUiThread {
+            view ?: return@runOnUiThread
+
+            dfu_battery_warning_card.visibility = if (!isSpeakerCharging) View.VISIBLE else View.GONE
+
+            when (dfu.state) {
+                DfuModel.State.FILE_NOT_SELECTED -> {
+                    dfu_file_selector_text.text = getString(R.string.dfu_state_file_not_selected)
+                    dfu_file_selector_button.isEnabled = true
+                }
+                DfuModel.State.LOADING_FILE -> {
+                    dfu_file_selector_text.text = getString(R.string.dfu_state_loading_file)
+                    dfu_file_selector_button.isEnabled = false
+
+                    dfu_file_info_card.visibility = View.GONE
+                }
+                DfuModel.State.READY -> {
+                    dfu_file_selector_text.text = dfu.filename!!
+                    dfu_file_selector_button.isEnabled = true
+
+                    dfu_file_info_card.visibility = View.VISIBLE
+                    dfu_file_info_size_value.text = dfu.fileSize.toString()
+                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+
+                    dfu_flash_card.visibility = if (isSpeakerCharging) View.VISIBLE else View.GONE
+                    if (isSpeakerCharging) {
+                        dfu_flash_card.visibility = View.VISIBLE
+
+                        dfu_flash_progressbar.visibility = View.GONE
+                        dfu_flash_progress_text.visibility = View.GONE
+
+                        dfu_flash_button.isEnabled = true
+                        dfu_flash_button.text = getString(R.string.dfu_button_flash)
+
+                        dfu_flash_text.text = getString(R.string.dfu_state_ready)
+
+                        dfu_flash_button.setOnClickListener {
+                            presenter.startDfu()
+                        }
+                    }
+                }
+                DfuModel.State.INITIALIZING_DFU -> {
+                    dfu_file_selector_text.text = dfu.filename!!
+                    dfu_file_selector_button.isEnabled = false
+
+                    dfu_file_info_card.visibility = View.VISIBLE
+                    dfu_file_info_size_value.text = dfu.fileSize.toString()
+                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+
+                    dfu_flash_card.visibility = View.VISIBLE
+
+                    dfu_flash_progressbar.isIndeterminate = true
+                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    dfu_flash_progress_text.visibility = View.GONE
+
+                    dfu_flash_button.isEnabled = false
+                    dfu_flash_button.text = getString(R.string.dfu_button_flash)
+
+                    dfu_flash_text.text = getString(R.string.dfu_state_initializing_dfu)
+                }
+                DfuModel.State.FLASHING_DFU -> {
+                    dfu_file_selector_text.text = dfu.filename!!
+                    dfu_file_selector_button.isEnabled = false
+
+                    dfu_file_info_card.visibility = View.VISIBLE
+                    dfu_file_info_size_value.text = dfu.fileSize.toString()
+                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+
+                    dfu_flash_card.visibility = View.VISIBLE
+
+                    val progress = dfu.getProgress()
+                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    dfu_flash_progressbar.isIndeterminate = false
+                    dfu_flash_progressbar.progress = progress.toInt()
+
+                    dfu_flash_progress_text.text = String.format("%.2f%%", progress)
+                    dfu_flash_progress_text.visibility = View.VISIBLE
+
+                    dfu_flash_button.isEnabled = true
+                    dfu_flash_button.text = getString(R.string.dfu_button_cancel)
+
+                    dfu_flash_text.text = getString(R.string.dfu_state_flashing)
+
+                    dfu_flash_button.setOnClickListener {
+                        presenter.cancelDfu()
+                    }
+                }
+                DfuModel.State.WAITING_REBOOT -> {
+                    dfu_file_selector_text.text = dfu.filename!!
+                    dfu_file_selector_button.isEnabled = false
+
+                    dfu_file_info_card.visibility = View.VISIBLE
+                    dfu_file_info_size_value.text = dfu.fileSize.toString()
+                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+
+                    dfu_flash_card.visibility = View.VISIBLE
+
+                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    dfu_flash_progressbar.isIndeterminate = true
+                    dfu_flash_progress_text.visibility = View.GONE
+
+                    dfu_flash_button.isEnabled = false
+                    dfu_flash_button.text = getString(R.string.dfu_button_cancel)
+
+                    dfu_flash_text.text = when (dfu.status) {
+                        DfuModel.Status.SUCCESS -> getString(R.string.dfu_state_done)
+                        DfuModel.Status.ERROR -> getString(R.string.dfu_state_error)
+                        DfuModel.Status.CANCELED -> getString(R.string.dfu_state_canceled)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +162,7 @@ class DfuView : Fragment() {
                     }.show()
         }
 
-        dfu_file_button.setOnClickListener {
+        dfu_file_selector_button.setOnClickListener {
             val intent = Intent()
             intent.type = "*/*"
             intent.action = Intent.ACTION_GET_CONTENT
@@ -43,115 +170,21 @@ class DfuView : Fragment() {
             startActivityForResult(intent, 1)
         }
 
-        dfu_flash_button.setOnClickListener {
-            Log.w(TAG, "dfu_flash_button on click")
-            /*if (FragmentController.model!!.dfuState == DfuState.FILE_LOADED) {
-                App.logFirebaseEvent("dfu_start")
-                FragmentController.model!!.dfu.startFlashing()
-            } else {
-                App.logFirebaseEvent("dfu_cancel")
-                BluetoothProtocol.sendPacket(BluetoothProtocol.makePacket(PacketType.REQ_DFU_CANCEL))
-            }*/
-        }
-    }
-
-    fun update() {
-        activity?.runOnUiThread {
-            /*val speaker = FragmentController.model!!
-            val dfuState = speaker.dfuState
-
-            // DFU Battery warning card
-            card_dfu_charge.visibility = if (speaker.batteryCharging == true) View.GONE else View.VISIBLE
-
-            // DFU File card
-            dfu_file_text.text = when (dfuState) {
-                DfuState.FILE_NOT_SELECTED -> getString(R.string.dfu_file_not_selected)
-                DfuState.LOADING_FILE -> getString(R.string.dfu_file_loading)
-                DfuState.BAD_FILE -> "File corrupted"
-                else -> speaker.dfu.filename
-            }
-            dfu_file_button.isEnabled = when (dfuState) {
-                DfuState.INITIALIZING_FLASHING, DfuState.FLASHING -> false
-                else -> true
-            }
-
-            // DFU File info card
-            if (dfuState >= DfuState.FILE_LOADED) {
-                card_dfu_info_size_value.text = speaker.dfu.size.toString()
-                card_dfu_info_checksum_value.text = HexHelper.bytesToHex(speaker.dfu.checksum)
-                card_dfu_info.visibility = View.VISIBLE
-            } else {
-                card_dfu_info.visibility = View.GONE
-            }
-
-            // DFU Flash card
-            card_dfu_flash.visibility = when (dfuState) {
-                DfuState.INITIALIZING_FLASHING, DfuState.FLASHING, DfuState.FLASHING_DONE, DfuState.FLASHING_ERROR -> View.VISIBLE
-                DfuState.FILE_LOADED -> if (speaker.batteryCharging == true) View.VISIBLE else View.GONE
-                else -> View.GONE
-            }
-
-            when (dfuState) {
-                DfuState.FILE_LOADED -> {
-                    dfu_flash_button.isEnabled = true
-                    dfu_flash_button.text = getString(R.string.dfu_button_flash)
-                }
-                DfuState.FLASHING -> {
-                    dfu_flash_button.isEnabled = true
-                    dfu_flash_button.text = getString(R.string.dfu_button_cancel)
-                }
-                else -> dfu_flash_button.isEnabled = false
-            }
-
-            dfu_flash_progressbar.visibility = when (dfuState) {
-                DfuState.FLASHING, DfuState.INITIALIZING_FLASHING -> View.VISIBLE
-                else -> View.GONE
-            }
-
-            dfu_flash_progressbar.isIndeterminate = dfuState == DfuState.INITIALIZING_FLASHING
-
-            dfu_flash_progress_text.visibility = if (dfuState == DfuState.FLASHING) View.VISIBLE else View.GONE
-
-            when (dfuState) {
-                DfuState.FILE_LOADED -> {
-                    dfu_flash_text.text = getString(R.string.dfu_flash_ready)
-                }
-                DfuState.INITIALIZING_FLASHING -> {
-                    dfu_flash_text.text = getString(R.string.dfu_flash_initializing)
-                }
-                DfuState.FLASHING -> {
-                    val progress = 100f * speaker.dfu.currentChunk * 104 / speaker.dfu.size
-                    dfu_flash_progressbar.progress = progress.toInt()
-                    dfu_flash_progress_text.text = String.format("%.2f%%", progress)
-                    dfu_flash_text.text = getString(R.string.dfu_flash_flashing)
-                }
-                DfuState.FLASHING_DONE -> {
-                    dfu_flash_text.text = getString(R.string.dfu_flash_done)
-                }
-                DfuState.FLASHING_ERROR -> {
-                    dfu_flash_text.text = getString(R.string.dfu_flash_error)
-                }
-            }
-        }*/
-        }
+        presenter.attachView(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        /*if (data == null) return
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Thread {
-                val speaker = SpeakerManager.mainSpeaker!!
-                val intentData = data.data ?: run {
-                    Logger.print(TAG, "onActivityResult data.data = null")
-                    return@Thread
-                }
+        if (data == null) return
+        presenter.loadFile(data.data!!)
+    }
 
-                speaker.dfuState = DfuState.LOADING_FILE
+    override fun onDestroy() {
+        super.onDestroy()
 
-                val dfu = DfuFirmware(intentData)
-                speaker.dfu = dfu
-                dfu.check(context!!)
-            }.start()
-        }*/
+        presenter.detachView()
+
+        if (isRemoving) {
+            PresenterManager.destroyPresenter(DfuPresenter::class.java)
+        }
     }
 }

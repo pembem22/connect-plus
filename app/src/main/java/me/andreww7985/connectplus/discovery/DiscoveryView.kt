@@ -1,4 +1,4 @@
-package me.andreww7985.connectplus.ui.activities
+package me.andreww7985.connectplus.discovery
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
@@ -7,48 +7,65 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_discovery.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
+import me.andreww7985.connectplus.manager.PresenterManager
+import me.andreww7985.connectplus.mvp.BaseView
+import me.andreww7985.connectplus.speaker.SpeakerPresenter
+import timber.log.Timber
 
-class DiscoveryActivity : AppCompatActivity() {
+class DiscoveryView : AppCompatActivity(), BaseView {
     companion object {
-        private const val TAG = "DiscoveryActivity"
         private const val REQUEST_CODE_PERMISSION = 1
         private const val REQUEST_CODE_BLUETOOTH = 2
         private const val REQUEST_CODE_LOCATION = 3
-        //lateinit var instance: DiscoveryActivity
     }
+
+    private val presenter = PresenterManager.getPresenter(DiscoveryPresenter::class.java) as DiscoveryPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discovery)
-        //instance = this
+    }
+
+    fun showConnecting(name: String) {
+        runOnUiThread {
+            discovery_text.text = getString(R.string.discovery_connecting, name)
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
+        presenter.attachView(this)
         checkPermissions()
     }
 
     override fun onPause() {
         super.onPause()
 
+        presenter.detachView()
         BleScanManager.stopScan()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        PresenterManager.destroyPresenter(SpeakerPresenter::class.java)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        Log.d(TAG, "onRequestPermissionsResult requestCode = $requestCode")
+        Timber.d("onRequestPermissionsResult requestCode = $requestCode")
         checkPermissions()
     }
 
     private fun checkPermissions() {
-        Log.d(TAG, "checkPermissions")
+        Timber.d("checkPermissions")
         val location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
         val files = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -58,11 +75,11 @@ class DiscoveryActivity : AppCompatActivity() {
     }
 
     private fun checkBluetooth() {
-        Log.d(TAG, "checkBluetooth")
+        Timber.d("checkBluetooth")
 
         if (!BleScanManager.isBleSupported()) {
             UIHelper.showToast("Bluetooth not supported", Toast.LENGTH_LONG)
-            Log.d(TAG, "checkBluetooth bluetooth not supported")
+            Timber.d("checkBluetooth bluetooth not supported")
             finish()
             return
         }

@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.andreww7985.connectplus.ui.activities.DiscoveryActivity">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="me.andreww7985.connectplus.discovery.DiscoveryView">
 
     <ProgressBar
-        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/discovery_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/discovery_searching"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/discovery_searching" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -31,7 +31,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name=".ui.activities.DiscoveryActivity"
+            android:name=".discovery.DiscoveryView"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

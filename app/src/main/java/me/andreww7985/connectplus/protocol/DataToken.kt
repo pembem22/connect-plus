@@ -1,4 +1,4 @@
-package me.andreww7985.connectplus.bluetooth
+package me.andreww7985.connectplus.protocol
 
 enum class DataToken(val id: Int) {
     TOKEN_MAC(0x48),

@@ -1,4 +1,4 @@
-package me.andreww7985.connectplus.bluetooth
+package me.andreww7985.connectplus.protocol
 
 enum class ActiveChannel(val value: Byte) {
     LEFT(1),

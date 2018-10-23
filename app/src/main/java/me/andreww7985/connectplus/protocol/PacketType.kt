@@ -1,4 +1,4 @@
-package me.andreww7985.connectplus.bluetooth
+package me.andreww7985.connectplus.protocol
 
 enum class PacketType(val id: Int) {
     ACK(0x00),

@@ -4,11 +4,14 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
+import me.andreww7985.connectplus.protocol.DataToken
+import me.andreww7985.connectplus.protocol.Packet
+import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.Feature.Type.*
 
 class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
-        val view = view as SpeakerView? ?: return
+        val view = view as SpeakerView
         val model = model as SpeakerModel
 
         view.setDeveloperData(model.mac, model.scanRecord, model.color.name, model.model.name)
@@ -22,7 +25,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
 
         view.setSpeakerImages(logoDrawableId, speakerDrawableId)
 
-        model.setOnFeatureChangedListener {
+        model.featuresUpdatedEvent.subscribe {
             updateFeatures()
         }
 
@@ -59,8 +62,30 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
         }
     }
 
+    fun onRenamePressed() {
+        val feature = (model as SpeakerModel).getFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
+
+        (view as SpeakerView).showRenameAlertDialog(feature.deviceName!!)
+    }
+
+    fun onRenameDialogConfirmed(newName: String) {
+        val model = model as SpeakerModel
+        val feature = model.getFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
+
+        feature.deviceName = newName
+
+        val bytes = newName.toByteArray()
+        model.sendPacket(
+                Packet(PacketType.SET_SPEAKER_INFO,
+                        byteArrayOf(
+                                model.index.toByte(),
+                                DataToken.TOKEN_NAME.id.toByte(),
+                                bytes.size.toByte(),
+                                *bytes)))
+    }
+
     fun onPlaySoundPressed() {
-        val view = view as SpeakerView? ?: return
+        val view = view as SpeakerView
         val model = model as SpeakerModel
 
         val audioFeedback = (model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds?)?.enabled
@@ -68,11 +93,12 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
         if (audioFeedback)
             BluetoothProtocol.playSound(model)
         else
-            view.showFeedbackSoundsDisabledSnackbar()
+            view.showFeedbackSoundsDisabledMessage()
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {
         val model = model as SpeakerModel
+
         val speakerphoneMode = model.getFeature(Feature.Type.SPEAKERPHONE_MODE) as Feature.SpeakerphoneMode
 
         BluetoothProtocol.setSpeakerphoneMode(model, value)
@@ -82,10 +108,15 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
 
     fun onFeedbackSoundsChanged(value: Boolean) {
         val model = model as SpeakerModel
+
         val feedbackSounds = model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds
 
         BluetoothProtocol.setAudioFeedback(model, value)
         feedbackSounds.enabled = value
         model.featuresChanged()
+    }
+
+    override fun destroy() {
+        (model as SpeakerModel).featuresUpdatedEvent.unsubscribe()
     }
 }
