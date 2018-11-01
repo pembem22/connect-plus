@@ -91,7 +91,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
         val audioFeedback = (model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds?)?.enabled
                 ?: true
         if (audioFeedback)
-            BluetoothProtocol.playSound(model)
+            model.sendPacket(Packet(PacketType.PLAY_SOUND))
         else
             view.showFeedbackSoundsDisabledMessage()
     }

@@ -6,7 +6,7 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.dfu.DfuModel
 import me.andreww7985.connectplus.helpers.HexHelper
 import me.andreww7985.connectplus.manager.SpeakerManager
-import me.andreww7985.connectplus.protocol.ActiveChannel
+import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
@@ -23,7 +23,7 @@ object BluetoothProtocol {
         val scanRecord = scanResult.scanRecord
 
         if (scanRecord == null) {
-            Timber.w("connect scanRecord = null")
+            //Timber.w("connect scanRecord = null")
             return
         }
 
@@ -52,7 +52,7 @@ object BluetoothProtocol {
         val speakerData = manufacturerData[87]
 
         if (speakerData == null) {
-            Timber.w("connect speakerData = null")
+            //Timber.w("connect speakerData = null")
             return
         }
 
@@ -72,10 +72,6 @@ object BluetoothProtocol {
 
     fun setAudioFeedback(speaker: SpeakerModel, audioFeedback: Boolean) {
         sendPacket(makePacket(PacketType.SET_FEEDBACK_SOUNDS, byteArrayOf(if (audioFeedback) 1 else 0)))
-    }
-
-    fun playSound(speaker: SpeakerModel) {
-        sendPacket(makePacket(PacketType.PLAY_SOUND))
     }
 
     fun sendPacket(packet: Packet) {
@@ -129,11 +125,9 @@ object BluetoothProtocol {
                             val likedDeviceCount = payload[pointer + 1].toInt() and 0xFF
                             pointer += 2
                         }
-                        DataToken.TOKEN_ACTIVE_CHANNEL -> {
-                            val activeChannel = ActiveChannel.from(payload[pointer + 1])!!
-                            // speaker.activeChannel = activeChannel
+                        DataToken.TOKEN_AUDIO_CHANNEL -> {
+                            speaker.updateAudioChannel(AudioChannel.from(payload[pointer + 1].toInt() and 0xFF))
                             pointer += 2
-
                         }
                         DataToken.TOKEN_AUDIO_SOURCE -> {
                             pointer += 2
@@ -157,19 +151,19 @@ object BluetoothProtocol {
                     }
                 }
 
-                if (!speaker.isDiscovered) {
-                    speaker.color = productColor
-                    speaker.model = productModel
-
-                    speaker.connected()
-                }
-
                 if (name != null && batteryLevel != null && batteryCharging != null) {
                     feature.batteryCharging = batteryCharging
                     feature.batteryLevel = batteryLevel
                     feature.deviceName = name
 
                     speaker.featuresChanged()
+                }
+
+                if (!speaker.isDiscovered) {
+                    speaker.color = productColor
+                    speaker.model = productModel
+
+                    speaker.discovered()
                 }
             }
             PacketType.RES_FIRMWARE_VERSION -> {

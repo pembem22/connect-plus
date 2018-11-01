@@ -10,6 +10,7 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.speaker.SpeakerView
+import me.andreww7985.connectplus.ui.fragments.ConnectPlusFragment
 import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 import timber.log.Timber
 
@@ -47,8 +48,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val fragment = when (selectedItemId) {
             R.id.nav_dashboard -> SpeakerView()
-            R.id.nav_dfu_update -> DfuView()
+            R.id.nav_flash_dfu -> DfuView()
             R.id.nav_settings -> SettingsFragment()
+            R.id.nav_connect -> ConnectPlusFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }
 

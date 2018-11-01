@@ -8,9 +8,13 @@
             android:icon="@drawable/ic_dashboard"
             android:title="@string/menu_dashboard" />
         <item
-            android:id="@+id/nav_dfu_update"
+            android:id="@+id/nav_flash_dfu"
             android:icon="@drawable/ic_upload"
             android:title="@string/menu_flash_dfu" />
+        <item
+            android:id="@+id/nav_connect"
+            android:icon="@drawable/ic_connect_plus"
+            android:title="@string/menu_connect_plus" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"

@@ -6,20 +6,26 @@ import me.andreww7985.connectplus.Event
 import me.andreww7985.connectplus.bluetooth.BleConnection
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.dfu.DfuModel
+import me.andreww7985.connectplus.helpers.HexHelper
 import me.andreww7985.connectplus.manager.BleOperationManager
+import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.manager.bleoperations.WriteCharacteristicOperation
 import me.andreww7985.connectplus.mvp.BaseModel
+import me.andreww7985.connectplus.protocol.AudioChannel
+import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import timber.log.Timber
 import java.util.concurrent.ConcurrentHashMap
 
 class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : BaseModel {
-    val mac = bluetoothDevice.address
+    val mac = bluetoothDevice.address!!
     var index = 0
     lateinit var model: ProductModel
     lateinit var color: ProductColor
     var isDiscovered = false
+
+    var audioChannel = AudioChannel.STEREO
 
     var readCharacteristic: BluetoothGattCharacteristic? = null
     var writeCharacteristic: BluetoothGattCharacteristic? = null
@@ -36,7 +42,8 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         bleConnection.connect()
     }
 
-    fun connected() {
+    fun discovered() {
+        Timber.d("$mac discovered")
         isDiscovered = true
 
         sendPacket(Packet(PacketType.REQ_FEEDBACK_SOUNDS))
@@ -48,7 +55,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
     }
 
     fun featuresChanged() {
-        Timber.d("featuresChanged")
+        Timber.d("$mac featuresChanged")
         featuresUpdatedEvent.fire()
     }
 
@@ -69,6 +76,21 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         BluetoothProtocol.onPacket(this, Packet(PacketType.from(bytes[1]), payload))
     }
 
+    fun updateAudioChannel(audioChannel: AudioChannel) {
+        if (this.audioChannel != audioChannel) {
+            sendPacket(Packet(PacketType.SET_SPEAKER_INFO, byteArrayOf(index.toByte(), DataToken.TOKEN_AUDIO_CHANNEL.id.toByte(), audioChannel.value.toByte())))
+            this.audioChannel = audioChannel
+        }
+
+        if (isDiscovered) {
+            SpeakerManager.linkUpdated()
+        }
+    }
+
+    fun playSound() {
+        sendPacket(Packet(PacketType.PLAY_SOUND))
+    }
+
     fun sendPacket(packet: Packet) {
         val writeCharacteristic = writeCharacteristic
         val bleConnection = bleConnection
@@ -77,7 +99,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
             Timber.w("sendPacket when writeCharacteristic is null")
         } else {
             val bytes = byteArrayOf(0xAA.toByte(), packet.type.id.toByte(), packet.payload.size.toByte(), *packet.payload)
-            Timber.d("sendPacket ${packet.type.name}")
+            Timber.d("$mac sendPacket ${packet.type.name} ${HexHelper.bytesToHex(packet.payload)}")
             BleOperationManager.request(WriteCharacteristicOperation(bleConnection, writeCharacteristic, bytes))
         }
     }

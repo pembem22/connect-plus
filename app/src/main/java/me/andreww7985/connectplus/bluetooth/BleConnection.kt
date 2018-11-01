@@ -8,6 +8,8 @@ import me.andreww7985.connectplus.manager.bleoperations.DisconnectOperation
 import me.andreww7985.connectplus.manager.bleoperations.DiscoverOperation
 import me.andreww7985.connectplus.manager.bleoperations.EnableNotificationOperation
 import me.andreww7985.connectplus.manager.bleoperations.RequestMtuOperation
+import me.andreww7985.connectplus.protocol.Packet
+import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.SpeakerModel
 import timber.log.Timber
 import java.util.*
@@ -87,12 +89,6 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         else bluetoothDevice.connectGatt(App.instance, false, gattCallback)
     }
 
-    fun discoverServices() {
-        val gatt = gatt ?: throw IllegalStateException("discoverServices when gatt is null")
-
-        gatt.discoverServices()
-    }
-
     fun requestMtu(mtu: Int) {
         val gatt = gatt ?: throw IllegalStateException("requestMtu when gatt is null")
 
@@ -104,6 +100,8 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
 
         gatt.setCharacteristicNotification(characteristic, value)
         BleOperationManager.operationComplete()
+
+        speaker.sendPacket(Packet(PacketType.REQ_SPEAKER_INFO))
     }
 
     fun getBluetoothName() = gatt!!.device.name

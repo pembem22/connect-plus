@@ -20,7 +20,7 @@ object PresenterManager {
     fun destroyPresenter(presenterClass: Class<out BasePresenter>) {
         val presenter = presenters[presenterClass]
         if (presenter == null) {
-            Timber.e("destroyPresenter nonexistent presenter")
+            Timber.w("destroyPresenter nonexistent presenter ${presenterClass.simpleName}")
             return
         }
 

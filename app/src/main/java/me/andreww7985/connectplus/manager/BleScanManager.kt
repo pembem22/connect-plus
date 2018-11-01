@@ -36,7 +36,7 @@ object BleScanManager {
     }
 
     fun stopScan() {
-        bleScanner.stopScan(scanCallback)
+        // bleScanner.stopScan(scanCallback)
     }
 
     fun isBleSupported() = BluetoothAdapter.getDefaultAdapter() != null && App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE)

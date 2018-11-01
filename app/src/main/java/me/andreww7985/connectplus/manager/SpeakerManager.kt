@@ -12,42 +12,57 @@ object SpeakerManager : BaseModel {
     var selectedSpeaker: SpeakerModel? = null
 
     val speakers = HashMap<String, SpeakerModel>()
+    val speakerList = ArrayList<SpeakerModel>()
 
     val speakerFoundEvent = Event()
+    val linkUpdatedEvent = Event()
 
     fun speakerFound(speaker: SpeakerModel) {
-        Timber.d("speakerFound")
+        Timber.d("speakerFound MAC = ${speaker.mac}")
 
         speakers[speaker.mac] = speaker
 
         if (speakers.size == 1) {
-            Timber.d("speakerFound found main speaker MAC = ${speaker.mac}")
+            Timber.d("speakerFound found main speaker")
             mainSpeaker = speaker
             selectedSpeaker = speaker
+        }
 
-            speaker.connectedEvent.subscribe {
-                App.analytics.logSpeakerEvent("speaker_connected") {
-                    putString("speaker_model", speaker.model.name)
-                    putString("speaker_color", speaker.color.name)
-                    putString("speaker_data", speaker.scanRecord)
-                }
-
-                if (speaker == mainSpeaker) {
-                    UIHelper.openMainActivity()
-                }
-
-                unsubscribe()
-            }
+        speaker.connectedEvent.subscribe {
+            speakerConnected(speaker)
+            unsubscribe()
         }
 
         BleScanManager.stopScan()
         speakerFoundEvent.fire()
     }
 
-    fun getSpeaker(index: Int): SpeakerModel? {
-        return speakers
-                .filter { (_, v) -> v.index == index }
-                .flatMap { (_, v) -> listOf(v) }
-                .firstOrNull()
+    fun speakerConnected(speaker: SpeakerModel) {
+        Timber.d("speakerConnected MAC = ${speaker.mac}")
+
+        App.analytics.logSpeakerEvent("speaker_connected") {
+            putString("speaker_model", speaker.model.name)
+            putString("speaker_color", speaker.color.name)
+            putString("speaker_data", speaker.scanRecord)
+        }
+
+        if (speaker == mainSpeaker) {
+            UIHelper.openMainActivity()
+        }
+
+        linkUpdated()
     }
+
+    fun speakerDisconnected() {
+
+    }
+
+    fun linkUpdated() {
+        speakerList.clear()
+        speakerList.addAll(speakers.values.filter { it.isDiscovered })
+
+        linkUpdatedEvent.fire()
+    }
+
+    fun getSpeaker(index: Int) = speakers.values.filter { it.index == index }.firstOrNull()
 }
