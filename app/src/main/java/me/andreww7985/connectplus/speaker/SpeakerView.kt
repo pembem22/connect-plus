@@ -13,8 +13,9 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
+import me.andreww7985.connectplus.ui.FragmentName
 
-class SpeakerView : BaseView, Fragment() {
+class SpeakerView : BaseView, Fragment(), FragmentName {
     companion object {
         const val TAG = "SpeakerView"
     }
@@ -49,7 +50,7 @@ class SpeakerView : BaseView, Fragment() {
         activity?.runOnUiThread {
             view ?: return@runOnUiThread
 
-            dashboard_battery_value.text = if (batteryCharging == true)
+            dashboard_battery_value.text = if (batteryCharging)
                 getString(R.string.dashboard_battery_level_charging, batteryLevel)
             else
                 getString(R.string.dashboard_battery_level, batteryLevel)
@@ -129,4 +130,6 @@ class SpeakerView : BaseView, Fragment() {
             PresenterManager.destroyPresenter(SpeakerPresenter::class.java)
         }
     }
+
+    override fun getName() = "Dashboard"
 }

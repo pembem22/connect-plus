@@ -27,7 +27,10 @@ object BleScanManager {
         }
     }
 
+    var isScanning = false
+
     fun startScan() {
+        isScanning = true
         bleScanner.startScan(null,
                 ScanSettings.Builder()
                         .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
@@ -36,7 +39,8 @@ object BleScanManager {
     }
 
     fun stopScan() {
-        // bleScanner.stopScan(scanCallback)
+        isScanning = false
+        bleScanner.stopScan(scanCallback)
     }
 
     fun isBleSupported() = BluetoothAdapter.getDefaultAdapter() != null && App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE)

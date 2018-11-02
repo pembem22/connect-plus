@@ -43,4 +43,13 @@
     <string name="discovery_connecting">Подключение к %1$s&#8230;</string>
     <string name="dfu_state_canceled">Отменено! Ваше устройство должно перезагрузиться прямо сейчас в нормальный режим</string>
     <string name="dashboard_speakerphone_mode">Режим громкой связи</string>
+    <string name="connect_searching_on">Поиск&#8230;</string>
+    <string name="connect_searching_off">Поиск отключен</string>
+    <string name="connect_button_search">ПОИСК</string>
+    <string name="connect_button_stop">СТОП</string>
+    <string name="settings_images_info">Все логотипы и изображения колонок принадлежат JBL</string>
+    <string name="setting_about">О приложении</string>
+    <string name="settings_source_code_title">Исходный код</string>
+    <string name="settings_source_code_summary">Нажмите чтобы открыть в браузере</string>
+    <string name="settings_app_version_title">Версия приложения</string>
 </resources>

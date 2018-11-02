@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 def versionMajor = 1
 def versionMinor = 1
-def versionPatch = 1
+def versionPatch = 2
 
 def props = new Properties()
 props.load(new FileInputStream(rootProject.file("release.properties")))
@@ -57,7 +57,6 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
-    // implementation 'com.google.firebase:firebase-ads:17.0.0'
 
     implementation 'androidx.core:core-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'

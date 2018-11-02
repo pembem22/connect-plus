@@ -16,11 +16,9 @@ import me.andreww7985.connectplus.helpers.HexHelper
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
+import me.andreww7985.connectplus.ui.FragmentName
 
-class DfuView : Fragment(), BaseView {
-    companion object {
-        const val TAG = "DfuView"
-    }
+class DfuView : Fragment(), BaseView, FragmentName {
 
     private val presenter = PresenterManager.getPresenter(DfuPresenter::class.java) as DfuPresenter
 
@@ -187,4 +185,6 @@ class DfuView : Fragment(), BaseView {
             PresenterManager.destroyPresenter(DfuPresenter::class.java)
         }
     }
+
+    override fun getName() = "DFU"
 }

@@ -3,6 +3,7 @@ package me.andreww7985.connectplus.ui.activities
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import me.andreww7985.connectplus.App
@@ -10,7 +11,8 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.speaker.SpeakerView
-import me.andreww7985.connectplus.ui.fragments.ConnectPlusFragment
+import me.andreww7985.connectplus.ui.FragmentName
+import me.andreww7985.connectplus.ui.fragments.ConnectFragment
 import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 import timber.log.Timber
 
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     companion object {
         private const val KEY_SELECTED_ITEM = "selectedItem"
     }
+
     var selectedItem: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +50,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         nav_menu.selectedItemId = selectedItemId
 
         val fragment = when (selectedItemId) {
-            R.id.nav_dashboard -> SpeakerView()
+            R.id.nav_dashboard -> SpeakerView() as Fragment
             R.id.nav_flash_dfu -> DfuView()
             R.id.nav_settings -> SettingsFragment()
-            R.id.nav_connect -> ConnectPlusFragment()
+            R.id.nav_connect -> ConnectFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }
 
         App.analytics.logEvent("opened_menu") {
-            putString("menu_name", fragment::class.java.simpleName)
+            putString("menu_name", (fragment as FragmentName).getName())
         }
 
         UIHelper.showFragment(this, fragment)

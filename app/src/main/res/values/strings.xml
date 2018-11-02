@@ -11,7 +11,7 @@
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_flash_dfu">Flash DFU</string>
-    <string name="menu_connect_plus" translatable="false">JBL Connect+</string>
+    <string name="menu_connect" translatable="false">JBL Connect+</string>
 
     <string name="dashboard_battery_level" translatable="false">%1$d%%</string>
     <string name="dashboard_battery_level_charging">%1$d%%, charging</string>
@@ -61,4 +61,14 @@
     <string name="dfu_button_open_file">OPEN FILE</string>
     <string name="dfu_state_canceled">Canceled! Your device should reboot right now to normal mode</string>
     <string name="dashboard_speakerphone_mode">Speakerphone mode</string>
+    <string name="connect_searching_on">Searching&#8230;</string>
+    <string name="connect_searching_off">Not searching</string>
+    <string name="connect_button_search">SEARCH</string>
+    <string name="connect_button_stop">STOP</string>
+    <string name="settings_images_info">All speaker logos and images belong to JBL</string>
+    <string name="setting_about">About</string>
+    <string name="settings_source_code_title">Source code</string>
+    <string name="settings_source_code_summary">Tap to open in browser</string>
+    <string name="settings_app_version_title">App version</string>
+    <string name="settings_app_version_summary" translatable="false">1.1.2</string>
 </resources>

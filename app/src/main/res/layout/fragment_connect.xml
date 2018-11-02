@@ -6,7 +6,7 @@
     android:divider="?android:attr/listDivider"
     android:orientation="vertical"
     android:showDividers="middle|end"
-    tools:context=".ui.fragments.ConnectPlusFragment">
+    tools:context=".ui.fragments.ConnectFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,23 +19,23 @@
         android:orientation="horizontal">
 
         <ProgressBar
+            android:id="@+id/connect_scan_progressbar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp" />
 
         <TextView
+            android:id="@+id/connect_scan_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Scanning..." />
+            android:layout_weight="1" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/connect_scan_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ScrollView
