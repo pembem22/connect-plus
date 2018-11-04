@@ -155,8 +155,6 @@ class DfuView : Fragment(), BaseView, FragmentName {
                         App.sharedPreferences.edit {
                             putBoolean("dfu_warning_accepted", true)
                         }
-                    }.setNegativeButton(R.string.dialog_dfu_warning_do_not_agree) { _, _ ->
-                        activity?.supportFragmentManager?.popBackStack()
                     }.show()
         }
 

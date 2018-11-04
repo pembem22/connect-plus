@@ -4,10 +4,10 @@
     <string name="menu_settings">Настройки</string>
     <string name="dashboard_battery_level_charging">%1$d%%, заряжается</string>
     <string name="menu_dashboard">Главная</string>
-    <string name="dialog_rename_device_title">Переименовать устройство</string>
-    <string name="dialog_rename_device_message">Введите новое имя для вашего устройства (до 16 байтов)</string>
-    <string name="dialog_rename_device_cancel">ОТМЕНА</string>
-    <string name="dialog_rename_device_rename">ПЕРЕИМЕНОВАТЬ</string>
+    <string name="dialog_dashboard_rename_title">Переименовать устройство</string>
+    <string name="dialog_dashboard_rename_message">Введите новое имя для вашего устройства (до 16 байтов)</string>
+    <string name="dialog_dashboard_rename_cancel">ОТМЕНА</string>
+    <string name="dialog_dashboard_rename_confirm">ПЕРЕИМЕНОВАТЬ</string>
     <string name="dashboard_device_name">Название устройства</string>
     <string name="dashboard_battery_state">Состояние батареи</string>
     <string name="dashboard_feedback_sounds">Звуковой отклик</string>
@@ -28,7 +28,6 @@
     <string name="setting_privacy">"Конфиденциальность "</string>
     <string name="dialog_dfu_warning_text">Процесс прошивки DFU не является официальным и может аннулировать вашу гарантию! Есть шанс окирпичить ваше устройство! Никто не несет ответственность за возможные проблемы! Делайте все на свой страх и риск!</string>
     <string name="dialog_dfu_warning_agree">Я согласен (согласна)</string>
-    <string name="dialog_dfu_warning_do_not_agree">Я не согласен (согласна)</string>
     <string name="dialog_dfu_warning_title">Внимание!</string>
     <string name="dfu_state_initializing_dfu">Инициализация DFU режима&#8230;</string>
     <string name="dfu_file_info_size">Размер прошивки</string>

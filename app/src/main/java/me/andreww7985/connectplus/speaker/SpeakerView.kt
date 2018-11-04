@@ -114,11 +114,11 @@ class SpeakerView : BaseView, Fragment(), FragmentName {
         AlertDialog.Builder(context!!)
                 .setCancelable(true)
                 .setView(dialogView)
-                .setTitle(R.string.dialog_rename_device_title)
-                .setMessage(R.string.dialog_rename_device_message)
-                .setPositiveButton(R.string.dialog_rename_device_rename) { _, _ ->
+                .setTitle(R.string.dialog_dashboard_rename_title)
+                .setMessage(R.string.dialog_dashboard_rename_message)
+                .setPositiveButton(R.string.dialog_dashboard_rename_confirm) { _, _ ->
                     presenter.onRenameDialogConfirmed(textEdit.text.toString())
-                }.setNeutralButton(R.string.dialog_rename_device_cancel) { _, _ -> }.show()
+                }.setNeutralButton(R.string.dialog_dashboard_rename_cancel) { _, _ -> }.show()
     }
 
     override fun onDestroy() {

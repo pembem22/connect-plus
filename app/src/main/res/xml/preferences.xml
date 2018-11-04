@@ -1,5 +1,4 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory android:title="@string/setting_privacy">
         <CheckBoxPreference
             android:defaultValue="true"
@@ -39,5 +38,4 @@
 
         <Preference android:summary="@string/settings_images_info" />
     </PreferenceCategory>
-
 </PreferenceScreen>

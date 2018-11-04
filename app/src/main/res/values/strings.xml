@@ -16,10 +16,10 @@
     <string name="dashboard_battery_level" translatable="false">%1$d%%</string>
     <string name="dashboard_battery_level_charging">%1$d%%, charging</string>
 
-    <string name="dialog_rename_device_title">Rename device</string>
-    <string name="dialog_rename_device_message">Enter new name for your device (up to 16 bytes)</string>
-    <string name="dialog_rename_device_rename">RENAME</string>
-    <string name="dialog_rename_device_cancel">CANCEL</string>
+    <string name="dialog_dashboard_rename_title">Rename device</string>
+    <string name="dialog_dashboard_rename_message">Enter new name for your device (up to 16 bytes)</string>
+    <string name="dialog_dashboard_rename_confirm">RENAME</string>
+    <string name="dialog_dashboard_rename_cancel">CANCEL</string>
 
     <string name="dashboard_device_name">Device name</string>
     <string name="dashboard_firmware_version">Firmware version</string>
@@ -32,7 +32,6 @@
     <string name="dialog_dfu_warning_title">Warning!</string>
     <string name="dialog_dfu_warning_text">The process of flashing DFU firmware is not official and may void your warranty! There is a chance to brick your device! No one is responsible for possible problems! Do everything at your own risk!</string>
     <string name="dialog_dfu_warning_agree">I agree</string>
-    <string name="dialog_dfu_warning_do_not_agree">I don\'t agree</string>
 
     <string name="dfu_state_file_not_selected">File not selected</string>
     <string name="dfu_state_loading_file">Loading file&#8230;</string>
