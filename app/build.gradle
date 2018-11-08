@@ -32,22 +32,17 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            versionNameSuffix "debug-" + getDate()
+            versionNameSuffix "debug"
         }
         release {
             debuggable false
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-            versionNameSuffix getDate()
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
-}
-
-def static getDate() {
-    new Date().format('yyMMddHHmm')
 }
 
 dependencies {
