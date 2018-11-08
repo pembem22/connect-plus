@@ -21,5 +21,6 @@ class App : Application() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         analytics = Analytics()
+        analytics.setAnalyticsEnabled(sharedPreferences.getBoolean("send_usage_data", true))
     }
 }

@@ -17,4 +17,8 @@ class Analytics {
         log(bundle)
         firebaseAnalytics.logEvent(eventName, bundle)
     }
+
+    fun setAnalyticsEnabled(enabled: Boolean) {
+        firebaseAnalytics.setAnalyticsCollectionEnabled(enabled)
+    }
 }

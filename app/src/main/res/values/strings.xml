@@ -48,7 +48,7 @@
     <string name="setting_privacy">Privacy</string>
     <string name="settings_send_speaker_data_title">Send speaker data</string>
     <string name="settings_send_speaker_data_summary">Completely anonymous, includes speaker model, color and firmware version</string>
-    <string name="settings_send_app_data_summary">Completely anonymous, using Google Crashlytics and Google Analytics</string>
+    <string name="settings_send_app_data_summary">Completely anonymous, using Google Crashlytics and Google Analytics. Restart app to apply changes</string>
     <string name="settings_send_app_data_title">Send app usage data</string>
     <string name="settings_developers">Developers</string>
     <string name="settings_main_developer_title">Main developer</string>
