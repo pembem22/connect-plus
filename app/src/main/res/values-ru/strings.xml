@@ -51,4 +51,8 @@
     <string name="settings_source_code_title">Исходный код</string>
     <string name="settings_source_code_summary">Нажмите чтобы открыть в браузере</string>
     <string name="settings_app_version_title">Версия приложения</string>
+    <string name="speaker_left_channel">ЛЕВЫЙ</string>
+    <string name="speaker_right_channel">ПРАВЫЙ</string>
+    <string name="speaker_both_channel">СТЕРЕО</string>
+    <string name="speaker_audio_channel">Канал аудио</string>
 </resources>
