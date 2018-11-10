@@ -74,4 +74,6 @@
     <string name="speaker_right_channel">RIGHT</string>
     <string name="speaker_both_channel">STEREO</string>
     <string name="speaker_audio_channel">Audio channel</string>
+    <string name="settings_logs_title">Copy app logs</string>
+    <string name="settings_logs_summary">Tap to copy app logs into clipboard</string>
 </resources>

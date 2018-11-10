@@ -55,4 +55,6 @@
     <string name="speaker_right_channel">ПРАВЫЙ</string>
     <string name="speaker_both_channel">СТЕРЕО</string>
     <string name="speaker_audio_channel">Канал аудио</string>
+    <string name="settings_logs_title">Скопировать логи приложения</string>
+    <string name="settings_logs_summary">Нажмите, чтобы скопировать логи приложения</string>
 </resources>

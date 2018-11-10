@@ -37,5 +37,10 @@
             android:title="@string/settings_app_version_title" />
 
         <Preference android:summary="@string/settings_images_info" />
+
+        <Preference
+            android:key="copy_logs"
+            android:summary="@string/settings_logs_summary"
+            android:title="@string/settings_logs_title" />
     </PreferenceCategory>
 </PreferenceScreen>
