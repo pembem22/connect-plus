@@ -39,6 +39,7 @@ enum class ProductColor {
                     else -> UNKNOWN
                 }
                 ProductModel.FLIP3 -> when (speakerColor) {
+                    0, 1 -> BLACK
                     2 -> RED
                     3 -> ORANGE
                     4 -> PINK
@@ -46,6 +47,11 @@ enum class ProductColor {
                     6 -> BLUE
                     7 -> YELLOW
                     8 -> TEAL
+                    9 -> MALTA
+                    10 -> SQUAD
+                    11 -> ZAP
+                    12 -> TRIO
+                    13 -> MOSAIC
                     else -> UNKNOWN
                 }
                 ProductModel.FLIP4 -> when (speakerColor) {
@@ -71,9 +77,22 @@ enum class ProductColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                ProductModel.PULSE3 -> when (speakerColor) {
-                    1 -> BLACK
+                ProductModel.PULSE2 -> when (speakerColor) {
+                    0, 1 -> BLACK
                     2 -> WHITE
+                    else -> UNKNOWN
+                }
+                ProductModel.PULSE3 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> WHITE
+                    else -> UNKNOWN
+                }
+                ProductModel.XTREME -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> RED
+                    3, 6 -> BLUE
+                    4 -> SQUAD
+                    5 -> MALTA
                     else -> UNKNOWN
                 }
                 ProductModel.XTREME2 -> when (speakerColor) {
