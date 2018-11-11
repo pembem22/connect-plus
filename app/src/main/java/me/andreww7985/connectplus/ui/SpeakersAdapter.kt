@@ -20,7 +20,7 @@ class SpeakersAdapter(val context: Context, val speakers: List<SpeakerModel>) : 
         val speaker = speakers[position]
 
         val speakerDrawableId = context.resources.getIdentifier(String.format("img_%s_%s", speaker.model.name.toLowerCase(), speaker.color.name.toLowerCase()), "drawable", context.packageName)
-        holder.speakerImage.setImageResource(speakerDrawableId)
+        if (speakerDrawableId != 0) holder.speakerImage.setImageResource(speakerDrawableId)
 
         holder.soundButton.setOnClickListener { speaker.playSound() }
 
