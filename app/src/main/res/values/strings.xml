@@ -76,4 +76,5 @@
     <string name="speaker_audio_channel">Audio channel</string>
     <string name="settings_logs_title">Copy app logs</string>
     <string name="settings_logs_summary">Tap to copy app logs into clipboard</string>
+    <string name="connect_tooltip">Turn on search to find more devices. You can switch audio channels for each separately.</string>
 </resources>

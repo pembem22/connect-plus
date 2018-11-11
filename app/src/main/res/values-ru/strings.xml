@@ -57,4 +57,5 @@
     <string name="speaker_audio_channel">Канал аудио</string>
     <string name="settings_logs_title">Скопировать логи приложения</string>
     <string name="settings_logs_summary">Нажмите, чтобы скопировать логи приложения</string>
+    <string name="connect_tooltip">Включите поиск, чтобы здесь появилось больше устройств. Вы можете переключать звуковые каналы для каждого отдельно</string>
 </resources>
