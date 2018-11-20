@@ -37,9 +37,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:tint="#B00020"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_error" />
 
                 <TextView
@@ -48,11 +45,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="@string/dfu_connect_charger_message"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/dfu_warning_image"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
             </LinearLayout>
 
@@ -81,11 +74,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/dfu_file_selector_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dfu_file_selector_button"
@@ -94,10 +83,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/dfu_button_open_file"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="@string/dfu_button_open_file" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,18 +99,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/dfu_file_info_checksum_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dfu_file_info_size_value" />
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/dfu_file_info_size"
@@ -133,9 +115,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/dfu_file_info_size"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView
                 android:id="@+id/dfu_file_info_checksum"
@@ -145,10 +125,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/dfu_file_info_checksum"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dfu_file_info_size" />
+                android:textAppearance="@style/TextAppearance.AppCompat" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -166,11 +143,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/dfu_flash_progressbar"
-                app:layout_constraintEnd_toStartOf="@+id/dfu_flash_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginBottom="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dfu_flash_button"
@@ -178,10 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/dfu_flash_progressbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginBottom="8dp" />
 
             <ProgressBar
                 android:id="@+id/dfu_flash_progressbar"
@@ -191,10 +161,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/dfu_flash_progress_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/dfu_flash_progress_text"
@@ -202,9 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

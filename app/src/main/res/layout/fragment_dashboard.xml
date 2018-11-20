@@ -46,8 +46,6 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     android:tint="?attr/colorControlNormal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dashboard_product_image"
                     app:srcCompat="@drawable/ic_info" />
 
                 <ImageView
@@ -129,17 +127,13 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:text="@string/dashboard_battery_state"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
                 <TextView
                     android:id="@+id/dashboard_battery_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:layout_weight="0" />
 
             </LinearLayout>
 
