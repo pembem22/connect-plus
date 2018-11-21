@@ -87,6 +87,14 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         }
     }
 
+    fun updateAudioFeedback(audioFeedback: Boolean) {
+        sendPacket(Packet(PacketType.SET_FEEDBACK_SOUNDS, byteArrayOf(if (audioFeedback) 1 else 0)))
+    }
+
+    fun updateSpeakerphoneMode(speakerphoneMode: Boolean) {
+        sendPacket(Packet(PacketType.SET_SPEAKERPHONE_MODE, byteArrayOf(if (speakerphoneMode) 1 else 0)))
+    }
+
     fun playSound() {
         sendPacket(Packet(PacketType.PLAY_SOUND))
     }
@@ -104,16 +112,12 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         }
     }
 
-    fun getOrCreateFeature(featureType: Feature.Type): Feature {
-        var feature = features[featureType]
-
-        if (feature == null) {
-            feature = featureType.clazz.newInstance()!!
-            features[featureType] = feature
-        }
-
-        return feature
-    }
+    fun getOrCreateFeature(featureType: Feature.Type) =
+            features[featureType] ?: run {
+                val feature = featureType.clazz.newInstance()
+                features[featureType] = feature
+                feature
+            }
 
     fun getFeature(featureType: Feature.Type) = features[featureType]
 }

@@ -1,7 +1,6 @@
 package me.andreww7985.connectplus.speaker
 
 import me.andreww7985.connectplus.App
-import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
 import me.andreww7985.connectplus.protocol.DataToken
@@ -101,7 +100,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
 
         val speakerphoneMode = model.getFeature(Feature.Type.SPEAKERPHONE_MODE) as Feature.SpeakerphoneMode
 
-        BluetoothProtocol.setSpeakerphoneMode(model, value)
+        model.updateSpeakerphoneMode(value)
         speakerphoneMode.enabled = value
         model.featuresChanged()
     }
@@ -111,7 +110,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
 
         val feedbackSounds = model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds
 
-        BluetoothProtocol.setAudioFeedback(model, value)
+        model.updateAudioFeedback(value)
         feedbackSounds.enabled = value
         model.featuresChanged()
     }

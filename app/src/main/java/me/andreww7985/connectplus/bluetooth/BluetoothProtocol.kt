@@ -17,68 +17,38 @@ import me.andreww7985.connectplus.speaker.SpeakerModel
 import timber.log.Timber
 
 object BluetoothProtocol {
-    private const val TAG = "BluetoothProtocol"
-
     fun connect(scanResult: ScanResult) {
-        val scanRecord = scanResult.scanRecord
-
-        if (scanRecord == null) {
-            //Timber.w("connect scanRecord = null")
-            return
-        }
+        val scanRecord = scanResult.scanRecord ?: return
+        if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
 
         val scanRecordBytes = scanRecord.bytes
-        //Log.d(TAG, "connect scanRecordBytes = ${HexHelper.bytesToHex(scanRecordBytes)}")
 
         val manufacturerData = SparseArray<ByteArray>()
         var currentPos = 0
         while (currentPos < scanRecordBytes.size) {
-            val currentPos2 = currentPos + 1
-            val length = scanRecordBytes[currentPos].toInt() and 255
-            if (length == 0) {
+            val length = scanRecordBytes[currentPos].toInt() and 255 - 1
+            if (length == -1) {
                 break
             }
-            val dataLength = length - 1
-            currentPos = currentPos2 + 1
 
-            when (scanRecordBytes[currentPos2].toInt() and 0xFF) {
-                0xFF -> manufacturerData.put((scanRecordBytes[currentPos + 1].toInt() and 255 shl 8) + (scanRecordBytes[currentPos].toInt() and 255),
-                        scanRecordBytes.copyOfRange(currentPos + 2, currentPos + 2 + dataLength))
+            if (scanRecordBytes[currentPos + 1].toInt() and 0xFF == 0xFF) {
+                manufacturerData.put((scanRecordBytes[currentPos + 3].toInt() and 255 shl 8) + (scanRecordBytes[currentPos + 2].toInt() and 255),
+                        scanRecordBytes.copyOfRange(currentPos + 4, currentPos + 4 + length))
             }
 
-            currentPos += dataLength
+            currentPos += length + 2
         }
 
-        val speakerData = manufacturerData[87]
-
-        if (speakerData == null) {
-            //Timber.w("connect speakerData = null")
-            return
-        }
+        val speakerData = manufacturerData[87] ?: return
 
         if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
 
         Timber.d("connect parsed ${HexHelper.bytesToHex(speakerData)}")
-        //val speakerRole = speakerData[3]
 
         val speaker = SpeakerModel(scanResult.device, HexHelper.bytesToHex(speakerData))
 
         SpeakerManager.speakerFound(speaker)
     }
-
-    fun setSpeakerphoneMode(speaker: SpeakerModel, speakerphoneMode: Boolean) {
-        sendPacket(makePacket(PacketType.SET_SPEAKERPHONE_MODE, byteArrayOf(if (speakerphoneMode) 1 else 0)))
-    }
-
-    fun setAudioFeedback(speaker: SpeakerModel, audioFeedback: Boolean) {
-        sendPacket(makePacket(PacketType.SET_FEEDBACK_SOUNDS, byteArrayOf(if (audioFeedback) 1 else 0)))
-    }
-
-    fun sendPacket(packet: Packet) {
-        SpeakerManager.mainSpeaker!!.sendPacket(packet)
-    }
-
-    fun makePacket(packetType: PacketType, bytes: ByteArray = byteArrayOf()): Packet = Packet(packetType, bytes)
 
     fun onPacket(speaker: SpeakerModel, packet: Packet) {
         Timber.d("onPacket ${packet.type} ${HexHelper.bytesToHex(packet.payload)}")
@@ -104,8 +74,8 @@ object BluetoothProtocol {
                 while (pointer < payload.size) {
                     when (DataToken.from(payload[pointer].toInt() and 0xFF)) {
                         DataToken.TOKEN_MODEL -> {
-                            productModel = ProductModel.from(HexHelper.bytesToHex(
-                                    byteArrayOf(payload[pointer + 1], payload[pointer + 2])))
+                            productModel = ProductModel.from(
+                                    (payload[pointer + 1].toInt() and 0xFF shl 8) or (payload[pointer + 2].toInt() and 0xFF))
 
                             pointer += 3
                         }
@@ -122,7 +92,7 @@ object BluetoothProtocol {
                             batteryLevel = batteryStatus % 128
                         }
                         DataToken.TOKEN_LINKED_DEVICE_COUNT -> {
-                            val likedDeviceCount = payload[pointer + 1].toInt() and 0xFF
+                            // val likedDeviceCount = payload[pointer + 1].toInt() and 0xFF
                             pointer += 2
                         }
                         DataToken.TOKEN_AUDIO_CHANNEL -> {
@@ -208,6 +178,8 @@ object BluetoothProtocol {
                     3 -> dfu.dfuFinished(DfuModel.Status.SUCCESS)
                 }
             }
+            PacketType.UNKNOWN -> Timber.w("Unknown packet type")
+            else -> Timber.w("Wrong packet type")
         }
     }
 }

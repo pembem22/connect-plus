@@ -6,21 +6,17 @@ import timber.log.Timber
 object PresenterManager {
     private val presenters = HashMap<Class<out BasePresenter>, BasePresenter>()
 
-    fun getPresenter(presenterClass: Class<out BasePresenter>): BasePresenter {
-        var presenter = presenters[presenterClass]
-
-        if (presenter == null) {
-            presenter = presenterClass.newInstance()!!
-            presenters[presenterClass] = presenter
-        }
-
-        return presenter
-    }
+    fun getPresenter(presenterClass: Class<out BasePresenter>) =
+            presenters[presenterClass] ?: run {
+                val presenter = presenterClass.newInstance()
+                presenters[presenterClass] = presenter
+                presenter
+            }
 
     fun destroyPresenter(presenterClass: Class<out BasePresenter>) {
         val presenter = presenters[presenterClass]
         if (presenter == null) {
-            Timber.w("destroyPresenter nonexistent presenter ${presenterClass.simpleName}")
+            Timber.w("destroyPresenter non-existent presenter ${presenterClass.simpleName}")
             return
         }
 

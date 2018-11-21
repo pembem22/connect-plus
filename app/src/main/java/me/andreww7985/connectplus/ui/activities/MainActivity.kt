@@ -50,12 +50,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         nav_menu.selectedItemId = selectedItemId
 
         val fragment = when (selectedItemId) {
-            R.id.nav_dashboard -> SpeakerView() as Fragment
+            R.id.nav_dashboard -> SpeakerView()
             R.id.nav_flash_dfu -> DfuView()
             R.id.nav_settings -> SettingsFragment()
             R.id.nav_connect -> ConnectFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
-        }
+        } as Fragment
 
         App.analytics.logEvent("opened_menu") {
             putString("menu_name", (fragment as FragmentName).getName())
