@@ -59,119 +59,133 @@
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/dfu_file_selector_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="@dimen/card_vertical_border"
+            android:paddingEnd="16dp"
+            android:paddingBottom="@dimen/card_vertical_border"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/dfu_file_selector_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dfu_file_selector_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:text="@string/dfu_button_open_file" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/dfu_file_info_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="@dimen/card_vertical_border"
+            android:paddingRight="16dp"
+            android:paddingBottom="@dimen/card_vertical_border"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/dfu_file_info_size_value"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/dfu_file_info_checksum_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp" />
+                <TextView
+                    android:id="@+id/dfu_file_info_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/dfu_file_info_size"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
-            <TextView
-                android:id="@+id/dfu_file_info_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/dfu_file_info_size"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+                <TextView
+                    android:id="@+id/dfu_file_info_size_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <TextView
-                android:id="@+id/dfu_file_info_checksum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/dfu_file_info_checksum"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/dfu_file_info_checksum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/dfu_file_info_checksum"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/dfu_file_info_checksum_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/dfu_flash_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingTop="@dimen/card_vertical_border"
+            android:paddingEnd="16dp"
+            android:paddingBottom="@dimen/card_vertical_border"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/dfu_flash_text"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp" />
+                android:gravity="center_vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/dfu_flash_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp" />
+                <TextView
+                    android:id="@+id/dfu_flash_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dfu_flash_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <ProgressBar
                 android:id="@+id/dfu_flash_progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/dfu_flash_progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 android:visibility="gone" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <LinearLayout
             android:layout_width="match_parent"
