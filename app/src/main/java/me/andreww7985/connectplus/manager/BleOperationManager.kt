@@ -4,7 +4,7 @@ import me.andreww7985.connectplus.manager.bleoperations.BleOperation
 import timber.log.Timber
 import java.util.*
 
-// https://www.youtube.com/watch?v=jDykHjn-4Ng
+/* https://www.youtube.com/watch?v=jDykHjn-4Ng */
 object BleOperationManager {
     private val operationsQueue = LinkedList<BleOperation>()
     private var currentOperation: BleOperation? = null

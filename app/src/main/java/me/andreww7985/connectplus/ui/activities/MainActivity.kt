@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         private const val KEY_SELECTED_ITEM = "selectedItem"
     }
 
-    var selectedItem: Int = 0
+    private var selectedItem: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.nav_settings -> SettingsFragment()
             R.id.nav_connect -> ConnectFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
-        } as Fragment
+        }
 
         App.analytics.logEvent("opened_menu") {
             putString("menu_name", fragment.javaClass.simpleName)
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         UIHelper.showFragment(this, fragment)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putInt(KEY_SELECTED_ITEM, selectedItem)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(KEY_SELECTED_ITEM, selectedItem)
         super.onSaveInstanceState(outState)
     }
 

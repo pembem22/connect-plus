@@ -12,9 +12,8 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 
 object BleScanManager {
-    private val bleScanner: BluetoothLeScanner by lazy {
-        BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
-    }
+    private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
+
     private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             result ?: return

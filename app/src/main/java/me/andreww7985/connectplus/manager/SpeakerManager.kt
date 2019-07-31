@@ -8,7 +8,8 @@ import me.andreww7985.connectplus.speaker.SpeakerModel
 import timber.log.Timber
 
 object SpeakerManager : BaseModel {
-    var mainSpeaker: SpeakerModel? = null
+    // var mainSpeaker: SpeakerModel? = null
+
     var selectedSpeaker: SpeakerModel? = null
 
     val speakers = HashMap<String, SpeakerModel>()
@@ -24,7 +25,7 @@ object SpeakerManager : BaseModel {
 
         if (speakers.size == 1) {
             Timber.d("speakerFound found main speaker")
-            mainSpeaker = speaker
+            // mainSpeaker = speaker
             selectedSpeaker = speaker
         }
 
@@ -37,7 +38,7 @@ object SpeakerManager : BaseModel {
         speakerFoundEvent.fire()
     }
 
-    fun speakerConnected(speaker: SpeakerModel) {
+    private fun speakerConnected(speaker: SpeakerModel) {
         Timber.d("speakerConnected MAC = ${speaker.mac}")
 
         App.analytics.logSpeakerEvent("speaker_connected") {
@@ -46,16 +47,16 @@ object SpeakerManager : BaseModel {
             putString("speaker_data", speaker.scanRecord)
         }
 
-        if (speaker == mainSpeaker) {
+        if (speaker == selectedSpeaker) {
             UIHelper.openMainActivity()
         }
 
         linkUpdated()
     }
 
-    fun speakerDisconnected() {
-
-    }
+//    fun speakerDisconnected() {
+//
+//    }
 
     fun linkUpdated() {
         speakerList.clear()
@@ -64,5 +65,5 @@ object SpeakerManager : BaseModel {
         linkUpdatedEvent.fire()
     }
 
-    fun getSpeaker(index: Int) = speakers.values.filter { it.index == index }.firstOrNull()
+//    fun getSpeaker(index: Int) = speakers.values.filter { it.index == index }.firstOrNull()
 }

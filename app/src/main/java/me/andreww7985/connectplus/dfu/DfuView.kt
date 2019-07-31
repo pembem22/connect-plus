@@ -50,7 +50,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_file_info_card.visibility = View.VISIBLE
                     dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
 
                     dfu_flash_card.visibility = if (isSpeakerCharging) View.VISIBLE else View.GONE
                     if (isSpeakerCharging) {
@@ -75,7 +75,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_file_info_card.visibility = View.VISIBLE
                     dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
 
                     dfu_flash_card.visibility = View.VISIBLE
 
@@ -94,7 +94,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_file_info_card.visibility = View.VISIBLE
                     dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
 
                     dfu_flash_card.visibility = View.VISIBLE
 
@@ -121,7 +121,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_file_info_card.visibility = View.VISIBLE
                     dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = HexHelper.bytesToHex(dfu.checksum!!)
+                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
 
                     dfu_flash_card.visibility = View.VISIBLE
 
@@ -148,7 +148,8 @@ class DfuView : Fragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!App.sharedPreferences.getBoolean("dfu_warning_accepted", false)) {
-            AlertDialog.Builder(context!!).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
+
+            MaterialAlertDialogBuilder(context!!).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
                     .setMessage(getString(R.string.dialog_dfu_warning_text))
                     .setPositiveButton(R.string.dialog_dfu_warning_agree) { _, _ ->
                         App.sharedPreferences.edit {
@@ -169,7 +170,7 @@ class DfuView : Fragment(), BaseView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data == null) return
+        data ?: return
         presenter.loadFile(data.data!!)
     }
 
