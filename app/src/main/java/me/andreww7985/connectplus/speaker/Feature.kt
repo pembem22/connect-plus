@@ -5,7 +5,8 @@ abstract class Feature {
         BATTERY_NAME(BatteryName::class.java),
         FEEDBACK_SOUNDS(FeedbackSounds::class.java),
         FIRMWARE_VERSION(FirmwareVersion::class.java),
-        SPEAKERPHONE_MODE(SpeakerphoneMode::class.java)
+        SPEAKERPHONE_MODE(SpeakerphoneMode::class.java),
+        BASS_LEVEL(BassLevel::class.java)
     }
 
     class BatteryName : Feature() {
@@ -26,5 +27,9 @@ abstract class Feature {
 
     class SpeakerphoneMode : Feature() {
         var enabled: Boolean? = null
+    }
+
+    class BassLevel : Feature() {
+        var level: Int? = null
     }
 }

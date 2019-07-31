@@ -5,6 +5,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -90,6 +91,15 @@ class SpeakerView : BaseView, Fragment() {
         }
     }
 
+    fun showBassLevelFeature(level: Int) {
+        activity?.runOnUiThread {
+            view ?: return@runOnUiThread
+
+            dashboard_bass_level_slider.progress = level
+            dashboard_bass_level_feature.visibility = View.VISIBLE
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -97,6 +107,14 @@ class SpeakerView : BaseView, Fragment() {
         dashboard_speakerphone_mode_value.setOnCheckedChangeListener { _, isChecked -> presenter.onSpeakerphoneModeChanged(isChecked) }
         dashboard_feedback_sounds_value.setOnCheckedChangeListener { _, isChecked -> presenter.onFeedbackSoundsChanged(isChecked) }
         dashboard_name_edit_button.setOnClickListener { presenter.onRenamePressed() }
+        dashboard_bass_level_slider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) presenter.onBassLevelChanged(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         presenter.attachView(this)
     }

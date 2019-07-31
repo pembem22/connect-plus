@@ -49,7 +49,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         sendPacket(Packet(PacketType.REQ_FEEDBACK_SOUNDS))
         sendPacket(Packet(PacketType.REQ_FIRMWARE_VERSION))
         sendPacket(Packet(PacketType.REQ_SPEAKERPHONE_MODE))
-        sendPacket(Packet(PacketType.REQ_BASS_VOLUME))
+        sendPacket(Packet(PacketType.REQ_BASS_LEVEL))
 
         connectedEvent.fire()
     }
@@ -93,6 +93,10 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
 
     fun updateSpeakerphoneMode(speakerphoneMode: Boolean) {
         sendPacket(Packet(PacketType.SET_SPEAKERPHONE_MODE, byteArrayOf(if (speakerphoneMode) 1 else 0)))
+    }
+
+    fun updateBassLevel(level: Int) {
+        sendPacket(Packet(PacketType.SET_BASS_LEVEL, byteArrayOf(level.toByte())))
     }
 
     fun playSound() {

@@ -53,6 +53,11 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
 
                     view.showSpeakerphoneModeFeature(speakerphoneMode.enabled!!)
                 }
+                BASS_LEVEL -> {
+                    val bassLevel = feature as Feature.BassLevel
+
+                    view.showBassLevelFeature(bassLevel.level!!)
+                }
             }
         }
     }
@@ -98,6 +103,14 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
 
         model.updateAudioFeedback(value)
         feedbackSounds.enabled = value
+        model.featuresChanged()
+    }
+
+    fun onBassLevelChanged(level: Int) {
+        val bassLevel = model.getFeature<Feature.BassLevel>()
+
+        model.updateBassLevel(level)
+        bassLevel.level = level
         model.featuresChanged()
     }
 

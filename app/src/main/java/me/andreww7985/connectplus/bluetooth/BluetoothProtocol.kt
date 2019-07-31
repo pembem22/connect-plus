@@ -4,7 +4,7 @@ import android.bluetooth.le.ScanResult
 import android.util.SparseArray
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.dfu.DfuModel
-import me.andreww7985.connectplus.helpers.HexHelper
+import me.andreww7985.connectplus.helpers.HexHelper.toHexString
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.protocol.DataToken
@@ -177,6 +177,49 @@ object BluetoothProtocol {
                     2 -> if (dfu.state == DfuModel.State.FLASHING_DFU) dfu.sendNextPacket()
                     3 -> dfu.dfuFinished(DfuModel.Status.SUCCESS)
                 }
+            }
+            PacketType.RES_BASS_LEVEL -> {
+                val feature = speaker.getOrCreateFeature(Feature.Type.BASS_LEVEL) as Feature.BassLevel
+
+                feature.level = payload[0].toInt() and 0xFF
+                speaker.featuresChanged()
+            }
+            PacketType.RES_ANALYTICS_DATA -> {
+                val names = arrayOf(
+                        "JBLConnect",
+                        "DurationJBLConnect",
+                        "CriticalTemperature",
+                        "PowerBank",
+                        "Playtime",
+                        "PlaytimeInBattery",
+                        "ChargingTime",
+                        "PowerONCount",
+                        "DurationPowerONOFF",
+                        "Speakerphone"
+                )
+
+                names.forEachIndexed { index, s ->
+                    val vv = ((payload[index * 2].toInt() and 0xFF) shl 8) or (payload[index * 2 + 1].toInt() and 0xFF)
+
+                    Timber.d("$s: $vv")
+                }
+
+                //val length = s.length()
+                //if (length >= 6) {
+                /*var n2 = 6
+                var n3 = 0
+                while (n2 < length && n2 + 4 <= length) {
+                    val sb2 = StringBuilder()
+                    val n4 = n3 + 1
+                    sb.append(sb2.append(this.getTitle(n3)).append(": ").toString())
+                    sb.append(s.substring(n2, n2 + 4))
+                    sb.append("  ,  ")
+                    list.add(this.string2Int(s.substring(n2, n2 + 4)))
+                    n2 += 4
+                    n3 = n4
+                }*/
+                //return
+                //}
             }
             PacketType.UNKNOWN -> Timber.w("Unknown packet type")
             else -> Timber.w("Wrong packet type")
