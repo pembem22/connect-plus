@@ -16,7 +16,6 @@ import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
-import me.andreww7985.connectplus.speaker.SpeakerPresenter
 import timber.log.Timber
 
 class DiscoveryView : AppCompatActivity(), BaseView {
@@ -56,7 +55,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     override fun onDestroy() {
         super.onDestroy()
 
-        PresenterManager.destroyPresenter(SpeakerPresenter::class.java)
+        PresenterManager.destroyPresenter(DiscoveryPresenter::class.java)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
