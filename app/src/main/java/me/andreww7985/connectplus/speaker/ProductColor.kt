@@ -71,6 +71,20 @@ enum class ProductColor {
                     0x0B -> MOSAIC
                     else -> UNKNOWN
                 }
+                ProductModel.FLIP5 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> RED
+                    3 -> BLUE
+                    4 -> WHITE
+                    5 -> GREEN
+                    6 -> YELLOW
+                    7 -> GRAY
+                    8 -> DESERT
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x13 -> CAMO
+                    else -> UNKNOWN
+                }
                 ProductModel.BOOMBOX -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> GREEN

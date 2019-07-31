@@ -5,6 +5,7 @@ enum class ProductModel(val value: Int) {
     CHARGE4(0x1F17),
     FLIP3(0x0023),
     FLIP4(0x1ED1),
+    FLIP5(0x1F31),
     PULSE2(0x0026),
     PULSE3(0x1ED2),
     BOOMBOX(0x1EE7),
