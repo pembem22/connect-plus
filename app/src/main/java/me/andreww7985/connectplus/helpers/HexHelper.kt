@@ -15,10 +15,10 @@ object HexHelper {
         return result
     }
 
-    fun bytesToHex(bytes: ByteArray): String {
+    fun ByteArray.toHexString(): String {
         val result = StringBuffer()
 
-        for (b in bytes) {
+        for (b in this) {
             result.append(String.format("%02X", b))
         }
 

@@ -111,7 +111,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
             Timber.w("sendPacket when writeCharacteristic is null")
         } else {
             val bytes = byteArrayOf(0xAA.toByte(), packet.type.id.toByte(), packet.payload.size.toByte(), *packet.payload)
-            Timber.d("$mac sendPacket ${packet.type.name} ${HexHelper.bytesToHex(packet.payload)}")
+            Timber.d("$mac sendPacket ${packet.type.name} ${packet.payload.toHexString()}")
             BleOperationManager.request(WriteCharacteristicOperation(bleConnection, writeCharacteristic, bytes))
         }
     }

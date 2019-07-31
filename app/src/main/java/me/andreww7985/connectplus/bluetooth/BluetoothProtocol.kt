@@ -41,17 +41,15 @@ object BluetoothProtocol {
 
         val speakerData = manufacturerData[87] ?: return
 
-        if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
+        Timber.d("connect parsed ${speakerData.toHexString()}")
 
-        Timber.d("connect parsed ${HexHelper.bytesToHex(speakerData)}")
-
-        val speaker = SpeakerModel(scanResult.device, HexHelper.bytesToHex(speakerData))
+        val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
 
         SpeakerManager.speakerFound(speaker)
     }
 
     fun onPacket(speaker: SpeakerModel, packet: Packet) {
-        Timber.d("onPacket ${packet.type} ${HexHelper.bytesToHex(packet.payload)}")
+        Timber.d("onPacket ${packet.type} ${packet.payload.toHexString()}")
 
         val payload = packet.payload
 
