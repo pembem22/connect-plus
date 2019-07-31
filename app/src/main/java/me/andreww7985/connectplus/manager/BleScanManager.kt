@@ -1,17 +1,13 @@
 package me.andreww7985.connectplus.manager
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.pm.PackageManager.FEATURE_BLUETOOTH_LE
 import android.location.LocationManager
-import android.os.Build
-import android.provider.Settings
-import android.provider.Settings.Secure.LOCATION_MODE
-import android.provider.Settings.Secure.LOCATION_MODE_OFF
+import androidx.core.location.LocationManagerCompat
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 
@@ -45,7 +41,5 @@ object BleScanManager {
 
     fun isBleSupported() = BluetoothAdapter.getDefaultAdapter() != null && App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE)
     fun isBluetoothEnabled() = BluetoothAdapter.getDefaultAdapter().isEnabled
-    fun isLocationEnabled() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-        (App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager).isLocationEnabled
-    else Settings.Secure.getInt(App.instance.contentResolver, LOCATION_MODE) != LOCATION_MODE_OFF
+    fun isLocationEnabled() = LocationManagerCompat.isLocationEnabled(App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager)
 }
