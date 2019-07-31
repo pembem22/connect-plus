@@ -59,7 +59,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
 
         Thread {
             try {
-                filename = getFilename(file) ?: throw Exception()
+                filename = getFilename(file) ?: throw Exception("Can't get DFU file name")
 
                 val inputStream = App.instance.contentResolver.openInputStream(file)!!
                 val size = inputStream.available()
@@ -75,11 +75,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
                 state = State.READY
                 modelChangedEvent.fire()
 
-                App.analytics.logEvent("dfu_file_loaded") {
-                    putString("filename", filename)
-                    putString("file_size", fileSize.toString())
-                    putString("file_checksum", HexHelper.bytesToHex(checksum))
-                }
+                App.analytics.logEvent("dfu_file_loaded")
             } catch (exception: Exception) {
                 Timber.e(exception, "loadFile")
 
