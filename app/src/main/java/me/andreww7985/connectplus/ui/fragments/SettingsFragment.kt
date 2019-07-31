@@ -7,12 +7,11 @@ import androidx.core.content.getSystemService
 import androidx.preference.PreferenceFragmentCompat
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper
-import me.andreww7985.connectplus.ui.FragmentName
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 
-class SettingsFragment : PreferenceFragmentCompat(), FragmentName {
+class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
 
@@ -31,6 +30,4 @@ class SettingsFragment : PreferenceFragmentCompat(), FragmentName {
             false
         }
     }
-
-    override fun getName() = "Settings"
 }

@@ -3,15 +3,15 @@ package me.andreww7985.connectplus.ui.activities
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
+import me.andreww7985.connectplus.manager.SpeakerManager
+import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerView
-import me.andreww7985.connectplus.ui.FragmentName
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
 import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 import timber.log.Timber
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         } as Fragment
 
         App.analytics.logEvent("opened_menu") {
-            putString("menu_name", (fragment as FragmentName).getName())
+            putString("menu_name", fragment.javaClass.simpleName)
         }
 
         UIHelper.showFragment(this, fragment)

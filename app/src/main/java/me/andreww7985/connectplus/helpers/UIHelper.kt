@@ -8,7 +8,6 @@ import me.andreww7985.connectplus.ui.activities.MainActivity
 import timber.log.Timber
 
 object UIHelper {
-    private const val TAG = "UIHelper"
     private val app = App.instance
 
     fun showToast(text: String, duration: Int = Toast.LENGTH_LONG) {

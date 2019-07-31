@@ -13,13 +13,8 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
-import me.andreww7985.connectplus.ui.FragmentName
 
-class SpeakerView : BaseView, Fragment(), FragmentName {
-    companion object {
-        const val TAG = "SpeakerView"
-    }
-
+class SpeakerView : BaseView, Fragment() {
     private val presenter = PresenterManager.getPresenter(SpeakerPresenter::class.java) as SpeakerPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -130,6 +125,4 @@ class SpeakerView : BaseView, Fragment(), FragmentName {
             PresenterManager.destroyPresenter(SpeakerPresenter::class.java)
         }
     }
-
-    override fun getName() = "Dashboard"
 }

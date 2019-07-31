@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_dfu.*
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
-import me.andreww7985.connectplus.helpers.HexHelper
+import me.andreww7985.connectplus.helpers.HexHelper.toHexString
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
-import me.andreww7985.connectplus.ui.FragmentName
 
-class DfuView : Fragment(), BaseView, FragmentName {
+class DfuView : Fragment(), BaseView {
 
     private val presenter = PresenterManager.getPresenter(DfuPresenter::class.java) as DfuPresenter
 
@@ -183,6 +182,4 @@ class DfuView : Fragment(), BaseView, FragmentName {
             PresenterManager.destroyPresenter(DfuPresenter::class.java)
         }
     }
-
-    override fun getName() = "DFU"
 }

@@ -11,10 +11,9 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BaseView
-import me.andreww7985.connectplus.ui.FragmentName
 import me.andreww7985.connectplus.ui.SpeakersAdapter
 
-class ConnectFragment : Fragment(), FragmentName, BaseView {
+class ConnectFragment : Fragment(), BaseView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_connect, container, false)
     }
@@ -58,6 +57,4 @@ class ConnectFragment : Fragment(), FragmentName, BaseView {
         super.onDestroyView()
         SpeakerManager.speakerFoundEvent.unsubscribe()
     }
-
-    override fun getName() = "Connect"
 }
