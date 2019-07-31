@@ -18,6 +18,8 @@ import timber.log.Timber
 
 object BluetoothProtocol {
     fun connect(scanResult: ScanResult) {
+        Timber.d("CONNECT ${scanResult.device.address} ${scanResult.device.name}")
+
         val scanRecord = scanResult.scanRecord ?: return
         if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
 
@@ -26,17 +28,20 @@ object BluetoothProtocol {
         val manufacturerData = SparseArray<ByteArray>()
         var currentPos = 0
         while (currentPos < scanRecordBytes.size) {
-            val length = scanRecordBytes[currentPos].toInt() and 255 - 1
-            if (length == -1) {
+            val currentPos2 = currentPos + 1
+            val length = scanRecordBytes[currentPos].toInt() and 255
+            if (length == 0) {
                 break
             }
+            val dataLength = length - 1
+            currentPos = currentPos2 + 1
 
-            if (scanRecordBytes[currentPos + 1].toInt() and 0xFF == 0xFF) {
-                manufacturerData.put((scanRecordBytes[currentPos + 3].toInt() and 255 shl 8) + (scanRecordBytes[currentPos + 2].toInt() and 255),
-                        scanRecordBytes.copyOfRange(currentPos + 4, currentPos + 4 + length))
+            if (scanRecordBytes[currentPos2].toInt() and 0xFF == 0xFF) {
+                manufacturerData.put((scanRecordBytes[currentPos + 1].toInt() and 255 shl 8) + (scanRecordBytes[currentPos].toInt() and 255),
+                        scanRecordBytes.copyOfRange(currentPos + 2, currentPos + 2 + dataLength))
             }
 
-            currentPos += length + 2
+            currentPos += dataLength
         }
 
         val speakerData = manufacturerData[87] ?: return
