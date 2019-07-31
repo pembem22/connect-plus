@@ -6,7 +6,7 @@ import me.andreww7985.connectplus.Event
 import me.andreww7985.connectplus.bluetooth.BleConnection
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 import me.andreww7985.connectplus.dfu.DfuModel
-import me.andreww7985.connectplus.helpers.HexHelper
+import me.andreww7985.connectplus.helpers.HexHelper.toHexString
 import me.andreww7985.connectplus.manager.BleOperationManager
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.manager.bleoperations.WriteCharacteristicOperation
@@ -119,5 +119,5 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
                 feature
             }
 
-    fun getFeature(featureType: Feature.Type) = features[featureType]
+    inline fun <reified T> getFeature(): T = features.values.first { feature -> feature is T } as T
 }

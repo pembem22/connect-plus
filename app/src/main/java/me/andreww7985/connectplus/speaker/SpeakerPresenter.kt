@@ -8,12 +8,9 @@ import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.Feature.Type.*
 
-class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
+class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
-        val view = view as SpeakerView
-        val model = model as SpeakerModel
-
-        view.setDeveloperData(model.mac, model.scanRecord, model.color.name, model.model.name)
+        view!!.setDeveloperData(model.mac, model.scanRecord, model.color.name, model.model.name)
 
         val app = App.instance
         val resources = app.resources
@@ -22,7 +19,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
         val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.name.toLowerCase()), "drawable", packageName)
         val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.name.toLowerCase(), model.color.name.toLowerCase()), "drawable", packageName)
 
-        view.setSpeakerImages(logoDrawableId, speakerDrawableId)
+        view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 
         model.featuresUpdatedEvent.subscribe {
             updateFeatures()
@@ -32,8 +29,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     }
 
     private fun updateFeatures() {
-        val view = view as SpeakerView? ?: return
-        val model = model as SpeakerModel
+        val view = view ?: return
 
         for ((featureType, feature) in model.features) {
             when (featureType) {
@@ -62,16 +58,11 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     }
 
     fun onRenamePressed() {
-        val feature = (model as SpeakerModel).getFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
-
-        (view as SpeakerView).showRenameAlertDialog(feature.deviceName!!)
+        view!!.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
     }
 
     fun onRenameDialogConfirmed(newName: String) {
-        val model = model as SpeakerModel
-        val feature = model.getFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
-
-        feature.deviceName = newName
+        model.getFeature<Feature.BatteryName>().deviceName = newName
 
         val bytes = newName.toByteArray()
         model.sendPacket(
@@ -84,21 +75,18 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     }
 
     fun onPlaySoundPressed() {
-        val view = view as SpeakerView
-        val model = model as SpeakerModel
+        model.sendPacket(Packet(PacketType.REQ_ANALYTICS_DATA))
 
-        val audioFeedback = (model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds?)?.enabled
+        val audioFeedback = model.getFeature<Feature.FeedbackSounds>().enabled
                 ?: true
         if (audioFeedback)
             model.sendPacket(Packet(PacketType.PLAY_SOUND))
         else
-            view.showFeedbackSoundsDisabledMessage()
+            view!!.showFeedbackSoundsDisabledMessage()
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {
-        val model = model as SpeakerModel
-
-        val speakerphoneMode = model.getFeature(Feature.Type.SPEAKERPHONE_MODE) as Feature.SpeakerphoneMode
+        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()
 
         model.updateSpeakerphoneMode(value)
         speakerphoneMode.enabled = value
@@ -106,9 +94,7 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     }
 
     fun onFeedbackSoundsChanged(value: Boolean) {
-        val model = model as SpeakerModel
-
-        val feedbackSounds = model.getFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds
+        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()
 
         model.updateAudioFeedback(value)
         feedbackSounds.enabled = value
@@ -116,6 +102,6 @@ class SpeakerPresenter : BasePresenter(SpeakerManager.selectedSpeaker!!) {
     }
 
     override fun destroy() {
-        (model as SpeakerModel).featuresUpdatedEvent.unsubscribe()
+        model.featuresUpdatedEvent.unsubscribe()
     }
 }

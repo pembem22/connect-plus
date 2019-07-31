@@ -1,9 +1,9 @@
 package me.andreww7985.connectplus.mvp
 
-abstract class BasePresenter(val model: BaseModel) {
-    var view: BaseView? = null
+abstract class BasePresenter<ViewClass : BaseView, ModelClass : BaseModel>(val model: ModelClass) {
+    var view: ViewClass? = null
 
-    fun attachView(view: BaseView) {
+    fun attachView(view: ViewClass) {
         this.view = view
         onViewAttached()
     }
