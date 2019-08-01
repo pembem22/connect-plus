@@ -39,14 +39,13 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/dashboard_product_info_button"
+                <ImageView
+                    android:id="@+id/dashboard_product_playing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     android:tint="?attr/colorControlNormal"
-                    app:srcCompat="@drawable/ic_info" />
+                    app:srcCompat="@drawable/ic_pause" />
 
                 <ImageView
                     android:id="@+id/dashboard_product_logo"

@@ -38,6 +38,8 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
 
     val connectedEvent = Event()
 
+    var isPlaying = false
+
     init {
         bleConnection.connect()
     }
@@ -112,7 +114,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         } else {
             val bytes = byteArrayOf(0xAA.toByte(), packet.type.id.toByte(), packet.payload.size.toByte(), *packet.payload)
             Timber.d("$mac sendPacket ${packet.type.name} ${packet.payload.toHexString()}")
-            BleOperationManager.request(WriteCharacteristicOperation(bleConnection, writeCharacteristic, bytes))
+            BleOperationManager.request(WriteCharacteristicOperation(bleConnection, writeCharacteristic, bytes), replacePrevious)
         }
     }
 

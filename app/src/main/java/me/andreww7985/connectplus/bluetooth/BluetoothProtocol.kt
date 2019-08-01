@@ -103,6 +103,7 @@ object BluetoothProtocol {
                             pointer += 2
                         }
                         DataToken.TOKEN_AUDIO_SOURCE -> {
+                            speaker.isPlaying = (payload[pointer + 1].toInt() and 0xFF) == 1
                             pointer += 2
                         }
                         DataToken.TOKEN_MAC -> {

@@ -33,6 +33,17 @@ class SpeakerView : BaseView, Fragment() {
         }
     }
 
+    fun setIsPlaying(isPlaying: Boolean) {
+        activity?.runOnUiThread {
+            view ?: return@runOnUiThread
+
+            dashboard_product_playing.setImageResource(
+                    if (isPlaying) R.drawable.ic_play
+                    else R.drawable.ic_pause
+            )
+        }
+    }
+
     fun setSpeakerImages(logoDrawableId: Int, speakerDrawableId: Int) {
         activity?.runOnUiThread {
             view ?: return@runOnUiThread

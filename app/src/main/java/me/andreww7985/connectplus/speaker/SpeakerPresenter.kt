@@ -31,6 +31,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     private fun updateFeatures() {
         val view = view ?: return
 
+        view.setIsPlaying(model.isPlaying)
+
         for ((featureType, feature) in model.features) {
             when (featureType) {
                 BATTERY_NAME -> {
