@@ -96,7 +96,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
     }
 
     fun updateBassLevel(level: Int) {
-        sendPacket(Packet(PacketType.SET_BASS_LEVEL, byteArrayOf(level.toByte())))
+        sendPacket(Packet(PacketType.SET_BASS_LEVEL, byteArrayOf(level.toByte())), replacePrevious = true)
     }
 
     fun playSound() {
