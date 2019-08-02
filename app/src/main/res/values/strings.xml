@@ -17,10 +17,11 @@
     <string name="dashboard_battery_level_charging">%1$d%%, charging</string>
 
     <string name="dialog_dashboard_rename_title">Rename device</string>
-    <string name="dialog_dashboard_rename_message">Enter new name for your device (up to 16 bytes)</string>
+    <string name="dialog_dashboard_rename_message">Enter new name (up to 16 bytes)</string>
     <string name="dialog_dashboard_rename_confirm">RENAME</string>
     <string name="dialog_dashboard_rename_cancel">CANCEL</string>
 
+    <string name="dashboard_bass_level">Bass level</string>
     <string name="dashboard_device_name">Device name</string>
     <string name="dashboard_firmware_version">Firmware version</string>
     <string name="dashboard_feedback_sounds">Feedback sounds</string>
@@ -38,17 +39,20 @@
 
     <string name="dfu_state_ready">Ready to flash</string>
     <string name="dfu_state_initializing_dfu">Initializing DFU mode&#8230;</string>
-    <string name="dfu_state_flashing">Flashing…</string>
-    <string name="dfu_state_done">Done! Your device will automatically reboot in a few minutes. Don\'t even touch it, otherwise you will brick it!</string>
+    <string name="dfu_state_flashing">Flashing&#8230;</string>
+    <string name="dfu_state_done">Done! Your device will automatically reboot in a few minutes. Do not press any button or unplug it, otherwise you will brick it! You can close this app</string>
     <string name="dfu_state_error">Error! Don\'t worry, your device will automatically reboot into normal mode</string>
 
     <string name="dfu_file_info_size">Firmware size</string>
     <string name="dfu_file_info_checksum">Firmware CRC32</string>
 
+    <string name="dfu_error_file_manager">Failed to open file. Try another file manager</string>
+    <string name="dfu_error_wrong_file">Wrong file selected. You must select a file with .DFU extension</string>
+
     <string name="setting_privacy">Privacy</string>
     <string name="settings_send_speaker_data_title">Send speaker data</string>
-    <string name="settings_send_speaker_data_summary">Completely anonymous, includes speaker model, color and firmware version</string>
-    <string name="settings_send_app_data_summary">Completely anonymous, using Google Crashlytics and Google Analytics. Restart app to apply changes</string>
+    <string name="settings_send_speaker_data_summary">Sends speaker model, color and firmware version</string>
+    <string name="settings_send_app_data_summary">Uses Google Crashlytics and Google Analytics. Restart app to apply changes</string>
     <string name="settings_send_app_data_title">Send app usage data</string>
     <string name="settings_developers">Developers</string>
     <string name="settings_main_developer_title">Main developer</string>
@@ -76,5 +80,5 @@
     <string name="speaker_audio_channel">Audio channel</string>
     <string name="settings_logs_title">Copy app logs</string>
     <string name="settings_logs_summary">Tap to copy app logs into clipboard</string>
-    <string name="connect_tooltip">Turn on search to find more devices. You can switch audio channels for each separately.</string>
+    <string name="connect_tooltip">Turn on search to find more devices. You can switch audio channels for each device separately.</string>
 </resources>
