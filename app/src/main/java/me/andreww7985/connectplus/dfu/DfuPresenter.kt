@@ -15,6 +15,10 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
             view!!.showFileBrowserError()
         }
 
+        model.wrongFileEvent.subscribe {
+            view!!.showWrongFile()
+        }
+
         model.modelChangedEvent.subscribe {
             updateView()
         }
@@ -23,10 +27,10 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
     }
 
     override fun destroy() {
-        val model = model
         model.speaker.featuresUpdatedEvent.unsubscribe()
         model.fileLoadingErrorEvent.unsubscribe()
         model.modelChangedEvent.unsubscribe()
+        model.wrongFileEvent.unsubscribe()
     }
 
     fun isSpeakerCharging() = model.speaker.getFeature<Feature.BatteryName>().batteryCharging

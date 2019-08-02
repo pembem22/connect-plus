@@ -10,7 +10,6 @@ import me.andreww7985.connectplus.mvp.BaseModel
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.SpeakerModel
-import timber.log.Timber
 
 class DfuModel(val speaker: SpeakerModel) : BaseModel {
     companion object {
@@ -28,6 +27,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
 
     val modelChangedEvent = Event()
     val fileLoadingErrorEvent = Event()
+    val wrongFileEvent = Event()
 
     private fun getFilename(uri: Uri): String? {
         var result: String? = null
@@ -54,35 +54,38 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
     }
 
     fun loadFile(file: Uri) {
-        state = State.LOADING_FILE
-        modelChangedEvent.fire()
-
         Thread {
-            try {
-                filename = getFilename(file) ?: throw Exception("Can't get DFU file name")
+            val filename = getFilename(file)
 
-                val inputStream = App.instance.contentResolver.openInputStream(file)!!
-                val size = inputStream.available()
-                val bytes = ByteArray(size)
-                inputStream.read(bytes)
-                inputStream.close()
-                val checksum = HexHelper.intToBytes(ChecksumHelper.crc(bytes).toInt())
-
-                this.fileBytes = bytes
-                this.fileSize = size
-                this.checksum = checksum
-
-                state = State.READY
-                modelChangedEvent.fire()
-
-                App.analytics.logEvent("dfu_file_loaded")
-            } catch (exception: Exception) {
-                Timber.e(exception, "loadFile")
-
-                state = State.FILE_NOT_SELECTED
+            if (filename == null) {
                 fileLoadingErrorEvent.fire()
-                modelChangedEvent.fire()
+                return@Thread
             }
+
+            if (!filename.toLowerCase().endsWith(".dfu")) {
+                wrongFileEvent.fire()
+                return@Thread
+            }
+
+            state = State.LOADING_FILE
+            this.filename = filename
+            modelChangedEvent.fire()
+
+            val inputStream = App.instance.contentResolver.openInputStream(file)!!
+            val size = inputStream.available()
+            val bytes = ByteArray(size)
+            inputStream.read(bytes)
+            inputStream.close()
+            val checksum = HexHelper.intToBytes(ChecksumHelper.crc(bytes).toInt())
+
+            this.fileBytes = bytes
+            this.fileSize = size
+            this.checksum = checksum
+
+            state = State.READY
+            modelChangedEvent.fire()
+
+            App.analytics.logEvent("dfu_file_loaded")
         }.start()
     }
 

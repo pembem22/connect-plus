@@ -23,7 +23,13 @@ class DfuView : Fragment(), BaseView {
 
     fun showFileBrowserError() {
         activity?.runOnUiThread {
-            UIHelper.showToast("Failed to open file. Try another file manager!", Toast.LENGTH_LONG)
+            UIHelper.showToast(getString(R.string.dfu_error_file_manager), Toast.LENGTH_LONG)
+        }
+    }
+
+    fun showWrongFile() {
+        activity?.runOnUiThread {
+            UIHelper.showToast(getString(R.string.dfu_error_wrong_file), Toast.LENGTH_LONG)
         }
     }
 
