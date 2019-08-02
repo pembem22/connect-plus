@@ -24,8 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 log.appendln(bufferedReader.readLine() ?: break)
             }
 
-            val clipboardManager = context!!.getSystemService<ClipboardManager>()!!
-            clipboardManager.primaryClip = ClipData.newPlainText("logs", log)
+            context!!.getSystemService<ClipboardManager>()!!.setPrimaryClip(ClipData.newPlainText("logs", log))
 
             UIHelper.showToast("Copied logs to clipboard")
             false

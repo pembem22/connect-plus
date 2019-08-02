@@ -3,9 +3,6 @@ package me.andreww7985.connectplus.speaker
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
-import me.andreww7985.connectplus.protocol.DataToken
-import me.andreww7985.connectplus.protocol.Packet
-import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.Feature.Type.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
@@ -65,31 +62,23 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onRenamePressed() {
-        view!!.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
+        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
     }
 
-    fun onRenameDialogConfirmed(newName: String) {
-        model.getFeature<Feature.BatteryName>().deviceName = newName
-
-        val bytes = newName.toByteArray()
-        model.sendPacket(
-                Packet(PacketType.SET_SPEAKER_INFO,
-                        byteArrayOf(
-                                model.index.toByte(),
-                                DataToken.TOKEN_NAME.id.toByte(),
-                                bytes.size.toByte(),
-                                *bytes)))
+    fun onRenameDialogConfirmed(name: String) {
+        model.getFeature<Feature.BatteryName>().deviceName = name
+        model.setName(name)
     }
 
     fun onPlaySoundPressed() {
-        model.sendPacket(Packet(PacketType.REQ_ANALYTICS_DATA))
+        model.requestAnalyticsData()
 
         val audioFeedback = model.getFeature<Feature.FeedbackSounds>().enabled
                 ?: true
         if (audioFeedback)
-            model.sendPacket(Packet(PacketType.PLAY_SOUND))
+            model.playSound()
         else
-            view!!.showFeedbackSoundsDisabledMessage()
+            view?.showFeedbackSoundsDisabledMessage()
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {

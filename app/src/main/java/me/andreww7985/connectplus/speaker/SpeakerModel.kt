@@ -105,7 +105,20 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         sendPacket(Packet(PacketType.PLAY_SOUND))
     }
 
-    fun sendPacket(packet: Packet) {
+    fun requestAnalyticsData() {
+        sendPacket(Packet(PacketType.REQ_ANALYTICS_DATA))
+    }
+
+    fun setName(name: String) {
+        val bytes = name.toByteArray()
+        sendPacket(Packet(PacketType.SET_SPEAKER_INFO, byteArrayOf(
+                index.toByte(),
+                DataToken.TOKEN_NAME.id.toByte(),
+                bytes.size.toByte(),
+                *bytes)))
+    }
+
+    fun sendPacket(packet: Packet, replacePrevious: Boolean = false) {
         val writeCharacteristic = writeCharacteristic
         val bleConnection = bleConnection
 
