@@ -1,5 +1,6 @@
 package me.andreww7985.connectplus.speaker
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -67,6 +68,7 @@ class SpeakerView : BaseView, Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun showFirmwareVersionFeature(minor: Int, major: Int, build: Int?) {
         activity?.runOnUiThread {
             view ?: return@runOnUiThread
