@@ -62,15 +62,12 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
     }
 
     fun onPacket(bytes: ByteArray) {
-        if (bytes[0] != 0xAA.toByte()) {
-            throw IllegalArgumentException("Packet header != 0xAA")
-        }
+        if (bytes[0] != 0xAA.toByte()) return
 
         val length = bytes[2].toInt() and 0xFF
 
-        if (length + 3 != bytes.size) {
-            throw IllegalArgumentException("Payload size from header != actual payload size")
-        }
+        if (length + 3 != bytes.size) return
+
 
         val payload = ByteArray(length)
         System.arraycopy(bytes, 3, payload, 0, length)
@@ -131,12 +128,16 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         }
     }
 
-    fun getOrCreateFeature(featureType: Feature.Type) =
-            features[featureType] ?: run {
-                val feature = featureType.clazz.newInstance()
-                features[featureType] = feature
-                feature
-            }
+    inline fun <reified T : Feature> getOrCreateFeature(): T =
+            (features.values.firstOrNull { feature -> feature is T }
+                    ?: run {
+                        val type = Feature.Type.fromClass(T::class.java)
+                        val feature = type.clazz.newInstance()
+                        features[type] = feature
+                        feature
+                    }) as T
 
-    inline fun <reified T> getFeature(): T = features.values.first { feature -> feature is T } as T
+    inline fun <reified T : Feature> getFeature(): T? =
+            features.values.firstOrNull { feature -> feature is T } as T?
 }
+

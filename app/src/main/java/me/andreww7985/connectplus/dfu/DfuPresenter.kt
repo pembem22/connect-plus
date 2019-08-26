@@ -12,11 +12,11 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
         }
 
         model.fileLoadingErrorEvent.subscribe {
-            view!!.showFileBrowserError()
+            view?.showFileBrowserError()
         }
 
         model.wrongFileEvent.subscribe {
-            view!!.showWrongFile()
+            view?.showWrongFile()
         }
 
         model.modelChangedEvent.subscribe {
@@ -33,11 +33,11 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
         model.wrongFileEvent.unsubscribe()
     }
 
-    fun isSpeakerCharging() = model.speaker.getFeature<Feature.BatteryName>().batteryCharging
+    private fun isSpeakerCharging() = model.speaker.getFeature<Feature.BatteryName>()?.batteryCharging
             ?: false
 
 
-    fun updateView() {
+    private fun updateView() {
         view!!.updateUi(model, isSpeakerCharging())
     }
 

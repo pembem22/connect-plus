@@ -6,7 +6,11 @@ abstract class Feature {
         FEEDBACK_SOUNDS(FeedbackSounds::class.java),
         FIRMWARE_VERSION(FirmwareVersion::class.java),
         SPEAKERPHONE_MODE(SpeakerphoneMode::class.java),
-        BASS_LEVEL(BassLevel::class.java)
+        BASS_LEVEL(BassLevel::class.java);
+
+        companion object {
+            fun fromClass(clazz: Class<out Feature>): Type = values().first { type -> type.clazz == clazz }
+        }
     }
 
     class BatteryName : Feature() {

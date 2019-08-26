@@ -62,27 +62,28 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onRenamePressed() {
-        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
+        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>()!!.deviceName!!)
     }
 
     fun onRenameDialogConfirmed(name: String) {
-        model.getFeature<Feature.BatteryName>().deviceName = name
+        model.getFeature<Feature.BatteryName>()!!.deviceName = name
         model.setName(name)
     }
 
     fun onPlaySoundPressed() {
         model.requestAnalyticsData()
 
-        val audioFeedback = model.getFeature<Feature.FeedbackSounds>().enabled
+        val audioFeedback = model.getFeature<Feature.FeedbackSounds>()?.enabled
                 ?: true
-        if (audioFeedback)
+        if (audioFeedback) {
             model.playSound()
-        else
+        } else {
             view?.showFeedbackSoundsDisabledMessage()
+        }
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {
-        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()
+        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()!!
 
         model.updateSpeakerphoneMode(value)
         speakerphoneMode.enabled = value
@@ -90,7 +91,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onFeedbackSoundsChanged(value: Boolean) {
-        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()
+        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()!!
 
         model.updateAudioFeedback(value)
         feedbackSounds.enabled = value
@@ -98,7 +99,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onBassLevelChanged(level: Int) {
-        val bassLevel = model.getFeature<Feature.BassLevel>()
+        val bassLevel = model.getFeature<Feature.BassLevel>()!!
 
         model.updateBassLevel(level)
         bassLevel.level = level

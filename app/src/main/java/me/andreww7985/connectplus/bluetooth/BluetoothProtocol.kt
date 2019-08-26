@@ -18,7 +18,7 @@ import timber.log.Timber
 
 object BluetoothProtocol {
     fun connect(scanResult: ScanResult) {
-        Timber.d("CONNECT ${scanResult.device.address} ${scanResult.device.name}")
+        Timber.d("connect ${scanResult.device.address} ${scanResult.device.name}")
 
         val scanRecord = scanResult.scanRecord ?: return
         if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
@@ -65,7 +65,7 @@ object BluetoothProtocol {
             PacketType.RES_SPEAKER_INFO -> {
                 speaker.index = payload[0].toInt() and 0xFF
 
-                val feature = speaker.getOrCreateFeature(Feature.Type.BATTERY_NAME) as Feature.BatteryName
+                val feature = speaker.getOrCreateFeature<Feature.BatteryName>()
                 var name = feature.deviceName
                 var batteryCharging = feature.batteryCharging
                 var batteryLevel = feature.batteryLevel
@@ -141,7 +141,7 @@ object BluetoothProtocol {
                 }
             }
             PacketType.RES_FIRMWARE_VERSION -> {
-                val feature = speaker.getOrCreateFeature(Feature.Type.FIRMWARE_VERSION) as Feature.FirmwareVersion
+                val feature = speaker.getOrCreateFeature<Feature.FirmwareVersion>()
 
                 if (payload.size <= 2) {
                     feature.major = payload[0].toInt() shr 4 and 0xF
@@ -160,15 +160,11 @@ object BluetoothProtocol {
                 speaker.featuresChanged()
             }
             PacketType.RES_FEEDBACK_SOUNDS -> {
-                val feature = speaker.getOrCreateFeature(Feature.Type.FEEDBACK_SOUNDS) as Feature.FeedbackSounds
-
-                feature.enabled = payload[0] == 1.toByte()
+                speaker.getOrCreateFeature<Feature.FeedbackSounds>().enabled = payload[0] == 1.toByte()
                 speaker.featuresChanged()
             }
             PacketType.RES_SPEAKERPHONE_MODE -> {
-                val feature = speaker.getOrCreateFeature(Feature.Type.SPEAKERPHONE_MODE) as Feature.SpeakerphoneMode
-
-                feature.enabled = payload[0] == 1.toByte()
+                speaker.getOrCreateFeature<Feature.SpeakerphoneMode>().enabled = payload[0] == 1.toByte()
                 speaker.featuresChanged()
             }
             PacketType.RES_DFU_STATUS_CHANGE -> {
@@ -183,7 +179,7 @@ object BluetoothProtocol {
                 }
             }
             PacketType.RES_BASS_LEVEL -> {
-                val feature = speaker.getOrCreateFeature(Feature.Type.BASS_LEVEL) as Feature.BassLevel
+                val feature = speaker.getOrCreateFeature<Feature.BassLevel>()
 
                 feature.level = payload[0].toInt() and 0xFF
                 speaker.featuresChanged()
@@ -207,23 +203,6 @@ object BluetoothProtocol {
 
                     Timber.d("$s: $vv")
                 }
-
-                //val length = s.length()
-                //if (length >= 6) {
-                /*var n2 = 6
-                var n3 = 0
-                while (n2 < length && n2 + 4 <= length) {
-                    val sb2 = StringBuilder()
-                    val n4 = n3 + 1
-                    sb.append(sb2.append(this.getTitle(n3)).append(": ").toString())
-                    sb.append(s.substring(n2, n2 + 4))
-                    sb.append("  ,  ")
-                    list.add(this.string2Int(s.substring(n2, n2 + 4)))
-                    n2 += 4
-                    n3 = n4
-                }*/
-                //return
-                //}
             }
             PacketType.UNKNOWN -> Timber.w("Unknown packet type")
             else -> Timber.w("Wrong packet type")

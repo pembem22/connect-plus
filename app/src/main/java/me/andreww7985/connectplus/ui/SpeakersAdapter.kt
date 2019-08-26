@@ -24,7 +24,7 @@ class SpeakersAdapter(val context: Context, val speakers: List<SpeakerModel>) : 
 
         holder.soundButton.setOnClickListener { speaker.playSound() }
 
-        holder.nameLabel.text = speaker.getFeature<Feature.BatteryName>().deviceName
+        holder.nameLabel.text = speaker.getFeature<Feature.BatteryName>()!!.deviceName
 
         holder.leftButton.isEnabled = speaker.audioChannel != AudioChannel.LEFT
         holder.leftButton.setOnClickListener { speaker.updateAudioChannel(AudioChannel.LEFT) }
