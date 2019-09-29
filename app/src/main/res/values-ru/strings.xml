@@ -40,7 +40,7 @@
     <string name="dfu_button_cancel">ОТМЕНА</string>
     <string name="dfu_button_open_file">ОТКРЫТЬ ФАЙЛ</string>
     <string name="discovery_connecting">Подключение к %1$s&#8230;</string>
-    <string name="dfu_state_canceled">Отменено! Ваша колонка должна перезагрузиться прямо сейчас в нормальный режим</string>
+    <string name="dfu_state_canceled">Отменено! Ваша колонка прямо сейчас перезагрузится в нормальный режим</string>
     <string name="dashboard_speakerphone_mode">Режим громкой связи</string>
     <string name="connect_searching_on">Поиск&#8230;</string>
     <string name="connect_searching_off">Поиск отключен</string>
@@ -49,7 +49,7 @@
     <string name="settings_images_info">Все логотипы и изображения колонок принадлежат JBL</string>
     <string name="setting_about">О приложении</string>
     <string name="settings_source_code_title">Исходный код</string>
-    <string name="settings_source_code_summary">Нажмите чтобы открыть в браузере</string>
+    <string name="settings_source_code_summary">Нажмите, чтобы открыть в браузере</string>
     <string name="settings_app_version_title">Версия приложения</string>
     <string name="speaker_left_channel">ЛЕВЫЙ</string>
     <string name="speaker_right_channel">ПРАВЫЙ</string>
@@ -57,8 +57,8 @@
     <string name="speaker_audio_channel">Канал аудио</string>
     <string name="settings_logs_title">Скопировать логи приложения</string>
     <string name="settings_logs_summary">Нажмите, чтобы скопировать логи приложения</string>
-    <string name="connect_tooltip">Включите поиск, чтобы здесь появилось больше колонок. Вы можете переключать звуковые каналы для каждой отдельно</string>
+    <string name="connect_tooltip">Включите поиск, чтобы здесь появилось больше колонок. Вы можете переключать звуковые каналы для каждой отдельно.</string>
     <string name="dashboard_bass_level">Уровень баса</string>
-    <string name="dfu_error_file_manager">Не удалось открыть файл. Попробуйте использовать другой фаловый проводник</string>
+    <string name="dfu_error_file_manager">Не удалось открыть файл. Попробуйте использовать другой файловый проводник</string>
     <string name="dfu_error_wrong_file">Выбран неправильный файл. Вы должны выбрать файл с расширением .DFU</string>
 </resources>
