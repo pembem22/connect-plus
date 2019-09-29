@@ -20,6 +20,8 @@ enum class ProductColor {
     YELLOW,
     WHITE,
     ZAP,
+    ECO_GREEN,
+    ECO_BLUE,
     UNKNOWN;
 
 
@@ -83,6 +85,9 @@ enum class ProductColor {
                     9 -> TEAL
                     0x10 -> PINK
                     0x13 -> SQUAD
+                    0x14 -> ECO_BLUE
+                    0x15 -> ECO_GREEN
+                    0x16 -> CAMO
                     else -> UNKNOWN
                 }
                 ProductModel.BOOMBOX -> when (speakerColor) {
