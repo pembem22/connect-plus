@@ -82,7 +82,7 @@ enum class ProductColor {
                     8 -> DESERT
                     9 -> TEAL
                     0x10 -> PINK
-                    0x13 -> CAMO
+                    0x13 -> SQUAD
                     else -> UNKNOWN
                 }
                 ProductModel.BOOMBOX -> when (speakerColor) {
