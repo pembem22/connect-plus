@@ -137,6 +137,11 @@ enum class ProductColor {
                     0x13 -> CAMO
                     else -> UNKNOWN
                 }
+                ProductModel.PULSE4 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> WHITE
+                    else -> UNKNOWN
+                }
                 else -> UNKNOWN
             }
         }

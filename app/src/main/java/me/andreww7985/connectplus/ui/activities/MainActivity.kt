@@ -40,9 +40,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         nav_menu.setOnNavigationItemSelectedListener(this)
 
-        /* Don't show DFU flash menu when speaker model is unknown or Flip 5 */
+        /* Don't show DFU flash menu when speaker model is unknown, Flip 5 or Pulse 4 */
         val selectedSpeaker = SpeakerManager.selectedSpeaker
-        if (selectedSpeaker == null || selectedSpeaker.model == ProductModel.UNKNOWN || selectedSpeaker.model == ProductModel.FLIP5)
+        if (selectedSpeaker == null ||
+                selectedSpeaker.model == ProductModel.UNKNOWN ||
+                selectedSpeaker.model == ProductModel.FLIP5 ||
+                selectedSpeaker.model == ProductModel.PULSE4)
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
     }
 
