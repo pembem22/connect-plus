@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="dark_theme_entries">
+        <item>@string/settings_dark_theme_enabled</item>
+        <item>@string/settings_dark_theme_disabled</item>
+        <item>@string/settings_dark_theme_system</item>
+    </array>
+    <array name="dark_theme_values">
+        <item>ENABLED</item>
+        <item>DISABLED</item>
+        <item>SYSTEM</item>
+    </array>
+</resources>

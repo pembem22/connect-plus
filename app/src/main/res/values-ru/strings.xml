@@ -61,4 +61,8 @@
     <string name="dashboard_bass_level">Уровень баса</string>
     <string name="dfu_error_file_manager">Не удалось открыть файл. Попробуйте использовать другой файловый проводник</string>
     <string name="dfu_error_wrong_file">Выбран неправильный файл. Вы должны выбрать файл с расширением .DFU</string>
+    <string name="settings_dark_theme_title">Тема</string>
+    <string name="settings_dark_theme_disabled">Светлая</string>
+    <string name="settings_dark_theme_enabled">Тёмная</string>
+    <string name="settings_dark_theme_system">Использовать системные настройки</string>
 </resources>

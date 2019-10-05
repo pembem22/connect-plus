@@ -81,4 +81,8 @@
     <string name="settings_logs_title">Copy app logs</string>
     <string name="settings_logs_summary">Tap to copy app logs into clipboard</string>
     <string name="connect_tooltip">Turn on search to find more devices. You can switch audio channels for each device separately.</string>
+    <string name="settings_dark_theme_title">Theme</string>
+    <string name="settings_dark_theme_enabled">Dark</string>
+    <string name="settings_dark_theme_disabled">Light</string>
+    <string name="settings_dark_theme_system">Use system settings</string>
 </resources>

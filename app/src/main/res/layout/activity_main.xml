@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <FrameLayout
         android:id="@+id/main_fragment"
@@ -21,13 +20,6 @@
         android:layout_weight="1">
 
     </FrameLayout>
-
-    <!-- <com.google.android.gms.ads.AdView
-        android:id="@+id/ad_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111" /> !-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_menu"

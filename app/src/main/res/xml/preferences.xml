@@ -1,4 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:entries="@array/dark_theme_entries"
+        android:entryValues="@array/dark_theme_values"
+        android:key="dark_theme"
+        android:summary="%s"
+        android:title="@string/settings_dark_theme_title"
+        android:defaultValue="SYSTEM" />
+
     <PreferenceCategory android:title="@string/setting_privacy">
         <CheckBoxPreference
             android:defaultValue="true"
