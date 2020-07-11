@@ -16,9 +16,6 @@ import java.util.*
 
 class BleConnection(private val bluetoothDevice: BluetoothDevice, private val speaker: SpeakerModel) {
     companion object {
-        const val TAG = "BleConnection"
-        const val GATT_MTU_VALUE = 517
-
         val UUID_RX_TX_SERVICE = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0000")!!
         val UUID_READ_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0002")!!
         val UUID_WRITE_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0001")!!
@@ -34,7 +31,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
             }
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                BleOperationManager.request(RequestMtuOperation(this@BleConnection, GATT_MTU_VALUE))
+                BleOperationManager.request(RequestMtuOperation(this@BleConnection, speaker.model.getMtu()))
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 BleOperationManager.operationComplete()
                 gatt!!.close()

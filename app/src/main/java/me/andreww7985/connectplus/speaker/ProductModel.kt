@@ -14,6 +14,11 @@ enum class ProductModel(val value: Int) {
     XTREME2(0x1EFC),
     UNKNOWN(0xFFFF);
 
+    fun getMtu() = when (this) {
+        CHARGE3, CHARGE4, FLIP3, FLIP4, PULSE2, PULSE3, BOOMBOX, XTREME, XTREME2, UNKNOWN -> 517
+        FLIP5, PULSE4 -> 35
+    }
+
     companion object {
         fun from(value: Int) = values().firstOrNull { it.value == value } ?: UNKNOWN
     }
