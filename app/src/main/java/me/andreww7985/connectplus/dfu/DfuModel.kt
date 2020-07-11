@@ -10,6 +10,8 @@ import me.andreww7985.connectplus.mvp.BaseModel
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.SpeakerModel
+import java.util.*
+import kotlin.math.min
 
 class DfuModel(val speaker: SpeakerModel) : BaseModel {
     companion object {
@@ -62,7 +64,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
                 return@Thread
             }
 
-            if (!filename.toLowerCase().endsWith(".dfu")) {
+            if (!filename.toLowerCase(Locale.getDefault()).endsWith(".dfu")) {
                 wrongFileEvent.fire()
                 return@Thread
             }
@@ -101,7 +103,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
     }
 
     fun sendNextPacket() {
-        val chunkSize = Math.min(CHUNK_SIZE, fileSize - CHUNK_SIZE * currentChunk)
+        val chunkSize = min(CHUNK_SIZE, fileSize - CHUNK_SIZE * currentChunk)
         val chunk = ByteArray(chunkSize)
         System.arraycopy(fileBytes!!, CHUNK_SIZE * currentChunk, chunk, 0, chunkSize)
 
