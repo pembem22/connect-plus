@@ -15,17 +15,12 @@ object BleOperationManager {
         operationsQueue.add(operation)
 
         if (replacePrevious) {
-            /* TODO: Use removeIf when minimum API is 24 */
             operationsQueue
-                    .filter { currentOperation -> currentOperation.bleConnection == operation.bleConnection }
-                    .forEach { currentOperation -> operationsQueue.remove(currentOperation) }
+                    .removeIf { it.bleConnection == operation.bleConnection }
             Timber.d("removed previous operation")
         }
 
-        if (currentOperation == null) {
-            currentOperation = operationsQueue.poll()
-            currentOperation?.perform()
-        }
+        performOperation()
     }
 
     @Synchronized
@@ -33,11 +28,11 @@ object BleOperationManager {
         Timber.d("operationComplete")
         currentOperation ?: Timber.e("operationComplete called when currentOperation is null")
 
-        currentOperation = null
+        performOperation()
+    }
 
-        if (operationsQueue.peek() != null) {
-            currentOperation = operationsQueue.poll()
-            currentOperation!!.perform()
-        }
+    private fun performOperation() {
+        currentOperation = operationsQueue.poll()
+        currentOperation?.perform()
     }
 }
