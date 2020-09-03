@@ -85,6 +85,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     fun onSpeakerphoneModeChanged(value: Boolean) {
         val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()!!
 
+        if (speakerphoneMode.enabled == value) return
+
         model.updateSpeakerphoneMode(value)
         speakerphoneMode.enabled = value
         model.featuresChanged()
@@ -93,6 +95,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     fun onFeedbackSoundsChanged(value: Boolean) {
         val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()!!
 
+        if (feedbackSounds.enabled == value) return
+
         model.updateAudioFeedback(value)
         feedbackSounds.enabled = value
         model.featuresChanged()
@@ -100,6 +104,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
 
     fun onBassLevelChanged(level: Int) {
         val bassLevel = model.getFeature<Feature.BassLevel>()!!
+
+        if (bassLevel.level == level) return
 
         model.updateBassLevel(level)
         bassLevel.level = level
