@@ -184,7 +184,7 @@
                 android:text="@string/dashboard_feedback_sounds"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/dashboard_feedback_sounds_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -208,7 +208,7 @@
                 android:text="@string/dashboard_speakerphone_mode"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/dashboard_speakerphone_mode_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

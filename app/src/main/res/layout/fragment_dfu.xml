@@ -168,9 +168,9 @@
                     android:layout_height="wrap_content" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.ProgressIndicator
                 android:id="@+id/dfu_flash_progressbar"
-                style="?android:attr/progressBarStyleHorizontal"
+                style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -201,7 +201,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="0"
                 android:src="@drawable/ic_info"
-                android:tint="?android:attr/textColorHint" />
+                app:tint="?android:attr/textColorHint" />
 
             <TextView
                 android:layout_width="wrap_content"
