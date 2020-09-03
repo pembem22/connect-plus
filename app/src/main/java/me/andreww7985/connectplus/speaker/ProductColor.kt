@@ -22,6 +22,8 @@ enum class ProductColor {
     ZAP,
     ECO_GREEN,
     ECO_BLUE,
+    BLACKSTAR,
+    TOMORROWLAND,
     UNKNOWN;
 
 
@@ -84,6 +86,8 @@ enum class ProductColor {
                     8 -> DESERT
                     9 -> TEAL
                     0x10 -> PINK
+                    0x11 -> BLACKSTAR
+                    0x12 -> TOMORROWLAND
                     0x13 -> SQUAD
                     0x14 -> ECO_BLUE
                     0x15 -> ECO_GREEN
@@ -124,6 +128,7 @@ enum class ProductColor {
                     2 -> RED
                     3 -> BLUE
                     4 -> TEAL
+                    8 -> SQUAD
                     else -> UNKNOWN
                 }
                 ProductModel.CHARGE4 -> when (speakerColor) {
