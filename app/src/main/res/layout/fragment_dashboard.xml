@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:tint="?attr/colorControlNormal"
+                    app:tint="?attr/colorControlNormal"
                     app:srcCompat="@drawable/ic_pause" />
 
                 <ImageView
@@ -57,7 +57,7 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
                     android:scaleType="fitCenter"
-                    android:tint="?attr/colorOnBackground"
+                    app:tint="?attr/colorOnBackground"
                     app:srcCompat="@drawable/ic_unknown" />
 
                 <ImageButton

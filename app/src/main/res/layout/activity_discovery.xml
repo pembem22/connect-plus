@@ -7,8 +7,8 @@
     android:orientation="vertical"
     tools:context="me.andreww7985.connectplus.discovery.DiscoveryView">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
+    <com.google.android.material.progressindicator.ProgressIndicator
+        style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
