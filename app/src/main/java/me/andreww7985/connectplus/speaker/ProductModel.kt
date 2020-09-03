@@ -10,13 +10,14 @@ enum class ProductModel(val value: Int) {
     PULSE3(0x1ED2),
     PULSE4(0x1F56),
     BOOMBOX(0x1EE7),
+    BOOMBOX2(0x1F53),
     XTREME(0x0024),
     XTREME2(0x1EFC),
     UNKNOWN(0xFFFF);
 
     fun getMtu() = when (this) {
         CHARGE3, CHARGE4, FLIP3, FLIP4, PULSE2, PULSE3, BOOMBOX, XTREME, XTREME2, UNKNOWN -> 517
-        FLIP5, PULSE4 -> 35
+        FLIP5, PULSE4, BOOMBOX2 -> 35
     }
 
     companion object {

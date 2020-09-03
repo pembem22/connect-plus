@@ -96,6 +96,11 @@ enum class ProductColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
+                ProductModel.BOOMBOX2 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    8 -> SQUAD
+                    else -> UNKNOWN
+                }
                 ProductModel.PULSE2 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
