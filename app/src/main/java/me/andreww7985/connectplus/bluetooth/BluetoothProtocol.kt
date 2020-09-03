@@ -29,7 +29,7 @@ object BluetoothProtocol {
         var currentPos = 0
         while (currentPos < scanRecordBytes.size) {
             val currentPos2 = currentPos + 1
-            val length = scanRecordBytes[currentPos].toInt() and 255
+            val length = scanRecordBytes[currentPos].toInt() and 0xFF
             if (length == 0) {
                 break
             }
@@ -37,7 +37,7 @@ object BluetoothProtocol {
             currentPos = currentPos2 + 1
 
             if (scanRecordBytes[currentPos2].toInt() and 0xFF == 0xFF) {
-                manufacturerData.put((scanRecordBytes[currentPos + 1].toInt() and 255 shl 8) + (scanRecordBytes[currentPos].toInt() and 255),
+                manufacturerData.put((scanRecordBytes[currentPos + 1].toInt() and 0xFF shl 8) + (scanRecordBytes[currentPos].toInt() and 0xFF),
                         scanRecordBytes.copyOfRange(currentPos + 2, currentPos + 2 + dataLength))
             }
 
