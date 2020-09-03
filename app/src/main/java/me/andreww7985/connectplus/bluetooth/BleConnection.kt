@@ -10,6 +10,7 @@ import me.andreww7985.connectplus.manager.bleoperations.EnableNotificationOperat
 import me.andreww7985.connectplus.manager.bleoperations.RequestMtuOperation
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
+import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerModel
 import timber.log.Timber
 import java.util.*
@@ -31,7 +32,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
             }
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                BleOperationManager.request(RequestMtuOperation(this@BleConnection, speaker.model.getMtu()))
+                BleOperationManager.request(RequestMtuOperation(this@BleConnection, ProductModel.CHARGE3.getMtu()))
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 BleOperationManager.operationComplete()
                 gatt!!.close()

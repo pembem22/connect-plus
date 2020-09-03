@@ -65,10 +65,10 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     private fun checkPermissions() {
         Timber.d("checkPermissions")
-        val location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && location != PackageManager.PERMISSION_GRANTED)
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_CODE_PERMISSION)
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_PERMISSION)
         else checkBluetooth()
     }
 
