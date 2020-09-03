@@ -15,9 +15,9 @@ object BleOperationManager {
         operationsQueue.add(operation)
 
         if (replacePrevious) {
-            operationsQueue
-                    .removeIf { it.bleConnection == operation.bleConnection }
-            Timber.d("removed previous operation")
+            operationsQueue.removeIf {
+                it.bleConnection == operation.bleConnection && it.javaClass == operation.javaClass
+            }
         }
 
         performOperation()
@@ -28,10 +28,16 @@ object BleOperationManager {
         Timber.d("operationComplete")
         currentOperation ?: Timber.e("operationComplete called when currentOperation is null")
 
+        currentOperation = null
+
         performOperation()
     }
 
     private fun performOperation() {
+        if (currentOperation != null) {
+            return
+        }
+
         currentOperation = operationsQueue.poll()
         currentOperation?.perform()
     }
