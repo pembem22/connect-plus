@@ -48,7 +48,14 @@ object BluetoothProtocol {
 
         Timber.d("connect parsed ${speakerData.toHexString()}")
 
+
+        val speakerModel = ProductModel.from((speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt()
+                and 0xFF))
+        val speakerColor = ProductColor.from(speakerModel, speakerData[2].toInt() and 0xFF)
         val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
+
+        speaker.model = speakerModel
+        speaker.color = speakerColor
 
         SpeakerManager.speakerFound(speaker)
     }
