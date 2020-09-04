@@ -1,9 +1,10 @@
 package me.andreww7985.connectplus.ui.activities
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.core.view.ViewCompat
+import androidx.core.view.updatePadding
 import kotlinx.android.synthetic.main.activity_main.*
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
@@ -13,10 +14,9 @@ import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerView
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
-import me.andreww7985.connectplus.ui.fragments.SettingsFragment
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     companion object {
         private const val KEY_SELECTED_ITEM = "selectedItem"
     }
@@ -38,7 +38,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         }
 
-        nav_menu.setOnNavigationItemSelectedListener(this)
+        nav_menu.setOnNavigationItemSelectedListener { item ->
+            updateCurrentFragment(item.itemId)
+            true
+        }
 
         /* Don't show DFU flash menu when speaker model is unknown, Flip 5 or Pulse 4 */
         val selectedSpeaker = SpeakerManager.selectedSpeaker
@@ -47,6 +50,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 selectedSpeaker.model == ProductModel.FLIP5 ||
                 selectedSpeaker.model == ProductModel.PULSE4)
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
+
+        val view = window.decorView
+
+        view.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+//            v.updatePadding(bottom = insets.systemWindowInsetTop)
+            toolbar.updatePadding(top = insets.systemWindowInsetTop)
+            insets
+        }
     }
 
     private fun updateCurrentFragment(selectedItemId: Int) {
@@ -59,7 +73,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.nav_dashboard -> SpeakerView()
             R.id.nav_connect -> ConnectFragment()
             R.id.nav_flash_dfu -> DfuView()
-//            R.id.nav_settings -> SettingsFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }
 
@@ -73,10 +86,5 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_SELECTED_ITEM, selectedItem)
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        updateCurrentFragment(item.itemId)
-        return true
     }
 }
