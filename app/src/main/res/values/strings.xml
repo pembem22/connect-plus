@@ -19,7 +19,7 @@
     <string name="dialog_dashboard_rename_title">Rename device</string>
     <string name="dialog_dashboard_rename_message">Enter new name (up to 16 bytes)</string>
     <string name="dialog_dashboard_rename_confirm">RENAME</string>
-    <string name="dialog_dashboard_rename_cancel">CANCEL</string>
+    <string name="dialog_dashboard_rename_cancel">@android:string/cancel</string>
 
     <string name="dashboard_bass_level">Bass level</string>
     <string name="dashboard_device_name">Device name</string>
@@ -60,7 +60,7 @@
     <string name="settings_testers_title">Testers</string>
     <string name="settings_testers_summary" translatable="false">\@AKladkov, @Alex62ru, @weisib</string>
     <string name="dfu_button_flash">FLASH</string>
-    <string name="dfu_button_cancel">CANCEL</string>
+    <string name="dfu_button_cancel">@android:string/cancel</string>
     <string name="dfu_button_open_file">OPEN FILE</string>
     <string name="dfu_state_canceled">Canceled! Your device should reboot right now to normal mode</string>
     <string name="dashboard_speakerphone_mode">Speakerphone mode</string>
