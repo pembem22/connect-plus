@@ -11,7 +11,9 @@
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_flash_dfu">Flash DFU</string>
-    <string name="menu_connect" translatable="false">JBL Connect+</string>
+    <string name="menu_connect" translatable="false">JBL Connect</string>
+    <string name="menu_connect_plus" translatable="false">JBL Connect+</string>
+    <string name="menu_partyboost" translatable="false">JBL PartyBoost</string>
 
     <string name="dashboard_battery_level" translatable="false">%1$d%%</string>
     <string name="dashboard_battery_level_charging">%1$d%%, charging</string>

@@ -13,6 +13,7 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.SpeakerManager
+import me.andreww7985.connectplus.speaker.ProductConnect
 import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerView
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
@@ -63,6 +64,11 @@ class MainActivity : AppCompatActivity() {
                 selectedSpeaker.model == ProductModel.FLIP5 ||
                 selectedSpeaker.model == ProductModel.PULSE4)
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
+
+        nav_menu.menu.findItem(R.id.nav_connect).apply {
+            setIcon(ProductConnect.from(selectedSpeaker!!.model).iconId)
+            setTitle(ProductConnect.from(selectedSpeaker.model).nameId)
+        }
 
         val view = window.decorView
 

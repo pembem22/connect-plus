@@ -8,7 +8,6 @@
             android:title="@string/menu_dashboard" />
         <item
             android:id="@+id/nav_connect"
-            android:icon="@drawable/ic_connect_plus"
             android:title="@string/menu_connect" />
         <item
             android:id="@+id/nav_flash_dfu"
