@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val fragment = when (selectedItemId) {
             R.id.nav_dashboard -> SpeakerView()
-            R.id.nav_flash_dfu -> DfuView()
-            R.id.nav_settings -> SettingsFragment()
             R.id.nav_connect -> ConnectFragment()
+            R.id.nav_flash_dfu -> DfuView()
+//            R.id.nav_settings -> SettingsFragment()
             else -> throw IllegalArgumentException("Wrong selectedItemId")
         }
 
