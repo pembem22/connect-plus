@@ -1,6 +1,8 @@
 package me.andreww7985.connectplus.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -41,6 +43,17 @@ class MainActivity : AppCompatActivity() {
         nav_menu.setOnNavigationItemSelectedListener { item ->
             updateCurrentFragment(item.itemId)
             true
+        }
+
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.nav_settings -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
 
         /* Don't show DFU flash menu when speaker model is unknown, Flip 5 or Pulse 4 */
@@ -86,5 +99,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_SELECTED_ITEM, selectedItem)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }

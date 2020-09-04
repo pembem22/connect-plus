@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_reload"
-        android:id="@+id/nav_reload"
-        android:title="@string/menu_refresh"
+        android:icon="@drawable/ic_settings"
+        android:id="@+id/nav_settings"
+        android:title="@string/menu_settings"
         app:showAsAction="always" />
 </menu>
