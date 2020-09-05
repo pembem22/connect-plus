@@ -6,7 +6,6 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
+import kotlin.math.roundToInt
 
 class SpeakerView : BaseView, Fragment() {
     private val presenter = PresenterManager.getPresenter(SpeakerPresenter::class.java) as SpeakerPresenter
@@ -108,7 +108,7 @@ class SpeakerView : BaseView, Fragment() {
         activity?.runOnUiThread {
             view ?: return@runOnUiThread
 
-            dashboard_bass_level_slider.progress = level
+            dashboard_bass_level_slider.value = level.toFloat()
             dashboard_bass_level_feature.visibility = View.VISIBLE
         }
     }
@@ -120,14 +120,11 @@ class SpeakerView : BaseView, Fragment() {
         dashboard_speakerphone_mode_value.setOnCheckedChangeListener { _, isChecked -> presenter.onSpeakerphoneModeChanged(isChecked) }
         dashboard_feedback_sounds_value.setOnCheckedChangeListener { _, isChecked -> presenter.onFeedbackSoundsChanged(isChecked) }
         dashboard_name_edit_button.setOnClickListener { presenter.onRenamePressed() }
-        dashboard_bass_level_slider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) presenter.onBassLevelChanged(progress)
+        dashboard_bass_level_slider.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                presenter.onBassLevelChanged(value.roundToInt())
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+        }
 
         presenter.attachView(this)
     }

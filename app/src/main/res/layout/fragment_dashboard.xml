@@ -157,12 +157,14 @@
                 android:text="@string/dashboard_bass_level"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
-            <androidx.appcompat.widget.AppCompatSeekBar
+            <com.google.android.material.slider.Slider
                 android:id="@+id/dashboard_bass_level_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:max="20" />
+                android:valueFrom="0.0"
+                android:valueTo="20.0"
+                android:stepSize="1.0" />
 
         </LinearLayout>
 
