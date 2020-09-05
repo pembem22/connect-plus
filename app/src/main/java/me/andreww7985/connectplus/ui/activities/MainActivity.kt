@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
@@ -16,16 +17,12 @@ import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.speaker.ProductConnect
 import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerView
+import me.andreww7985.connectplus.ui.MainActivityViewModel
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val KEY_SELECTED_ITEM = "selectedItem"
-    }
-
-    private var selectedItem: Int = 0
-
+    private val model: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
@@ -33,12 +30,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        savedInstanceState.let {
-            if (it == null) {
-                updateCurrentFragment(R.id.nav_dashboard)
-            } else {
-                selectedItem = it.getInt(KEY_SELECTED_ITEM)
-            }
+        if (model.selectedNavbarItem == 0) {
+            updateCurrentFragment(R.id.nav_dashboard)
         }
 
         nav_menu.setOnNavigationItemSelectedListener { item ->
@@ -91,8 +84,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCurrentFragment(selectedItemId: Int) {
         Timber.d("updateCurrentFragment")
-        if (this.selectedItem == selectedItemId) return
-        this.selectedItem = selectedItemId
+        if (model.selectedNavbarItem == selectedItemId) {
+            return
+        }
+
+        model.selectedNavbarItem = selectedItemId
         nav_menu.selectedItemId = selectedItemId
 
         val fragment = when (selectedItemId) {
@@ -107,11 +103,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         UIHelper.showFragment(this, fragment)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(KEY_SELECTED_ITEM, selectedItem)
-        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
