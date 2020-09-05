@@ -131,8 +131,11 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_flash_card.visibility = View.VISIBLE
 
-                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    /* Cannot switch to indeterminate mode while the progress indicator is visible. */
+                    dfu_flash_progressbar.visibility = View.GONE
                     dfu_flash_progressbar.isIndeterminate = true
+                    dfu_flash_progressbar.visibility = View.VISIBLE
+
                     dfu_flash_progress_text.visibility = View.GONE
 
                     dfu_flash_button.isEnabled = false
