@@ -22,21 +22,19 @@ class DfuView : Fragment(), BaseView {
     private val presenter = PresenterManager.getPresenter(DfuPresenter::class.java) as DfuPresenter
 
     fun showFileBrowserError() {
-        activity?.runOnUiThread {
+        lifecycleScope.launch {
             UIHelper.showToast(getString(R.string.dfu_error_file_manager), Toast.LENGTH_LONG)
         }
     }
 
     fun showWrongFile() {
-        activity?.runOnUiThread {
+        lifecycleScope.launch {
             UIHelper.showToast(getString(R.string.dfu_error_wrong_file), Toast.LENGTH_LONG)
         }
     }
 
     fun updateUi(dfu: DfuModel, isSpeakerCharging: Boolean) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dfu_battery_warning_card.visibility = if (!isSpeakerCharging) View.VISIBLE else View.GONE
 
             when (dfu.state) {

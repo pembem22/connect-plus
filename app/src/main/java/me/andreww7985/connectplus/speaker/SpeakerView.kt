@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
@@ -24,9 +26,8 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun setDeveloperData(mac: String, data: String, color: String, model: String) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
 
+        lifecycleScope.launch {
             mac_value.text = mac
             data_value.text = data
             color_value.text = color
@@ -35,9 +36,7 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun setIsPlaying(isPlaying: Boolean) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_product_playing.setImageResource(
                     if (isPlaying) R.drawable.ic_play
                     else R.drawable.ic_pause
@@ -46,18 +45,14 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun setSpeakerImages(logoDrawableId: Int, speakerDrawableId: Int) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             if (speakerDrawableId != 0) dashboard_product_image.setImageResource(speakerDrawableId)
             if (logoDrawableId != 0) dashboard_product_logo.setImageResource(logoDrawableId)
         }
     }
 
     fun showBatteryNameFeature(deviceName: String, batteryLevel: Int, batteryCharging: Boolean) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_battery_value.text = if (batteryCharging)
                 getString(R.string.dashboard_battery_level_charging, batteryLevel)
             else
@@ -70,9 +65,7 @@ class SpeakerView : BaseView, Fragment() {
 
     @SuppressLint("SetTextI18n")
     fun showFirmwareVersionFeature(minor: Int, major: Int, build: Int?) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_firmware_version_value.text =
                     "$major.$minor${if (build != null) ".$build" else ""}"
 
@@ -81,33 +74,27 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun showFeedbackSoundsDisabledMessage() {
-        activity?.runOnUiThread {
+        lifecycleScope.launch {
             Snackbar.make(requireView(), getString(R.string.dashboard_feedback_sounds_disabled), Snackbar.LENGTH_SHORT).show()
         }
     }
 
     fun showFeedbackSoundsFeature(enabled: Boolean) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_feedback_sounds_value.isChecked = enabled
             dashboard_feedback_sounds_feature.visibility = View.VISIBLE
         }
     }
 
     fun showSpeakerphoneModeFeature(enabled: Boolean) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_speakerphone_mode_value.isChecked = enabled
             dashboard_speakerphone_mode_feature.visibility = View.VISIBLE
         }
     }
 
     fun showBassLevelFeature(level: Int) {
-        activity?.runOnUiThread {
-            view ?: return@runOnUiThread
-
+        lifecycleScope.launch {
             dashboard_bass_level_slider.value = level.toFloat()
             dashboard_bass_level_feature.visibility = View.VISIBLE
         }

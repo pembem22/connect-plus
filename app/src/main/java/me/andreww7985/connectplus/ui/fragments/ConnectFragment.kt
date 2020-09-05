@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_connect.*
+import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.SpeakerManager
@@ -23,7 +25,7 @@ class ConnectFragment : Fragment(), BaseView {
         connect_list.adapter = SpeakersAdapter(SpeakerManager.speakerList)
 
         SpeakerManager.linkUpdatedEvent.subscribe {
-            this@ConnectFragment.activity?.runOnUiThread {
+            lifecycleScope.launch {
                 connect_list.adapter?.notifyDataSetChanged()
             }
         }
@@ -41,7 +43,7 @@ class ConnectFragment : Fragment(), BaseView {
         updateUi()
     }
 
-    fun updateUi() {
+    private fun updateUi() {
         if (BleScanManager.isScanning) {
             connect_scan_progressbar.visibility = View.VISIBLE
             connect_scan_value.text = getString(R.string.connect_searching_on)

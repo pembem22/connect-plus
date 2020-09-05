@@ -10,7 +10,9 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_discovery.*
+import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
@@ -33,7 +35,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     }
 
     fun showConnecting(name: String) {
-        runOnUiThread {
+        lifecycleScope.launch {
             discovery_text.text = getString(R.string.discovery_connecting, name)
         }
     }
