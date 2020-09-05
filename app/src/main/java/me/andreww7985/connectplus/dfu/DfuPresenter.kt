@@ -33,7 +33,7 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
         model.wrongFileEvent.unsubscribe()
     }
 
-    private fun isSpeakerCharging() = model.speaker.getFeature<Feature.BatteryName>()?.batteryCharging
+    private fun isSpeakerCharging() = model.speaker.getFeature<Feature.BatteryName>().batteryCharging
             ?: false
 
 

@@ -166,7 +166,7 @@ class DfuView : Fragment(), BaseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!App.sharedPreferences.getBoolean("dfu_warning_accepted", false)) {
 
-            MaterialAlertDialogBuilder(context!!).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
+            MaterialAlertDialogBuilder(requireContext()).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
                     .setMessage(getString(R.string.dialog_dfu_warning_text))
                     .setPositiveButton(R.string.dialog_dfu_warning_agree) { _, _ ->
                         App.sharedPreferences.edit {
