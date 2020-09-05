@@ -66,8 +66,9 @@ class MainActivity : AppCompatActivity() {
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
 
         nav_menu.menu.findItem(R.id.nav_connect).apply {
-            setIcon(ProductConnect.from(selectedSpeaker!!.model).iconId)
-            setTitle(ProductConnect.from(selectedSpeaker.model).nameId)
+            val connect = ProductConnect.from(selectedSpeaker!!.model)
+            setIcon(connect.iconId)
+            setTitle(connect.nameId)
         }
 
         val view = window.decorView

@@ -82,7 +82,7 @@ class SpeakerView : BaseView, Fragment() {
 
     fun showFeedbackSoundsDisabledMessage() {
         activity?.runOnUiThread {
-            Snackbar.make(view!!, getString(R.string.dashboard_feedback_sounds_disabled), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.dashboard_feedback_sounds_disabled), Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -134,7 +134,7 @@ class SpeakerView : BaseView, Fragment() {
         val textEdit = dialogView.findViewById<TextInputEditText>(R.id.rename_input)
         textEdit.text = Editable.Factory.getInstance().newEditable(currentName)
 
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
                 .setCancelable(true)
                 .setView(dialogView)
                 .setTitle(R.string.dialog_dashboard_rename_title)
