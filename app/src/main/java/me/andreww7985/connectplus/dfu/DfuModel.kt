@@ -150,7 +150,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
         }
     }
 
-    fun getProgress() = 100f * currentChunk * CHUNK_SIZE / fileSize
+    fun getProgress() = 1f * currentChunk * CHUNK_SIZE / fileSize
 
     enum class State {
         FILE_NOT_SELECTED,

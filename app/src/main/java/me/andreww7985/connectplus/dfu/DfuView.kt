@@ -107,9 +107,9 @@ class DfuView : Fragment(), BaseView {
                     val progress = dfu.getProgress()
                     dfu_flash_progressbar.visibility = View.VISIBLE
                     dfu_flash_progressbar.isIndeterminate = false
-                    dfu_flash_progressbar.progress = progress.toInt()
+                    dfu_flash_progressbar.progress = (progress * 1e5f).toInt()
 
-                    dfu_flash_progress_text.text = String.format("%.2f%%", progress)
+                    dfu_flash_progress_text.text = String.format("%.2f%%", progress * 100f)
                     dfu_flash_progress_text.visibility = View.VISIBLE
 
                     dfu_flash_button.isEnabled = true
