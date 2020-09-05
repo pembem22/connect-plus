@@ -137,7 +137,8 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
                         feature
                     }) as T
 
-    inline fun <reified T : Feature> getFeature(): T? =
+    inline fun <reified T : Feature> getFeature(): T =
             features.values.firstOrNull { feature -> feature is T } as T?
+                    ?: throw IllegalArgumentException("Feature ${T::class.java.simpleName} does not exist")
 }
 

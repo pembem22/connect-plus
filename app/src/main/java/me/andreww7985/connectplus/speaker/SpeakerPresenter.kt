@@ -4,6 +4,7 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
 import me.andreww7985.connectplus.speaker.Feature.Type.*
+import java.util.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
@@ -13,8 +14,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
         val resources = app.resources
         val packageName = app.packageName
 
-        val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.name.toLowerCase()), "drawable", packageName)
-        val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.name.toLowerCase(), model.color.name.toLowerCase()), "drawable", packageName)
+        val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
+        val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.name.toLowerCase(Locale.ROOT), model.color.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
 
         view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 
@@ -62,18 +63,18 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onRenamePressed() {
-        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>()!!.deviceName!!)
+        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
     }
 
     fun onRenameDialogConfirmed(name: String) {
-        model.getFeature<Feature.BatteryName>()!!.deviceName = name
+        model.getFeature<Feature.BatteryName>().deviceName = name
         model.setName(name)
     }
 
     fun onPlaySoundPressed() {
         model.requestAnalyticsData()
 
-        val audioFeedback = model.getFeature<Feature.FeedbackSounds>()?.enabled
+        val audioFeedback = model.getFeature<Feature.FeedbackSounds>().enabled
                 ?: true
         if (audioFeedback) {
             model.playSound()
@@ -83,7 +84,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {
-        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()!!
+        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()
 
         if (speakerphoneMode.enabled == value) return
 
@@ -93,7 +94,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onFeedbackSoundsChanged(value: Boolean) {
-        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()!!
+        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()
 
         if (feedbackSounds.enabled == value) return
 
@@ -103,7 +104,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onBassLevelChanged(level: Int) {
-        val bassLevel = model.getFeature<Feature.BassLevel>()!!
+        val bassLevel = model.getFeature<Feature.BassLevel>()
 
         if (bassLevel.level == level) return
 
