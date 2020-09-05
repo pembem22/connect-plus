@@ -49,7 +49,7 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
         model.requestDfu()
     }
 
-    fun loadFile(file: Uri) {
+    suspend fun loadFile(file: Uri) {
         model.loadFile(file)
     }
 }

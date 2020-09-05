@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_dfu.*
+import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.helpers.HexHelper.toHexString
@@ -186,7 +188,9 @@ class DfuView : Fragment(), BaseView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         data ?: return
-        presenter.loadFile(data.data!!)
+        lifecycleScope.launch {
+            presenter.loadFile(data.data!!)
+        }
     }
 
     override fun onDestroy() {

@@ -2,6 +2,9 @@ package me.andreww7985.connectplus.dfu
 
 import android.net.Uri
 import android.provider.OpenableColumns
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.Event
 import me.andreww7985.connectplus.helpers.ChecksumHelper
@@ -55,40 +58,48 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
         return result
     }
 
-    fun loadFile(file: Uri) {
-        Thread {
+    suspend fun loadFile(file: Uri) {
+        val dfuModel = this
+
+        coroutineScope {
             val filename = getFilename(file)
 
             if (filename == null) {
                 fileLoadingErrorEvent.fire()
-                return@Thread
+                return@coroutineScope
             }
 
             if (!filename.toLowerCase(Locale.getDefault()).endsWith(".dfu")) {
                 wrongFileEvent.fire()
-                return@Thread
+                return@coroutineScope
             }
 
             state = State.LOADING_FILE
-            this.filename = filename
+            dfuModel.filename = filename
             modelChangedEvent.fire()
 
-            val inputStream = App.instance.contentResolver.openInputStream(file)!!
-            val size = inputStream.available()
-            val bytes = ByteArray(size)
-            inputStream.read(bytes)
-            inputStream.close()
-            val checksum = HexHelper.intToBytes(ChecksumHelper.crc(bytes).toInt())
+            launch(Dispatchers.IO) {
+                val inputStream = App.instance.contentResolver.openInputStream(file)!!
+                val size = inputStream.available()
+                val bytes = ByteArray(size)
+                inputStream.read(bytes)
+                inputStream.close()
 
-            this.fileBytes = bytes
-            this.fileSize = size
-            this.checksum = checksum
+                dfuModel.fileBytes = bytes
+                dfuModel.fileSize = size
+            }.join()
 
-            state = State.READY
-            modelChangedEvent.fire()
+            launch(Dispatchers.Default) {
+                val checksum = HexHelper.intToBytes(ChecksumHelper.crc(dfuModel.fileBytes!!).toInt())
 
-            App.analytics.logEvent("dfu_file_loaded")
-        }.start()
+                dfuModel.checksum = checksum
+
+                state = State.READY
+                modelChangedEvent.fire()
+
+                App.analytics.logEvent("dfu_file_loaded")
+            }
+        }
     }
 
     fun cancelDfu() {
