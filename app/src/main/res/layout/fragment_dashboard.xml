@@ -44,8 +44,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    app:tint="?attr/colorControlNormal"
-                    app:srcCompat="@drawable/ic_pause" />
+                    app:srcCompat="@drawable/ic_pause"
+                    app:tint="?attr/colorControlNormal" />
 
                 <ImageView
                     android:id="@+id/dashboard_product_logo"
@@ -57,8 +57,8 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
                     android:scaleType="fitCenter"
-                    app:tint="?attr/colorOnBackground"
-                    app:srcCompat="@drawable/ic_unknown" />
+                    app:srcCompat="@drawable/ic_unknown"
+                    app:tint="?attr/colorOnBackground" />
 
                 <ImageButton
                     android:id="@+id/dashboard_product_audio_button"
@@ -162,9 +162,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:stepSize="1.0"
                 android:valueFrom="0.0"
-                android:valueTo="20.0"
-                android:stepSize="1.0" />
+                android:valueTo="20.0" />
 
         </LinearLayout>
 

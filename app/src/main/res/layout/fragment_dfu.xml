@@ -17,51 +17,36 @@
         <LinearLayout
             android:id="@+id/dfu_battery_warning_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/dfu_warning_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:tint="?attr/colorError"
-                    app:srcCompat="@drawable/ic_error" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="@string/dfu_connect_charger_message"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+            <ImageView
+                android:id="@+id/dfu_warning_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="Refresh"
-                android:visibility="gone" />
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/ic_error"
+                app:tint="?attr/colorError" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/dfu_connect_charger_message"
+                android:textAppearance="@style/TextAppearance.AppCompat" />
         </LinearLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/dfu_file_selector_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingTop="@dimen/card_vertical_border"
@@ -75,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:text="@string/dfu_state_file_not_selected"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <com.google.android.material.button.MaterialButton
@@ -94,7 +80,7 @@
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingRight="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -140,13 +126,14 @@
             android:id="@+id/dfu_flash_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="vertical"
             android:padding="8dp"
             android:paddingStart="16dp"
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -160,12 +147,14 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:text="@string/dfu_state_ready"
                     android:textAppearance="@style/TextAppearance.AppCompat" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/dfu_flash_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/dfu_button_flash" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.google.android.material.progressindicator.ProgressIndicator
@@ -175,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:max="100000"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/dfu_flash_progress_text"
@@ -183,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

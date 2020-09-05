@@ -23,10 +23,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
             val log = StringBuilder()
             while (true) {
-                log.appendln(bufferedReader.readLine() ?: break)
+                log.appendLine(bufferedReader.readLine() ?: break)
             }
 
-            context!!.getSystemService<ClipboardManager>()!!.setPrimaryClip(ClipData.newPlainText("logs", log))
+            requireContext().getSystemService<ClipboardManager>()!!.setPrimaryClip(ClipData.newPlainText("logs", log))
 
             UIHelper.showToast("Copied logs to clipboard")
             false

@@ -41,14 +41,22 @@ class DfuView : Fragment(), BaseView {
 
             when (dfu.state) {
                 DfuModel.State.FILE_NOT_SELECTED -> {
+                    dfu_file_selector_card.visibility = View.VISIBLE
                     dfu_file_selector_text.text = getString(R.string.dfu_state_file_not_selected)
                     dfu_file_selector_button.isEnabled = true
+
+                    dfu_file_info_card.visibility = View.GONE
+
+                    dfu_flash_card.visibility = View.GONE
                 }
                 DfuModel.State.LOADING_FILE -> {
+                    dfu_file_selector_card.visibility = View.VISIBLE
                     dfu_file_selector_text.text = getString(R.string.dfu_state_loading_file)
                     dfu_file_selector_button.isEnabled = false
 
                     dfu_file_info_card.visibility = View.GONE
+
+                    dfu_flash_card.visibility = View.GONE
                 }
                 DfuModel.State.READY -> {
                     dfu_file_selector_text.text = dfu.filename!!
