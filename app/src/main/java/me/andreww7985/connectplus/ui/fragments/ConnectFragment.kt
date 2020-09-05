@@ -20,7 +20,7 @@ class ConnectFragment : Fragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         connect_list.layoutManager = LinearLayoutManager(context)
-        connect_list.adapter = SpeakersAdapter(context!!, SpeakerManager.speakerList)
+        connect_list.adapter = SpeakersAdapter(SpeakerManager.speakerList)
 
         SpeakerManager.linkUpdatedEvent.subscribe {
             this@ConnectFragment.activity?.runOnUiThread {

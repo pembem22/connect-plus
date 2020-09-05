@@ -83,8 +83,7 @@ class MainActivity : AppCompatActivity() {
         view.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-//            v.updatePadding(bottom = insets.systemWindowInsetTop)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             toolbar.updatePadding(top = insets.systemWindowInsetTop)
             insets
         }
