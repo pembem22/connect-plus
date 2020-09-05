@@ -14,8 +14,8 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
         val resources = app.resources
         val packageName = app.packageName
 
-        val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
-        val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.name.toLowerCase(Locale.ROOT), model.color.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
+        val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.modelName), "drawable", packageName)
+        val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.modelName, model.color.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
 
         view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 

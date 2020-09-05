@@ -30,7 +30,7 @@ enum class ProductColor {
     companion object {
         fun from(speakerModel: ProductModel, speakerColor: Int): ProductColor {
             return when (speakerModel) {
-                ProductModel.CHARGE3 -> when (speakerColor) {
+                ProductModel.CHARGE3, ProductModel.CHARGE3_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> TEAL
@@ -58,7 +58,7 @@ enum class ProductColor {
                     13 -> MOSAIC
                     else -> UNKNOWN
                 }
-                ProductModel.FLIP4 -> when (speakerColor) {
+                ProductModel.FLIP4, ProductModel.FLIP4_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -94,7 +94,7 @@ enum class ProductColor {
                     0x16 -> CAMO
                     else -> UNKNOWN
                 }
-                ProductModel.BOOMBOX -> when (speakerColor) {
+                ProductModel.BOOMBOX, ProductModel.BOOMBOX_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> GREEN
                     8 -> SQUAD
@@ -110,7 +110,7 @@ enum class ProductColor {
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                ProductModel.PULSE3 -> when (speakerColor) {
+                ProductModel.PULSE3, ProductModel.PULSE3_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
@@ -123,7 +123,7 @@ enum class ProductColor {
                     5 -> MALTA
                     else -> UNKNOWN
                 }
-                ProductModel.XTREME2 -> when (speakerColor) {
+                ProductModel.XTREME2, ProductModel.XTREME2_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -131,7 +131,7 @@ enum class ProductColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                ProductModel.CHARGE4 -> when (speakerColor) {
+                ProductModel.CHARGE4, ProductModel.CHARGE4_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -152,7 +152,7 @@ enum class ProductColor {
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                else -> UNKNOWN
+                ProductModel.UNKNOWN -> UNKNOWN
             }
         }
     }

@@ -57,16 +57,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        /* Don't show DFU flash menu when speaker model is unknown, Flip 5 or Pulse 4 */
-        val selectedSpeaker = SpeakerManager.selectedSpeaker
-        if (selectedSpeaker == null ||
-                selectedSpeaker.model == ProductModel.UNKNOWN ||
-                selectedSpeaker.model == ProductModel.FLIP5 ||
-                selectedSpeaker.model == ProductModel.PULSE4)
+        val speaker = SpeakerManager.selectedSpeaker!!
+
+        /* Only show DFU flash menu on known supported models. */
+        val supportedDfu = listOf(
+                ProductModel.XTREME,
+                ProductModel.CHARGE3,
+                ProductModel.CHARGE4,
+                ProductModel.FLIP4,
+                ProductModel.XTREME2,
+                ProductModel.BOOMBOX
+        )
+        if (!supportedDfu.contains(speaker.model)) {
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
+        }
 
         nav_menu.menu.findItem(R.id.nav_connect).apply {
-            val connect = ProductConnect.from(selectedSpeaker!!.model)
+            val connect = ProductConnect.from(speaker.model)
             setIcon(connect.iconId)
             setTitle(connect.nameId)
         }

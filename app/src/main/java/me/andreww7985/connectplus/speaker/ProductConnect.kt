@@ -10,7 +10,11 @@ enum class ProductConnect(val nameId: Int, val iconId: Int) {
     companion object {
         fun from(productModel: ProductModel) = when (productModel) {
             ProductModel.FLIP3, ProductModel.PULSE2, ProductModel.XTREME, ProductModel.UNKNOWN -> CONNECT
-            ProductModel.CHARGE3, ProductModel.CHARGE4, ProductModel.FLIP4, ProductModel.BOOMBOX, ProductModel.XTREME2, ProductModel.PULSE3 -> CONNECT_PLUS
+
+            ProductModel.CHARGE3, ProductModel.CHARGE4, ProductModel.FLIP4, ProductModel.BOOMBOX, ProductModel.XTREME2, ProductModel.PULSE3,
+            ProductModel.CHARGE3_QCC, ProductModel.CHARGE4_QCC, ProductModel.FLIP4_QCC, ProductModel.BOOMBOX_QCC, ProductModel.XTREME2_QCC,
+            ProductModel.PULSE3_QCC -> CONNECT_PLUS
+
             ProductModel.FLIP5, ProductModel.PULSE4, ProductModel.BOOMBOX2 -> PARTYBOOST
         }
     }
