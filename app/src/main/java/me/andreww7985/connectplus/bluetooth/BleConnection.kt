@@ -31,7 +31,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
             }
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                BleOperationManager.request(RequestMtuOperation(this@BleConnection, speaker.hardware.model.getMtu()))
+                BleOperationManager.request(RequestMtuOperation(this@BleConnection, speaker.hardware.getMtu()))
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 BleOperationManager.operationComplete()
                 gatt!!.close()

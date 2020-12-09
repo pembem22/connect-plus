@@ -11,6 +11,11 @@ data class SpeakerHardware(
         val connect: HwConnect,
         val platform: HwPlatform
 ) {
+    fun getMtu() = when (platform) {
+        HwPlatform.VIMICRO -> 35
+        else -> 517
+    }
+
     companion object {
         fun from(modelId: Int, colorId: Int): SpeakerHardware {
             val model = HwModel.from(modelId)
