@@ -7,8 +7,7 @@
     android:orientation="vertical"
     tools:context="me.andreww7985.connectplus.discovery.DiscoveryView">
 
-    <com.google.android.material.progressindicator.ProgressIndicator
-        style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

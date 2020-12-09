@@ -157,9 +157,8 @@
                     android:text="@string/dfu_button_flash" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <com.google.android.material.progressindicator.ProgressIndicator
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/dfu_flash_progressbar"
-                style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
