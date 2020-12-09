@@ -26,7 +26,6 @@ class SpeakerView : BaseView, Fragment() {
     }
 
     fun setDeveloperData(mac: String, data: String, color: String, model: String) {
-
         lifecycleScope.launch {
             mac_value.text = mac
             data_value.text = data

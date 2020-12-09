@@ -101,5 +101,5 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         speaker.sendPacket(Packet(PacketType.REQ_SPEAKER_INFO))
     }
 
-    fun getBluetoothName() = gatt!!.device.name
+    fun getBluetoothName(): String = gatt!!.device.name
 }
