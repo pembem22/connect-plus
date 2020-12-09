@@ -14,9 +14,9 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.SpeakerManager
-import me.andreww7985.connectplus.speaker.ProductConnect
-import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerView
+import me.andreww7985.connectplus.speaker.hardware.HwConnect
+import me.andreww7985.connectplus.speaker.hardware.HwModel
 import me.andreww7985.connectplus.ui.MainActivityViewModel
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
 import timber.log.Timber
@@ -54,19 +54,19 @@ class MainActivity : AppCompatActivity() {
 
         /* Only show DFU flash menu on known supported models. */
         val supportedDfu = listOf(
-                ProductModel.XTREME,
-                ProductModel.CHARGE3,
-                ProductModel.CHARGE4,
-                ProductModel.FLIP4,
-                ProductModel.XTREME2,
-                ProductModel.BOOMBOX
+                HwModel.XTREME,
+                HwModel.CHARGE3,
+                HwModel.CHARGE4,
+                HwModel.FLIP4,
+                HwModel.XTREME2,
+                HwModel.BOOMBOX
         )
         if (!supportedDfu.contains(speaker.model)) {
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
         }
 
         nav_menu.menu.findItem(R.id.nav_connect).apply {
-            val connect = ProductConnect.from(speaker.model)
+            val connect = HwConnect.from(speaker.model)
             setIcon(connect.iconId)
             setTitle(connect.nameId)
         }

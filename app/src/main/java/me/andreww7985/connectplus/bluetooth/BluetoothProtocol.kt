@@ -11,9 +11,9 @@ import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.Feature
-import me.andreww7985.connectplus.speaker.ProductColor
-import me.andreww7985.connectplus.speaker.ProductModel
 import me.andreww7985.connectplus.speaker.SpeakerModel
+import me.andreww7985.connectplus.speaker.hardware.HwColor
+import me.andreww7985.connectplus.speaker.hardware.HwModel
 import timber.log.Timber
 
 object BluetoothProtocol {
@@ -49,9 +49,9 @@ object BluetoothProtocol {
         Timber.d("connect parsed ${speakerData.toHexString()}")
 
 
-        val speakerModel = ProductModel.from((speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt()
+        val speakerModel = HwModel.from((speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt()
                 and 0xFF))
-        val speakerColor = ProductColor.from(speakerModel, speakerData[2].toInt() and 0xFF)
+        val speakerColor = HwColor.from(speakerModel, speakerData[2].toInt() and 0xFF)
         val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
 
         speaker.model = speakerModel
@@ -77,20 +77,20 @@ object BluetoothProtocol {
                 var batteryCharging = feature.batteryCharging
                 var batteryLevel = feature.batteryLevel
 
-                var productModel = ProductModel.UNKNOWN
-                var productColor = ProductColor.UNKNOWN
+                var productModel = HwModel.UNKNOWN
+                var productColor = HwColor.UNKNOWN
 
                 var pointer = 1
                 while (pointer < payload.size) {
                     when (DataToken.from(payload[pointer].toInt() and 0xFF)) {
                         DataToken.TOKEN_MODEL -> {
-                            productModel = ProductModel.from(
+                            productModel = HwModel.from(
                                     (payload[pointer + 1].toInt() and 0xFF shl 8) or (payload[pointer + 2].toInt() and 0xFF))
 
                             pointer += 3
                         }
                         DataToken.TOKEN_COLOR -> {
-                            productColor = ProductColor.from(productModel, payload[pointer + 1].toInt())
+                            productColor = HwColor.from(productModel, payload[pointer + 1].toInt())
 
                             pointer += 2
                         }
