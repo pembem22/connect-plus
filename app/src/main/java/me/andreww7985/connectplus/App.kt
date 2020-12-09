@@ -4,8 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
 class App : Application() {
@@ -13,6 +12,7 @@ class App : Application() {
         lateinit var instance: App
         lateinit var sharedPreferences: SharedPreferences
         lateinit var analytics: Analytics
+        lateinit var crashlytics: FirebaseCrashlytics
     }
 
     override fun onCreate() {
@@ -28,12 +28,10 @@ class App : Application() {
         Timber.d("sendUsageData $sendUsageData")
 
         analytics = Analytics()
-        analytics.setAnalyticsEnabled(sendUsageData)
+        analytics.setAnalyticsCollectionEnabled(sendUsageData)
 
-        if (sendUsageData) {
-            Fabric.with(this, Crashlytics())
-            Timber.d("Crashlytics enabled")
-        }
+        crashlytics = FirebaseCrashlytics.getInstance()
+        crashlytics.setCrashlyticsCollectionEnabled(sendUsageData)
 
         updateDarkTheme()
     }
