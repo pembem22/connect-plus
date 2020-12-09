@@ -1,6 +1,6 @@
-package me.andreww7985.connectplus.speaker
+package me.andreww7985.connectplus.speaker.hardware
 
-enum class ProductModel(val value: Int, val modelName: String) {
+enum class HwModel(val value: Int, val modelName: String) {
     FLIP3(0x0023, "flip3"),
     XTREME(0x0024, "xtreme"),
     PULSE2(0x0026, "pulse2"),

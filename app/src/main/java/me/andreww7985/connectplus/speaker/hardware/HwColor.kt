@@ -1,6 +1,6 @@
-package me.andreww7985.connectplus.speaker
+package me.andreww7985.connectplus.speaker.hardware
 
-enum class ProductColor {
+enum class HwColor {
     BLACK,
     BLUE,
     CAMO,
@@ -28,9 +28,9 @@ enum class ProductColor {
 
 
     companion object {
-        fun from(speakerModel: ProductModel, speakerColor: Int): ProductColor {
+        fun from(speakerModel: HwModel, speakerColor: Int): HwColor {
             return when (speakerModel) {
-                ProductModel.CHARGE3, ProductModel.CHARGE3_QCC -> when (speakerColor) {
+                HwModel.CHARGE3, HwModel.CHARGE3_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> TEAL
@@ -42,7 +42,7 @@ enum class ProductColor {
                     9 -> MALTA
                     else -> UNKNOWN
                 }
-                ProductModel.FLIP3 -> when (speakerColor) {
+                HwModel.FLIP3 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> ORANGE
@@ -58,7 +58,7 @@ enum class ProductColor {
                     13 -> MOSAIC
                     else -> UNKNOWN
                 }
-                ProductModel.FLIP4, ProductModel.FLIP4_QCC -> when (speakerColor) {
+                HwModel.FLIP4, HwModel.FLIP4_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -75,7 +75,7 @@ enum class ProductColor {
                     0x0B -> MOSAIC
                     else -> UNKNOWN
                 }
-                ProductModel.FLIP5 -> when (speakerColor) {
+                HwModel.FLIP5 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -94,28 +94,28 @@ enum class ProductColor {
                     0x16 -> CAMO
                     else -> UNKNOWN
                 }
-                ProductModel.BOOMBOX, ProductModel.BOOMBOX_QCC -> when (speakerColor) {
+                HwModel.BOOMBOX, HwModel.BOOMBOX_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> GREEN
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                ProductModel.BOOMBOX2 -> when (speakerColor) {
+                HwModel.BOOMBOX2 -> when (speakerColor) {
                     0, 1 -> BLACK
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                ProductModel.PULSE2 -> when (speakerColor) {
+                HwModel.PULSE2 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                ProductModel.PULSE3, ProductModel.PULSE3_QCC -> when (speakerColor) {
+                HwModel.PULSE3, HwModel.PULSE3_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                ProductModel.XTREME -> when (speakerColor) {
+                HwModel.XTREME -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3, 6 -> BLUE
@@ -123,7 +123,7 @@ enum class ProductColor {
                     5 -> MALTA
                     else -> UNKNOWN
                 }
-                ProductModel.XTREME2, ProductModel.XTREME2_QCC -> when (speakerColor) {
+                HwModel.XTREME2, HwModel.XTREME2_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -131,7 +131,7 @@ enum class ProductColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                ProductModel.CHARGE4, ProductModel.CHARGE4_QCC -> when (speakerColor) {
+                HwModel.CHARGE4, HwModel.CHARGE4_QCC -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -147,12 +147,12 @@ enum class ProductColor {
                     0x13 -> CAMO
                     else -> UNKNOWN
                 }
-                ProductModel.PULSE4 -> when (speakerColor) {
+                HwModel.PULSE4 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                ProductModel.UNKNOWN -> UNKNOWN
+                HwModel.UNKNOWN -> UNKNOWN
             }
         }
     }
