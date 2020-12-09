@@ -11,9 +11,8 @@ import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.Feature
+import me.andreww7985.connectplus.speaker.SpeakerHardware
 import me.andreww7985.connectplus.speaker.SpeakerModel
-import me.andreww7985.connectplus.speaker.hardware.HwColor
-import me.andreww7985.connectplus.speaker.hardware.HwModel
 import timber.log.Timber
 
 object BluetoothProtocol {
@@ -48,14 +47,11 @@ object BluetoothProtocol {
 
         Timber.d("connect parsed ${speakerData.toHexString()}")
 
-
-        val speakerModel = HwModel.from((speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt()
-                and 0xFF))
-        val speakerColor = HwColor.from(speakerModel, speakerData[2].toInt() and 0xFF)
         val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
 
-        speaker.model = speakerModel
-        speaker.color = speakerColor
+        val modelId = (speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt() and 0xFF)
+        val colorId = speakerData[2].toInt() and 0xFF
+        speaker.hardware = SpeakerHardware.from(modelId, colorId)
 
         SpeakerManager.speakerFound(speaker)
     }
@@ -77,20 +73,19 @@ object BluetoothProtocol {
                 var batteryCharging = feature.batteryCharging
                 var batteryLevel = feature.batteryLevel
 
-                var productModel = HwModel.UNKNOWN
-                var productColor = HwColor.UNKNOWN
+                var modelId: Int? = null
+                var colorId: Int? = null
 
                 var pointer = 1
                 while (pointer < payload.size) {
                     when (DataToken.from(payload[pointer].toInt() and 0xFF)) {
                         DataToken.TOKEN_MODEL -> {
-                            productModel = HwModel.from(
-                                    (payload[pointer + 1].toInt() and 0xFF shl 8) or (payload[pointer + 2].toInt() and 0xFF))
+                            modelId = (payload[pointer + 1].toInt() and 0xFF shl 8) or (payload[pointer + 2].toInt() and 0xFF)
 
                             pointer += 3
                         }
                         DataToken.TOKEN_COLOR -> {
-                            productColor = HwColor.from(productModel, payload[pointer + 1].toInt())
+                            colorId = payload[pointer + 1].toInt()
 
                             pointer += 2
                         }
@@ -141,8 +136,9 @@ object BluetoothProtocol {
                 }
 
                 if (!speaker.isDiscovered) {
-                    speaker.color = productColor
-                    speaker.model = productModel
+                    if (modelId != null && colorId != null) {
+                        speaker.hardware = SpeakerHardware.from(modelId, colorId)
+                    }
 
                     speaker.discovered()
                 }

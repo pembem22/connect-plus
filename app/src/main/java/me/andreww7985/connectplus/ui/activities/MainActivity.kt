@@ -61,12 +61,12 @@ class MainActivity : AppCompatActivity() {
                 HwModel.XTREME2,
                 HwModel.BOOMBOX
         )
-        if (!supportedDfu.contains(speaker.model)) {
+        if (!supportedDfu.contains(speaker.hardware.model)) {
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
         }
 
         nav_menu.menu.findItem(R.id.nav_connect).apply {
-            val connect = HwConnect.from(speaker.model)
+            val connect = HwConnect.from(speaker.hardware.model)
             setIcon(connect.iconId)
             setTitle(connect.nameId)
         }

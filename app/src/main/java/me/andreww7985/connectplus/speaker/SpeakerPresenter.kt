@@ -8,14 +8,19 @@ import java.util.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
-        view!!.setDeveloperData(model.mac, model.scanRecord, model.color.name, model.model.name)
+        view!!.setDeveloperData(model.mac, model.scanRecord, model.hardware.color.name, model.hardware.model.name)
 
         val app = App.instance
         val resources = app.resources
         val packageName = app.packageName
 
-        val logoDrawableId = resources.getIdentifier(String.format("logo_%s", model.model.modelName), "drawable", packageName)
-        val speakerDrawableId = resources.getIdentifier(String.format("img_%s_%s", model.model.modelName, model.color.name.toLowerCase(Locale.ROOT)), "drawable", packageName)
+        val modelString = model.hardware.model.name.toLowerCase(Locale.ROOT)
+        val colorString = model.hardware.color.name.toLowerCase(Locale.ROOT)
+
+        val logoDrawableId = resources.getIdentifier(
+                "logo_${modelString}", "drawable", packageName)
+        val speakerDrawableId = resources.getIdentifier(
+                "img_${modelString}_${colorString}", "drawable", packageName)
 
         view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 

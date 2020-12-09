@@ -20,7 +20,9 @@ class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.A
         val speaker = speakers[position]
         val context = holder.itemView.context
 
-        val speakerDrawableId = context.resources.getIdentifier(String.format("img_%s_%s", speaker.model.modelName, speaker.color.name.toLowerCase(Locale.ROOT)), "drawable", context.packageName)
+        val speakerDrawableId = context.resources.getIdentifier(
+                String.format("img_%s_%s", speaker.hardware.model.modelName,
+                        speaker.hardware.color.name.toLowerCase(Locale.ROOT)), "drawable", context.packageName)
         if (speakerDrawableId != 0) holder.speakerImage.setImageResource(speakerDrawableId)
 
         holder.soundButton.setOnClickListener { speaker.playSound() }

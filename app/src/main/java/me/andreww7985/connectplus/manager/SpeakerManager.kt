@@ -42,8 +42,8 @@ object SpeakerManager : BaseModel {
         Timber.d("speakerConnected MAC = ${speaker.mac}")
 
         App.analytics.logSpeakerEvent("speaker_connected") {
-            putString("speaker_model", speaker.model.name)
-            putString("speaker_color", speaker.color.name)
+            putString("speaker_model", speaker.hardware.model.name)
+            putString("speaker_color", speaker.hardware.color.name)
             putString("speaker_data", speaker.scanRecord)
         }
 

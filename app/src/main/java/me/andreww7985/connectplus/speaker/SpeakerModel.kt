@@ -15,16 +15,13 @@ import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
-import me.andreww7985.connectplus.speaker.hardware.HwColor
-import me.andreww7985.connectplus.speaker.hardware.HwModel
 import timber.log.Timber
 import java.util.concurrent.ConcurrentHashMap
 
 class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : BaseModel {
     val mac = bluetoothDevice.address!!
     var index = 0
-    lateinit var model: HwModel
-    lateinit var color: HwColor
+    lateinit var hardware: SpeakerHardware
     var isDiscovered = false
 
     var audioChannel = AudioChannel.STEREO
