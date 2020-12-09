@@ -25,12 +25,13 @@ class SpeakerView : BaseView, Fragment() {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
-    fun setDeveloperData(mac: String, data: String, color: String, model: String) {
+    fun setDeveloperData(mac: String, data: String, color: String, model: String, platform: String) {
         lifecycleScope.launch {
             mac_value.text = mac
             data_value.text = data
             color_value.text = color
             model_value.text = model
+            platform_value.text = platform
         }
     }
 

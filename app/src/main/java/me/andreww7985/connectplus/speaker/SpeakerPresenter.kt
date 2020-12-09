@@ -8,7 +8,8 @@ import java.util.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
-        view!!.setDeveloperData(model.mac, model.scanRecord, model.hardware.color.name, model.hardware.model.name)
+        view!!.setDeveloperData(model.mac, model.scanRecord,
+                model.hardware.color.name, model.hardware.model.name, model.hardware.platform.name)
 
         val app = App.instance
         val resources = app.resources
