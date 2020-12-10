@@ -28,7 +28,7 @@ enum class HwModel(val value: Int, val modelName: String) {
             0x1ED1 /* CSR */, 0x1F24 /* QCC */ -> FLIP4
             0x1ED2 /* CSR */, 0x1F28 /* QCC */ -> PULSE3
             0x1EE7 /* CSR */, 0x1F27 /* QCC */ -> BOOMBOX
-            0x1EFC /* CSR */, 0x1F26 /* QCC */ -> XTREME2
+            0x1EFC /* CSR */, 0x1F26 /* QCC */, 0x2038 /* QCC */ -> XTREME2
             0x1F17 /* CSR */, 0x1F29 /* QCC */ -> CHARGE4
             0x1F31 /* VIMICRO */ -> FLIP5
             0x1F53 /* VIMICRO */ -> BOOMBOX2

@@ -24,6 +24,7 @@ enum class HwColor {
     ECO_BLUE,
     BLACKSTAR,
     TOMORROWLAND,
+    GUN_METAL,
     UNKNOWN;
 
 
@@ -129,6 +130,7 @@ enum class HwColor {
                     3 -> BLUE
                     4 -> TEAL
                     8 -> SQUAD
+                    0x12 -> GUN_METAL
                     else -> UNKNOWN
                 }
                 HwModel.CHARGE4 -> when (speakerColor) {
