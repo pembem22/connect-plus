@@ -161,6 +161,17 @@ enum class HwColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
+                HwModel.CHARGE5 -> when (speakerColor) {
+                    1 -> BLACK
+                    2 -> RED
+                    3 -> BLUE
+                    5 -> GREEN
+                    7 -> GRAY
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x13 -> SQUAD
+                    else -> UNKNOWN
+                }
                 HwModel.UNKNOWN -> UNKNOWN
             }
         }

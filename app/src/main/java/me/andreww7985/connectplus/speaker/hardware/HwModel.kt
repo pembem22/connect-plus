@@ -18,6 +18,7 @@ enum class HwModel(val value: Int, val modelName: String) {
     PULSE4(0x1F56, "pulse4"),
 
     XTREME3(0x202F, "xtreme3"),
+    CHARGE5(0x2040, "charge5"),
 
     UNKNOWN(0xFFFF, "unknown");
 
@@ -36,6 +37,7 @@ enum class HwModel(val value: Int, val modelName: String) {
             0x1F53 /* VIMICRO */ -> BOOMBOX2
             0x1F56 /* VIMICRO */ -> PULSE4
             0x202F /* VIMICRO */ -> XTREME3
+            0x2040 /* VIMICRO */ -> CHARGE5
             else -> UNKNOWN
         }
     }
