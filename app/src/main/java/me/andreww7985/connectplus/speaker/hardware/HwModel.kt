@@ -17,6 +17,8 @@ enum class HwModel(val value: Int, val modelName: String) {
     BOOMBOX2(0x1F53, "boombox2"),
     PULSE4(0x1F56, "pulse4"),
 
+    XTREME3(0x202F, "xtreme3"),
+
     UNKNOWN(0xFFFF, "unknown");
 
     companion object {
@@ -33,6 +35,7 @@ enum class HwModel(val value: Int, val modelName: String) {
             0x1F31 /* VIMICRO */ -> FLIP5
             0x1F53 /* VIMICRO */ -> BOOMBOX2
             0x1F56 /* VIMICRO */ -> PULSE4
+            0x202F /* VIMICRO */ -> XTREME3
             else -> UNKNOWN
         }
     }

@@ -154,6 +154,13 @@ enum class HwColor {
                     2 -> WHITE
                     else -> UNKNOWN
                 }
+                HwModel.XTREME3 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    3 -> BLUE
+                    7 -> GRAY
+                    8 -> SQUAD
+                    else -> UNKNOWN
+                }
                 HwModel.UNKNOWN -> UNKNOWN
             }
         }
