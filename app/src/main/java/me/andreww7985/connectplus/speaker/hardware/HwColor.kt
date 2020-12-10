@@ -30,7 +30,7 @@ enum class HwColor {
     companion object {
         fun from(speakerModel: HwModel, speakerColor: Int): HwColor {
             return when (speakerModel) {
-                HwModel.CHARGE3, HwModel.CHARGE3_QCC -> when (speakerColor) {
+                HwModel.CHARGE3 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> TEAL
@@ -58,7 +58,7 @@ enum class HwColor {
                     13 -> MOSAIC
                     else -> UNKNOWN
                 }
-                HwModel.FLIP4, HwModel.FLIP4_QCC -> when (speakerColor) {
+                HwModel.FLIP4 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -94,7 +94,7 @@ enum class HwColor {
                     0x16 -> CAMO
                     else -> UNKNOWN
                 }
-                HwModel.BOOMBOX, HwModel.BOOMBOX_QCC -> when (speakerColor) {
+                HwModel.BOOMBOX -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> GREEN
                     8 -> SQUAD
@@ -110,7 +110,7 @@ enum class HwColor {
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                HwModel.PULSE3, HwModel.PULSE3_QCC -> when (speakerColor) {
+                HwModel.PULSE3 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
@@ -123,7 +123,7 @@ enum class HwColor {
                     5 -> MALTA
                     else -> UNKNOWN
                 }
-                HwModel.XTREME2, HwModel.XTREME2_QCC -> when (speakerColor) {
+                HwModel.XTREME2 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
@@ -131,7 +131,7 @@ enum class HwColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                HwModel.CHARGE4, HwModel.CHARGE4_QCC -> when (speakerColor) {
+                HwModel.CHARGE4 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
                     3 -> BLUE
