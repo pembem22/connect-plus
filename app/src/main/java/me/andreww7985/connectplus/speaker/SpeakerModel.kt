@@ -75,10 +75,12 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
     }
 
     fun updateAudioChannel(audioChannel: AudioChannel) {
-        if (this.audioChannel != audioChannel) {
-            sendPacket(Packet(PacketType.SET_SPEAKER_INFO, byteArrayOf(index.toByte(), DataToken.TOKEN_AUDIO_CHANNEL.id.toByte(), audioChannel.value.toByte())))
-            this.audioChannel = audioChannel
+        if (this.audioChannel == audioChannel) {
+            return
         }
+
+        sendPacket(Packet(PacketType.SET_SPEAKER_INFO, byteArrayOf(index.toByte(), DataToken.TOKEN_AUDIO_CHANNEL.id.toByte(), audioChannel.value.toByte())))
+        this.audioChannel = audioChannel
 
         if (isDiscovered) {
             SpeakerManager.linkUpdated()
