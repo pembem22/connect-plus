@@ -6,7 +6,7 @@ import me.andreww7985.connectplus.mvp.BasePresenter
 class DiscoveryPresenter : BasePresenter<DiscoveryView, SpeakerManager>(SpeakerManager) {
     override fun onViewAttached() {
         model.speakerFoundEvent.subscribe {
-            view!!.showConnecting(model.selectedSpeaker!!.bleConnection.getBluetoothName())
+            view?.showConnecting(model.selectedSpeaker!!.bleConnection.getBluetoothName())
         }
 
         val speaker = model.selectedSpeaker
