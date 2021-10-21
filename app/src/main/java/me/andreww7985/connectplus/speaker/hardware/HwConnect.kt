@@ -17,7 +17,7 @@ enum class HwConnect(@StringRes val nameId: Int, @DrawableRes val iconId: Int) {
             HwModel.PULSE3 -> CONNECT_PLUS
 
             HwModel.FLIP5, HwModel.PULSE4, HwModel.BOOMBOX2, HwModel.XTREME3,
-            HwModel.CHARGE5 -> PARTYBOOST
+            HwModel.CHARGE5, HwModel.FLIP6, HwModel.PULSE5 -> PARTYBOOST
         }
     }
 }

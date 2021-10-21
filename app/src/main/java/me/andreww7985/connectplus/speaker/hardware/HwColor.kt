@@ -165,11 +165,36 @@ enum class HwColor {
                     1 -> BLACK
                     2 -> RED
                     3 -> BLUE
+                    4 -> WHITE
                     5 -> GREEN
                     7 -> GRAY
                     9 -> TEAL
                     0x10 -> PINK
                     0x13 -> SQUAD
+                    else -> UNKNOWN
+                }
+                HwModel.PULSE5 -> when (speakerColor) {
+                    1 -> BLACK
+                    2 -> WHITE
+                    else -> UNKNOWN
+                }
+                HwModel.FLIP6 -> when (speakerColor) {
+                    1 -> BLACK
+                    2 -> RED
+                    3 -> BLUE
+                    4 -> WHITE
+                    5 -> GREEN
+                    6 -> YELLOW
+                    7 -> GRAY
+                    8 -> DESERT
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x11 -> BLACKSTAR
+                    0x12 -> TOMORROWLAND
+                    0x13 -> SQUAD
+                    0x14 -> ECO_BLUE
+                    0x15 -> ECO_GREEN
+                    0x16 -> CAMO
                     else -> UNKNOWN
                 }
                 HwModel.UNKNOWN -> UNKNOWN
