@@ -33,9 +33,6 @@
     <string name="dfu_file_info_size">Размер прошивки</string>
     <string name="dfu_file_info_checksum">CRC32 прошивки</string>
     <string name="dashboard_feedback_sounds_disabled">Звуковой отклик отключен</string>
-    <string name="settings_developers">Разработчики</string>
-    <string name="settings_main_developer_title">Главный разработчик</string>
-    <string name="settings_testers_title">Тестировщики</string>
     <string name="dfu_button_flash">ПРОШИТЬ</string>
     <string name="dfu_button_cancel">ОТМЕНА</string>
     <string name="dfu_button_open_file">ОТКРЫТЬ ФАЙЛ</string>

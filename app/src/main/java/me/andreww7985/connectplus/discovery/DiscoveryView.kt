@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
+import me.andreww7985.connectplus.ui.activities.SettingsActivity
 import timber.log.Timber
 
 class DiscoveryView : AppCompatActivity(), BaseView {
@@ -31,7 +33,20 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_discovery)
+        setSupportActionBar(toolbar)
+
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.nav_settings -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     fun showConnecting(name: String) {
@@ -61,6 +76,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Timber.d("onRequestPermissionsResult requestCode = $requestCode")
         checkPermissions()
     }
@@ -94,5 +110,10 @@ class DiscoveryView : AppCompatActivity(), BaseView {
             startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CODE_LOCATION)
         else
             BleScanManager.startScan()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }

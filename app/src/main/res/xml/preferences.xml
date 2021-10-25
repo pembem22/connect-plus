@@ -21,23 +21,13 @@
             android:title="@string/settings_send_app_data_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_developers">
-        <Preference
-            android:summary="@string/settings_main_developer_summary"
-            android:title="@string/settings_main_developer_title" />
-
-        <Preference
-            android:summary="@string/settings_testers_summary"
-            android:title="@string/settings_testers_title" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/setting_about">
         <Preference
             android:summary="@string/settings_source_code_summary"
             android:title="@string/settings_source_code_title">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/andreww7985/connect-plus" />
+                android:data="https://github.com/pembem22/connect-plus" />
         </Preference>
 
         <Preference
