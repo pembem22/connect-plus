@@ -21,11 +21,11 @@ android {
         }
     }
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "me.andreww7985.connectplus"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}-"
     }
