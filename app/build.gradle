@@ -5,8 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 def versionMajor = 1
-def versionMinor = 1
-def versionPatch = 4
+def versionMinor = 2
+def versionPatch = 0
 
 def props = new Properties()
 props.load(new FileInputStream(rootProject.file("release.properties")))
@@ -27,7 +27,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}-"
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}-pre01-"
     }
     buildTypes {
         debug {
