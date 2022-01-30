@@ -10,6 +10,7 @@ import android.provider.Settings
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_discovery.*
@@ -83,11 +84,24 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     private fun checkPermissions() {
         Timber.d("checkPermissions")
-        val location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && location != PackageManager.PERMISSION_GRANTED)
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_PERMISSION)
-        else checkBluetooth()
+        if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            val locationGranted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (!locationGranted) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_CODE_PERMISSION
+                )
+                return
+            }
+        }
+
+        checkBluetooth()
     }
 
     private fun checkBluetooth() {
@@ -100,13 +114,36 @@ class DiscoveryView : AppCompatActivity(), BaseView {
             return
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val bluetoothConnectGranted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+            val bluetoothScanGranted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (!bluetoothConnectGranted || !bluetoothScanGranted) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN),
+                    REQUEST_CODE_PERMISSION
+                )
+                return
+            }
+        }
+
         if (!BleScanManager.isBluetoothEnabled()) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_BLUETOOTH)
-        } else checkLocation()
+            return
+        }
+
+        checkLocation()
     }
 
     private fun checkLocation() {
-        if (!BleScanManager.isLocationEnabled())
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && !BleScanManager.isLocationEnabled())
             startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CODE_LOCATION)
         else
             BleScanManager.startScan()
