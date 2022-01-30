@@ -147,7 +147,7 @@
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,15 +197,15 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_pause"
-                    android:text="Play/Pause" />
+                    android:text="Play/Pause"
+                    app:icon="@drawable/ic_pause" />
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_voice"
-                    android:text="Voice assistant" />
+                    android:text="Voice assistant"
+                    app:icon="@drawable/ic_voice" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
         </LinearLayout>
