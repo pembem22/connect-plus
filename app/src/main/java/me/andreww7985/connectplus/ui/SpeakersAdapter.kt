@@ -9,7 +9,6 @@ import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.speaker.Feature
 import me.andreww7985.connectplus.speaker.SpeakerModel
-import java.util.*
 
 class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,8 +20,11 @@ class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.A
         val context = holder.itemView.context
 
         val speakerDrawableId = context.resources.getIdentifier(
-                String.format("img_%s_%s", speaker.hardware.model.modelName,
-                        speaker.hardware.color.name.toLowerCase(Locale.ROOT)), "drawable", context.packageName)
+            String.format(
+                "img_%s_%s", speaker.hardware.model.modelName,
+                speaker.hardware.color.name.lowercase()
+            ), "drawable", context.packageName
+        )
         if (speakerDrawableId != 0) holder.speakerImage.setImageResource(speakerDrawableId)
 
         holder.soundButton.setOnClickListener { speaker.playSound() }

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             updateCurrentFragment(R.id.nav_dashboard)
         }
 
-        nav_menu.setOnNavigationItemSelectedListener { item ->
+        nav_menu.setOnItemSelectedListener { item ->
             updateCurrentFragment(item.itemId)
             true
         }

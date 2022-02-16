@@ -13,7 +13,6 @@ import me.andreww7985.connectplus.mvp.BaseModel
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.SpeakerModel
-import java.util.*
 import kotlin.math.min
 
 class DfuModel(val speaker: SpeakerModel) : BaseModel {
@@ -69,7 +68,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
                 return@coroutineScope
             }
 
-            if (!filename.toLowerCase(Locale.getDefault()).endsWith(".dfu")) {
+            if (!filename.lowercase().endsWith(".dfu")) {
                 wrongFileEvent.fire()
                 return@coroutineScope
             }

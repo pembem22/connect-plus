@@ -4,24 +4,27 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
 import me.andreww7985.connectplus.speaker.Feature.Type.*
-import java.util.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
     override fun onViewAttached() {
-        view!!.setDeveloperData(model.mac, model.scanRecord,
-                model.hardware.color.name, model.hardware.model.name, model.hardware.platform.name)
+        view!!.setDeveloperData(
+            model.mac, model.scanRecord,
+            model.hardware.color.name, model.hardware.model.name, model.hardware.platform.name
+        )
 
         val app = App.instance
         val resources = app.resources
         val packageName = app.packageName
 
-        val modelString = model.hardware.model.name.toLowerCase(Locale.ROOT)
-        val colorString = model.hardware.color.name.toLowerCase(Locale.ROOT)
+        val modelString = model.hardware.model.name.lowercase()
+        val colorString = model.hardware.color.name.lowercase()
 
         val logoDrawableId = resources.getIdentifier(
-                "logo_${modelString}", "drawable", packageName)
+            "logo_${modelString}", "drawable", packageName
+        )
         val speakerDrawableId = resources.getIdentifier(
-                "img_${modelString}_${colorString}", "drawable", packageName)
+            "img_${modelString}_${colorString}", "drawable", packageName
+        )
 
         view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 
