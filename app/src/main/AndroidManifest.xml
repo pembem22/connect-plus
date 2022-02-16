@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="me.andreww7985.connectplus">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Request legacy Bluetooth permissions on older devices. -->
     <uses-permission

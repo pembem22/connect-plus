@@ -55,6 +55,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace 'me.andreww7985.connectplus'
 }
 
 dependencies {
