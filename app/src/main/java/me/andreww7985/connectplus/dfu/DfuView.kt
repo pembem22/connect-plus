@@ -186,6 +186,7 @@ class DfuView : Fragment(), BaseView {
         presenter.attachView(this)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         data ?: return
         lifecycleScope.launch {
