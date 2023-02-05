@@ -16,6 +16,8 @@ import me.andreww7985.connectplus.mvp.BaseView
 import me.andreww7985.connectplus.ui.SpeakersAdapter
 
 class ConnectFragment : Fragment(), BaseView {
+    private var linkUpdatedEventListener: (() -> Unit)? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_connect, container, false)
     }
@@ -24,11 +26,12 @@ class ConnectFragment : Fragment(), BaseView {
         connect_list.layoutManager = LinearLayoutManager(context)
         connect_list.adapter = SpeakersAdapter(SpeakerManager.speakerList)
 
-        SpeakerManager.linkUpdatedEvent.subscribe {
+        linkUpdatedEventListener = {
             lifecycleScope.launch {
                 connect_list.adapter?.notifyDataSetChanged()
             }
         }
+        SpeakerManager.linkUpdatedEvent.subscribe(linkUpdatedEventListener!!)
 
         connect_scan_button.setOnClickListener {
             if (BleScanManager.isScanning) {
@@ -57,6 +60,8 @@ class ConnectFragment : Fragment(), BaseView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        SpeakerManager.speakerFoundEvent.unsubscribe()
+        linkUpdatedEventListener?.also {
+            SpeakerManager.speakerFoundEvent.unsubscribe(it)
+        }
     }
 }

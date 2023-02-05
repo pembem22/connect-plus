@@ -35,8 +35,6 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
 
     val dfuModel = DfuModel(this)
 
-    val connectedEvent = Event()
-
     var isPlaying = false
 
     init {
@@ -52,7 +50,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         sendPacket(Packet(PacketType.REQ_SPEAKERPHONE_MODE))
         sendPacket(Packet(PacketType.REQ_BASS_LEVEL))
 
-        connectedEvent.fire()
+        SpeakerManager.speakerConnected(this)
     }
 
     fun featuresChanged() {

@@ -25,20 +25,14 @@ object SpeakerManager : BaseModel {
 
         if (speakers.size == 1) {
             Timber.d("speakerFound found main speaker")
-            // mainSpeaker = speaker
             selectedSpeaker = speaker
-        }
-
-        speaker.connectedEvent.subscribe {
-            speakerConnected(speaker)
-            unsubscribe()
         }
 
         BleScanManager.stopScan()
         speakerFoundEvent.fire()
     }
 
-    private fun speakerConnected(speaker: SpeakerModel) {
+    fun speakerConnected(speaker: SpeakerModel) {
         Timber.d("speakerConnected MAC = ${speaker.mac}")
 
         App.analytics.logSpeakerEvent("speaker_connected") {

@@ -6,6 +6,8 @@ import me.andreww7985.connectplus.mvp.BasePresenter
 import me.andreww7985.connectplus.speaker.Feature.Type.*
 
 class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager.selectedSpeaker!!) {
+    private val featuresUpdatedEventListener = { updateFeatures() }
+
     override fun onViewAttached() {
         view!!.setDeveloperData(
             model.mac, model.scanRecord,
@@ -28,9 +30,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
 
         view!!.setSpeakerImages(logoDrawableId, speakerDrawableId)
 
-        model.featuresUpdatedEvent.subscribe {
-            updateFeatures()
-        }
+        model.featuresUpdatedEvent.subscribe(featuresUpdatedEventListener)
 
         updateFeatures()
     }
@@ -123,6 +123,6 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     override fun destroy() {
-        model.featuresUpdatedEvent.unsubscribe()
+        model.featuresUpdatedEvent.unsubscribe(featuresUpdatedEventListener)
     }
 }

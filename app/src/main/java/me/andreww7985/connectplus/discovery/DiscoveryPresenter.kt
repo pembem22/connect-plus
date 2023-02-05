@@ -4,10 +4,10 @@ import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BasePresenter
 
 class DiscoveryPresenter : BasePresenter<DiscoveryView, SpeakerManager>(SpeakerManager) {
+    private val speakerFoundEventListener = { view?.showConnecting(model.selectedSpeaker!!.bleConnection.getBluetoothName()); Unit }
+
     override fun onViewAttached() {
-        model.speakerFoundEvent.subscribe {
-            view?.showConnecting(model.selectedSpeaker!!.bleConnection.getBluetoothName())
-        }
+        model.speakerFoundEvent.subscribe(speakerFoundEventListener)
 
         val speaker = model.selectedSpeaker
         if (speaker != null) {
@@ -16,6 +16,6 @@ class DiscoveryPresenter : BasePresenter<DiscoveryView, SpeakerManager>(SpeakerM
     }
 
     override fun destroy() {
-        model.speakerFoundEvent.unsubscribe()
+        model.speakerFoundEvent.unsubscribe(speakerFoundEventListener)
     }
 }

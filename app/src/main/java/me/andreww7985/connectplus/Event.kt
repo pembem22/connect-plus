@@ -1,17 +1,20 @@
 package me.andreww7985.connectplus
 
-class Event {
-    var listener: (Event.() -> Unit)? = null
+import timber.log.Timber
 
-    fun subscribe(listener: Event.() -> Unit) {
-        this.listener = listener
+class Event {
+    private var listeners = HashSet<() -> Unit>()
+
+    fun subscribe(listener: () -> Unit) {
+        listeners.add(listener)
     }
 
-    fun unsubscribe() {
-        listener = null
+    fun unsubscribe(listener: () -> Unit) {
+        listeners.remove(listener)
     }
 
     fun fire() {
-        listener?.invoke(this)
+        Timber.d("Firing event $this, listeners: $listeners")
+        listeners.forEach { it.invoke() }
     }
 }
