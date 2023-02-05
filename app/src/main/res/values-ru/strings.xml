@@ -20,9 +20,9 @@
     <string name="dfu_state_file_not_selected">Файл не выбран</string>
     <string name="dfu_state_loading_file">Загрузка файла&#8230;</string>
     <string name="dfu_state_ready">Готов к прошивке</string>
-    <string name="dfu_state_flashing">Прошиваю, %1$.2f%%</string>
+    <string name="dfu_state_flashing">Прошиваю: %1$.2f%%</string>
     <string name="dfu_state_done">Готово! Не нажимайте никакие кнопки на колонке и не отключайте зарядку, иначе будет кирпич! Колонка автоматически перезагрузится через несколько минут. Приложение можно закрыть.</string>
-    <string name="dfu_state_error">Что-то пошло не так. Скорее всего, колонка отказалась от файла прошивки. Проверьте, правильный ли вы выбрали файл и не поврежден ли он. Колонка автоматически перезагрузится в обычный режим.</string>
+    <string name="dfu_state_error">Что-то пошло не так. Скорее всего, колонка отказалась от файла прошивки. Проверьте, правильный ли вы выбрали файл и не поврежден ли он. Колонка автоматически перезагрузится в обычный режим. Приложение можно закрыть.</string>
     <string name="settings_send_speaker_data_title">Отправлять данные о колонке</string>
     <string name="settings_send_speaker_data_summary">Отправляются модель колонки, цвет и версия прошивки</string>
     <string name="settings_send_app_data_title">Отправлять данные об использовании приложения</string>
@@ -39,7 +39,7 @@
     <string name="dfu_button_cancel">Отмена</string>
     <string name="dfu_button_open_file">Выбрать файл</string>
     <string name="discovery_connecting">Подключение к %1$s&#8230;</string>
-    <string name="dfu_state_canceled">Отменено! Колонка перезагрузится в обычный режим.</string>
+    <string name="dfu_state_canceled">Отменено! Колонка перезагрузится в обычный режим. Приложение можно закрыть.</string>
     <string name="dashboard_speakerphone_mode">Режим громкой связи</string>
     <string name="connect_searching_on">Поиск&#8230;</string>
     <string name="connect_searching_off">Поиск отключен</string>
