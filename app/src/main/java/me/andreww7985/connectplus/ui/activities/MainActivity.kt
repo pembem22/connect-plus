@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.view.WindowCompat
+import kotlinx.android.synthetic.main.activity_main.nav_menu
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.dfu.DfuView
@@ -13,7 +15,7 @@ import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.speaker.SpeakerView
 import me.andreww7985.connectplus.speaker.hardware.HwConnect
-import me.andreww7985.connectplus.speaker.hardware.HwModel
+import me.andreww7985.connectplus.speaker.hardware.HwPlatform
 import me.andreww7985.connectplus.ui.MainActivityViewModel
 import me.andreww7985.connectplus.ui.fragments.ConnectFragment
 import timber.log.Timber
@@ -23,9 +25,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        UIHelper.updateSystemBarsAppearance(this, hasNavbar = true)
 
         if (model.selectedNavbarItem == 0) {
             updateCurrentFragment(R.id.nav_dashboard)
@@ -43,22 +46,15 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
 
         val speaker = SpeakerManager.selectedSpeaker!!
 
-        /* Only show DFU flash menu on known supported models. */
-        val supportedDfu = listOf(
-                HwModel.XTREME,
-                HwModel.CHARGE3,
-                HwModel.CHARGE4,
-                HwModel.FLIP4,
-                HwModel.XTREME2,
-                HwModel.BOOMBOX
-        )
-        if (!supportedDfu.contains(speaker.hardware.model)) {
+        /* Only show DFU flash menu on known supported CSR models. */
+        if (speaker.hardware.platform != HwPlatform.CSR) {
             nav_menu.menu.removeItem(R.id.nav_flash_dfu)
         }
 

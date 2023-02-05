@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_dfu.*
 import kotlinx.coroutines.launch
@@ -25,19 +26,23 @@ class DfuView : Fragment(), BaseView {
 
     fun showFileBrowserError() {
         lifecycleScope.launch {
-            UIHelper.showToast(getString(R.string.dfu_error_file_manager), Toast.LENGTH_LONG)
+            UIHelper.showToast(this@DfuView.requireView(), getString(R.string.dfu_error_file_manager), Toast.LENGTH_LONG)
         }
     }
 
     fun showWrongFile() {
         lifecycleScope.launch {
-            UIHelper.showToast(getString(R.string.dfu_error_wrong_file), Toast.LENGTH_LONG)
+            UIHelper.showToast(this@DfuView.requireView(), getString(R.string.dfu_error_wrong_file), Toast.LENGTH_LONG)
         }
     }
 
     fun updateUi(dfu: DfuModel, isSpeakerCharging: Boolean) {
         lifecycleScope.launch {
-            dfu_battery_warning_card.visibility = if (!isSpeakerCharging) View.VISIBLE else View.GONE
+            dfu_battery_warning_title.text =
+                if (!isSpeakerCharging)
+                    getString(R.string.dfu_connect_charger_title)
+                else
+                    getString(R.string.dfu_connect_charger_title_connected)
 
             when (dfu.state) {
                 DfuModel.State.FILE_NOT_SELECTED -> {
@@ -49,6 +54,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_flash_card.visibility = View.GONE
                 }
+
                 DfuModel.State.LOADING_FILE -> {
                     dfu_file_selector_card.visibility = View.VISIBLE
                     dfu_file_selector_text.text = getString(R.string.dfu_state_loading_file)
@@ -58,6 +64,7 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_flash_card.visibility = View.GONE
                 }
+
                 DfuModel.State.READY -> {
                     dfu_file_selector_text.text = dfu.filename!!
                     dfu_file_selector_button.isEnabled = true
@@ -71,7 +78,6 @@ class DfuView : Fragment(), BaseView {
                         dfu_flash_card.visibility = View.VISIBLE
 
                         dfu_flash_progressbar.visibility = View.GONE
-                        dfu_flash_progress_text.visibility = View.GONE
 
                         dfu_flash_button.isEnabled = true
                         dfu_flash_button.text = getString(R.string.dfu_button_flash)
@@ -83,6 +89,7 @@ class DfuView : Fragment(), BaseView {
                         }
                     }
                 }
+
                 DfuModel.State.INITIALIZING_DFU -> {
                     dfu_file_selector_text.text = dfu.filename!!
                     dfu_file_selector_button.isEnabled = false
@@ -95,13 +102,13 @@ class DfuView : Fragment(), BaseView {
 
                     dfu_flash_progressbar.isIndeterminate = true
                     dfu_flash_progressbar.visibility = View.VISIBLE
-                    dfu_flash_progress_text.visibility = View.GONE
 
                     dfu_flash_button.isEnabled = false
                     dfu_flash_button.text = getString(R.string.dfu_button_flash)
 
                     dfu_flash_text.text = getString(R.string.dfu_state_initializing_dfu)
                 }
+
                 DfuModel.State.FLASHING_DFU -> {
                     dfu_file_selector_text.text = dfu.filename!!
                     dfu_file_selector_button.isEnabled = false
@@ -117,18 +124,16 @@ class DfuView : Fragment(), BaseView {
                     dfu_flash_progressbar.isIndeterminate = false
                     dfu_flash_progressbar.progress = (progress * 1e5f).toInt()
 
-                    dfu_flash_progress_text.text = String.format("%.2f%%", progress * 100f)
-                    dfu_flash_progress_text.visibility = View.VISIBLE
-
                     dfu_flash_button.isEnabled = true
                     dfu_flash_button.text = getString(R.string.dfu_button_cancel)
 
-                    dfu_flash_text.text = getString(R.string.dfu_state_flashing)
+                    dfu_flash_text.text = getString(R.string.dfu_state_flashing, progress * 100f)
 
                     dfu_flash_button.setOnClickListener {
                         presenter.cancelDfu()
                     }
                 }
+
                 DfuModel.State.WAITING_REBOOT -> {
                     dfu_file_selector_text.text = dfu.filename!!
                     dfu_file_selector_button.isEnabled = false
@@ -144,8 +149,6 @@ class DfuView : Fragment(), BaseView {
                     dfu_flash_progressbar.isIndeterminate = true
                     dfu_flash_progressbar.visibility = View.VISIBLE
 
-                    dfu_flash_progress_text.visibility = View.GONE
-
                     dfu_flash_button.isEnabled = false
                     dfu_flash_button.text = getString(R.string.dfu_button_cancel)
 
@@ -159,20 +162,33 @@ class DfuView : Fragment(), BaseView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_dfu, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!App.sharedPreferences.getBoolean("dfu_warning_accepted", false)) {
+            val dialogView = View.inflate(context, R.layout.dialog_dfu_warning, null)
+            val checkBox =
+                dialogView.findViewById<MaterialCheckBox>(R.id.dfu_warning_dont_show_checkbox)
 
-            MaterialAlertDialogBuilder(requireContext()).setCancelable(false).setTitle(getString(R.string.dialog_dfu_warning_title))
-                    .setMessage(getString(R.string.dialog_dfu_warning_text))
-                    .setPositiveButton(R.string.dialog_dfu_warning_agree) { _, _ ->
-                        App.sharedPreferences.edit {
-                            putBoolean("dfu_warning_accepted", true)
-                        }
-                    }.show()
+            MaterialAlertDialogBuilder(
+                requireContext(),
+                R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
+            ).setCancelable(false)
+                .setIcon(R.drawable.ic_warning)
+                .setTitle(getString(R.string.dialog_dfu_warning_title))
+                .setView(dialogView)
+                .setMessage(getString(R.string.dialog_dfu_warning_text))
+                .setPositiveButton(R.string.dialog_dfu_warning_agree) { _, _ ->
+                    App.sharedPreferences.edit {
+                        putBoolean("dfu_warning_accepted", checkBox.isChecked)
+                    }
+                }.show()
         }
 
         dfu_file_selector_button.setOnClickListener {

@@ -5,13 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:menu="@menu/toolbar_menu"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+        android:background="?attr/colorSecondaryContainer"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSecondaryContainer"
+            android:foregroundTint="?attr/colorOnSecondaryContainer"
+            app:menu="@menu/toolbar_menu"
+            app:title="@string/app_name"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/AppTheme.TextAppearance.ToolbarTitle"
+            app:titleTextColor="?attr/colorOnSecondaryContainer" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

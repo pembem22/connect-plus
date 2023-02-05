@@ -6,26 +6,38 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
 import kotlin.math.roundToInt
 
 class SpeakerView : BaseView, Fragment() {
-    private val presenter = PresenterManager.getPresenter(SpeakerPresenter::class.java) as SpeakerPresenter
+    private val presenter =
+        PresenterManager.getPresenter(SpeakerPresenter::class.java) as SpeakerPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
-    fun setDeveloperData(mac: String, data: String, color: String, model: String, platform: String) {
+    fun setDeveloperData(
+        mac: String,
+        data: String,
+        color: String,
+        model: String,
+        platform: String
+    ) {
         lifecycleScope.launch {
             mac_value.text = mac
             data_value.text = data
@@ -38,8 +50,8 @@ class SpeakerView : BaseView, Fragment() {
     fun setIsPlaying(isPlaying: Boolean) {
         lifecycleScope.launch {
             dashboard_product_playing.setImageResource(
-                    if (isPlaying) R.drawable.ic_play
-                    else R.drawable.ic_pause
+                if (isPlaying) R.drawable.ic_play
+                else R.drawable.ic_pause
             )
         }
     }
@@ -67,7 +79,7 @@ class SpeakerView : BaseView, Fragment() {
     fun showFirmwareVersionFeature(minor: Int, major: Int, build: Int?) {
         lifecycleScope.launch {
             dashboard_firmware_version_value.text =
-                    "$major.$minor${if (build != null) ".$build" else ""}"
+                "$major.$minor${if (build != null) ".$build" else ""}"
 
             dashboard_firmware_version_feature.visibility = View.VISIBLE
         }
@@ -75,7 +87,10 @@ class SpeakerView : BaseView, Fragment() {
 
     fun showFeedbackSoundsDisabledMessage() {
         lifecycleScope.launch {
-            Snackbar.make(requireView(), getString(R.string.dashboard_feedback_sounds_disabled), Snackbar.LENGTH_SHORT).show()
+            UIHelper.showToast(
+                requireView(),
+                getString(R.string.dashboard_feedback_sounds_disabled),
+            )
         }
     }
 
@@ -104,8 +119,16 @@ class SpeakerView : BaseView, Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dashboard_product_audio_button.setOnClickListener { presenter.onPlaySoundPressed() }
-        dashboard_speakerphone_mode_value.setOnCheckedChangeListener { _, isChecked -> presenter.onSpeakerphoneModeChanged(isChecked) }
-        dashboard_feedback_sounds_value.setOnCheckedChangeListener { _, isChecked -> presenter.onFeedbackSoundsChanged(isChecked) }
+        dashboard_speakerphone_mode_value.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onSpeakerphoneModeChanged(
+                isChecked
+            )
+        }
+        dashboard_feedback_sounds_value.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onFeedbackSoundsChanged(
+                isChecked
+            )
+        }
         dashboard_name_edit_button.setOnClickListener { presenter.onRenamePressed() }
         dashboard_bass_level_slider.addOnChangeListener { _, value, fromUser ->
             if (fromUser) {
@@ -121,14 +144,14 @@ class SpeakerView : BaseView, Fragment() {
         val textEdit = dialogView.findViewById<TextInputEditText>(R.id.rename_input)
         textEdit.text = Editable.Factory.getInstance().newEditable(currentName)
 
-        AlertDialog.Builder(requireContext())
-                .setCancelable(true)
-                .setView(dialogView)
-                .setTitle(R.string.dialog_dashboard_rename_title)
-                .setMessage(R.string.dialog_dashboard_rename_message)
-                .setPositiveButton(R.string.dialog_dashboard_rename_confirm) { _, _ ->
-                    presenter.onRenameDialogConfirmed(textEdit.text.toString())
-                }.setNeutralButton(R.string.dialog_dashboard_rename_cancel) { _, _ -> }.show()
+        MaterialAlertDialogBuilder(requireContext())
+            .setCancelable(true)
+            .setView(dialogView)
+            .setTitle(R.string.dialog_dashboard_rename_title)
+            .setMessage(R.string.dialog_dashboard_rename_message)
+            .setPositiveButton(R.string.dialog_dashboard_rename_confirm) { _, _ ->
+                presenter.onRenameDialogConfirmed(textEdit.text.toString())
+            }.setNeutralButton(R.string.dialog_dashboard_rename_cancel) { _, _ -> }.show()
     }
 
     override fun onDestroy() {

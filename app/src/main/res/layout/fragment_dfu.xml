@@ -14,33 +14,98 @@
         android:orientation="vertical"
         android:showDividers="middle|end">
 
-        <LinearLayout
-            android:id="@+id/dfu_battery_warning_card"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="@dimen/card_vertical_border"
-            android:paddingEnd="16dp"
-            android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="visible">
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/dfu_warning_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:srcCompat="@drawable/ic_error"
-                app:tint="?attr/colorError" />
+            <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingTop="@dimen/card_vertical_border"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="@dimen/card_vertical_border">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/ic_warning"
+                        app:tint="?attr/colorOnSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="0"
+                        android:text="@string/dialog_dfu_warning_text"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/dfu_connect_charger_message"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </LinearLayout>
+                android:backgroundTint="?attr/colorPrimaryContainer">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:srcCompat="@drawable/ic_cable"
+                        app:tint="?attr/colorOnPrimaryContainer" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/dfu_battery_warning_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/dfu_connect_charger_title"
+                            android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/dfu_connect_charger_text"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/dfu_file_selector_card"
@@ -60,11 +125,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="@string/dfu_state_file_not_selected"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+                android:text="@string/dfu_state_file_not_selected" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dfu_file_selector_button"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dfu_button_open_file" />
@@ -93,13 +158,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="@string/dfu_file_info_size"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:text="@string/dfu_file_info_size" />
 
                 <TextView
                     android:id="@+id/dfu_file_info_size_value"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="123456"
+                    android:typeface="monospace" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -112,13 +178,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="@string/dfu_file_info_checksum"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:text="@string/dfu_file_info_checksum" />
 
                 <TextView
                     android:id="@+id/dfu_file_info_checksum_value"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="12AB34DE"
+                    android:typeface="monospace" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -147,8 +214,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="@string/dfu_state_ready"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:text="@string/dfu_state_ready" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/dfu_flash_button"
@@ -161,42 +227,11 @@
                 android:id="@+id/dfu_flash_progressbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:max="100000"
                 android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/dfu_flash_progress_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:visibility="visible" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="@dimen/card_vertical_border"
-            android:paddingEnd="16dp"
-            android:paddingBottom="@dimen/card_vertical_border">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="0"
-                android:src="@drawable/ic_info"
-                app:tint="?android:attr/textColorHint" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="@string/dialog_dfu_warning_text" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

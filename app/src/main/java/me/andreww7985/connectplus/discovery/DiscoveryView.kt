@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.coroutines.launch
@@ -30,11 +31,13 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         private const val REQUEST_CODE_LOCATION = 3
     }
 
-    private val presenter = PresenterManager.getPresenter(DiscoveryPresenter::class.java) as DiscoveryPresenter
+    private val presenter =
+        PresenterManager.getPresenter(DiscoveryPresenter::class.java) as DiscoveryPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        UIHelper.updateSystemBarsAppearance(this)
         setContentView(R.layout.activity_discovery)
         setSupportActionBar(toolbar)
 
@@ -45,6 +48,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
@@ -76,7 +80,11 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         PresenterManager.destroyPresenter(DiscoveryPresenter::class.java)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Timber.d("onRequestPermissionsResult requestCode = $requestCode")
         checkPermissions()
@@ -108,8 +116,8 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         Timber.d("checkBluetooth")
 
         if (!BleScanManager.isBleSupported()) {
-            UIHelper.showToast("Bluetooth not supported", Toast.LENGTH_LONG)
-            Timber.d("checkBluetooth bluetooth not supported")
+            UIHelper.showToast(findViewById(android.R.id.content), "Bluetooth Low Energy not supported on this device", Toast.LENGTH_LONG)
+            Timber.d("checkBluetooth BLE not supported")
             finish()
             return
         }
@@ -127,7 +135,10 @@ class DiscoveryView : AppCompatActivity(), BaseView {
             if (!bluetoothConnectGranted || !bluetoothScanGranted) {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN),
+                    arrayOf(
+                        Manifest.permission.BLUETOOTH_CONNECT,
+                        Manifest.permission.BLUETOOTH_SCAN
+                    ),
                     REQUEST_CODE_PERMISSION
                 )
                 return
@@ -135,7 +146,10 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         }
 
         if (!BleScanManager.isBluetoothEnabled()) {
-            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_BLUETOOTH)
+            startActivityForResult(
+                Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
+                REQUEST_CODE_BLUETOOTH
+            )
             return
         }
 
@@ -144,7 +158,10 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     private fun checkLocation() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && !BleScanManager.isLocationEnabled())
-            startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CODE_LOCATION)
+            startActivityForResult(
+                Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+                REQUEST_CODE_LOCATION
+            )
         else
             BleScanManager.startScan()
     }

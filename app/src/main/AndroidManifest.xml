@@ -49,9 +49,7 @@
 
         <activity
             android:name=".discovery.DiscoveryView"
-            android:exported="true"
-            android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -60,9 +58,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.SettingsActivity" />
-        <activity
-            android:name=".ui.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activities.MainActivity" />
     </application>
 
 </manifest>

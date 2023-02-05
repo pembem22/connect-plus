@@ -28,7 +28,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
             requireContext().getSystemService<ClipboardManager>()!!.setPrimaryClip(ClipData.newPlainText("logs", log))
 
-            UIHelper.showToast("Copied logs to clipboard")
+            UIHelper.showToast(this@SettingsFragment.requireView(), "Copied logs to clipboard")
             false
         }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="?attr/dialogPreferredPadding"
+    android:orientation="vertical">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/dfu_warning_dont_show_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dfu_warning_dont_show" />
+</androidx.appcompat.widget.LinearLayoutCompat>

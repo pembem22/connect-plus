@@ -2,7 +2,28 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+   <com.google.android.material.appbar.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="?attr/colorSecondaryContainer"
+       android:fitsSystemWindows="true">
+
+      <com.google.android.material.appbar.MaterialToolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:background="?attr/colorSecondaryContainer"
+          android:foregroundTint="?attr/colorOnSecondaryContainer"
+          app:title="@string/app_name"
+          app:titleCentered="true"
+          app:titleTextAppearance="@style/AppTheme.TextAppearance.ToolbarTitle"
+          app:titleTextColor="?attr/colorOnSecondaryContainer"
+          app:navigationIcon="@drawable/ic_arrow_back"
+          app:navigationIconTint="?attr/colorOnSecondaryContainer"/>
+   </com.google.android.material.appbar.AppBarLayout>
 
    <androidx.fragment.app.FragmentContainerView
        android:id="@+id/settings_fragment_container"
