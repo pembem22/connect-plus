@@ -18,12 +18,12 @@
     <string name="dashboard_battery_level" translatable="false">%1$d%%</string>
     <string name="dashboard_battery_level_charging">%1$d%%, charging</string>
 
-    <string name="dialog_dashboard_rename_title">Rename device</string>
-    <string name="dialog_dashboard_rename_message">Enter new name (up to 16 bytes)</string>
+    <string name="dialog_dashboard_rename_title">Rename speaker</string>
+    <string name="dialog_dashboard_rename_message">Enter a new name (up to 16 bytes)</string>
     <string name="dialog_dashboard_rename_cancel">Cancel</string>
 
     <string name="dashboard_bass_level">Bass level</string>
-    <string name="dashboard_device_name">Device name</string>
+    <string name="dashboard_device_name">Speaker name</string>
     <string name="dashboard_firmware_version">Firmware version</string>
     <string name="dashboard_feedback_sounds">Feedback sounds</string>
     <string name="dashboard_battery_state">Battery state</string>
@@ -32,7 +32,6 @@
     <string name="dfu_connect_charger_title">Connect the speaker to a charger</string>
 
     <string name="dialog_dfu_warning_title">Warning!</string>
-    <string name="dialog_dfu_warning_text">The process of flashing DFU firmware is not official and may void your warranty! There is a chance to brick your device! No one is responsible for possible problems! Do everything at your own risk!</string>
     <string name="dialog_dfu_warning_agree">I understand</string>
 
     <string name="dfu_state_file_not_selected">File not selected</string>
@@ -41,33 +40,33 @@
     <string name="dfu_state_ready">Ready to flash</string>
     <string name="dfu_state_initializing_dfu">Initializing DFU mode&#8230;</string>
     <string name="dfu_state_flashing">Flashing, %1$.2f%%</string>
-    <string name="dfu_state_done">Done! Your device will automatically reboot in a few minutes. Do not press any button or unplug it, otherwise you will brick it! You can close this app</string>
-    <string name="dfu_state_error">Error! Don\'t worry, your device will automatically reboot into normal mode</string>
+    <string name="dfu_state_done">Done! Do not press any buttons on the speaker nor unplug it, otherwise you\'ll get a brick! The speaker will automatically reboot in a few minutes. You may close this app.</string>
+    <string name="dfu_state_error">Something went wrong. Most likely, the speaker refused the firmware file. Check if you selected the right file and if it\'s not damaged. The speaker will automatically reboot into normal mode.</string>
 
     <string name="dfu_file_info_size">Firmware size</string>
     <string name="dfu_file_info_checksum">Firmware CRC32</string>
 
-    <string name="dfu_error_file_manager">Failed to open file. Try another file manager</string>
-    <string name="dfu_error_wrong_file">Wrong file selected. You must select a file with .DFU extension</string>
+    <string name="dfu_error_file_manager">Failed to open file. Try another file manager.</string>
+    <string name="dfu_error_wrong_file">Wrong file selected. You must select a file with .DFU extension.</string>
 
     <string name="setting_privacy">Privacy</string>
     <string name="settings_send_speaker_data_title">Send speaker data</string>
     <string name="settings_send_speaker_data_summary">Sends speaker model, color and firmware version</string>
-    <string name="settings_send_app_data_summary">Uses Google Crashlytics and Google Analytics. Restart app to apply changes</string>
+    <string name="settings_send_app_data_summary">Uses Google Crashlytics and Google Analytics. Restart app to apply changes.</string>
     <string name="settings_send_app_data_title">Send app usage data</string>
     <string name="dfu_button_flash">Flash</string>
     <string name="dfu_button_cancel">Cancel</string>
     <string name="dfu_button_open_file">Select a file</string>
-    <string name="dfu_state_canceled">Canceled! Your device should reboot right now to normal mode</string>
+    <string name="dfu_state_canceled">Canceled! The speaker will reboot into normal mode.</string>
     <string name="dashboard_speakerphone_mode">Speakerphone mode</string>
     <string name="connect_searching_on">Searching&#8230;</string>
     <string name="connect_searching_off">Not searching</string>
     <string name="connect_button_search">Search</string>
     <string name="connect_button_stop">Stop</string>
-    <string name="settings_images_info">All speaker logos and images belong to JBL</string>
+    <string name="settings_images_info">All speaker logos and images belong to JBL.</string>
     <string name="setting_about">About</string>
     <string name="settings_source_code_title">Source code</string>
-    <string name="settings_source_code_summary">Tap to open in browser</string>
+    <string name="settings_source_code_summary">Tap to open in browser.</string>
     <string name="settings_app_version_title">App version</string>
     <string name="settings_app_version_summary" translatable="false">1.2.0-pre01</string>
     <string name="speaker_left_channel">Left</string>
@@ -75,14 +74,15 @@
     <string name="speaker_both_channel">Stereo</string>
     <string name="speaker_audio_channel">Audio channel</string>
     <string name="settings_logs_title">Copy app logs</string>
-    <string name="settings_logs_summary">Tap to copy app logs into clipboard</string>
-    <string name="connect_tooltip">Turn on search to find more devices. You can switch audio channels for each device separately.</string>
+    <string name="settings_logs_summary">Tap to copy app logs into clipboard.</string>
+    <string name="connect_tooltip">Turn on search to find more speakers. You can switch audio channels for each individually.</string>
     <string name="settings_dark_theme_title">Theme</string>
     <string name="settings_dark_theme_enabled">Dark</string>
     <string name="settings_dark_theme_disabled">Light</string>
     <string name="settings_dark_theme_system">Follow system settings</string>
-    <string name="dfu_connect_charger_text">The speaker must be connected to a charger during the entire flashing process.</string>
-    <string name="dfu_connect_charger_title_connected">Do not disconnect the speaker from the charger</string>
     <string name="dialog_dashboard_rename_confirm">Rename</string>
     <string name="dfu_warning_dont_show">Do not show again</string>
+    <string name="dialog_dfu_warning_text">Flashing custom firmware is not officially supported and may void your warranty. There is a possibility of bricking the speaker. No one is taking any responsibility for any possible problems. Your further use of this functionality is at your own risk.</string>
+    <string name="dfu_connect_charger_text">The speaker must be connected to a charger during the entire flashing process.</string>
+    <string name="dfu_connect_charger_title_connected">Do not disconnect the speaker from the charger</string>
 </resources>
