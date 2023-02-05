@@ -28,7 +28,7 @@ class ConnectFragment : Fragment(), BaseView {
 
         linkUpdatedEventListener = {
             lifecycleScope.launch {
-                connect_list.adapter?.notifyDataSetChanged()
+                connect_list?.adapter?.notifyDataSetChanged()
             }
         }
         SpeakerManager.linkUpdatedEvent.subscribe(linkUpdatedEventListener!!)
