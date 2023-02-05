@@ -15,7 +15,7 @@
     <string name="dashboard_firmware_version">Версія ПЗ</string>
     <string name="dashboard_feedback_sounds">Системні звуки</string>
     <string name="dashboard_battery_state">Стан заряду</string>
-    <string name="dashboard_feedback_sounds_disabled">Системні звуки відключені</string>
+    <string name="dashboard_feedback_sounds_disabled">Системні звуки вимкнені</string>
     <string name="dfu_connect_charger_title">Підключіть колонку до зарядного пристрою</string>
     <string name="dialog_dfu_warning_title">Увага!</string>
     <string name="dialog_dfu_warning_agree">Я розумію</string>
@@ -62,7 +62,7 @@
     <string name="settings_dark_theme_system">Використовувати системні налаштування</string>
     <string name="dialog_dashboard_rename_confirm">Перейменувати</string>
     <string name="dfu_warning_dont_show">Більше не показувати</string>
-    <string name="dialog_dfu_warning_text">Прошивання власного ПЗ офіційно не підтримується та може призвести до втрати гарантії. Можливе пошкодження пристрою. Ніхто не бере на себе відповідальнісь за можливі проблеми. Подальше використання цієї функції здійснюйте на власний ризик.</string>
+    <string name="dialog_dfu_warning_text">Прошивання власного ПЗ офіційно не підтримується та може призвести до втрати гарантії. Можливе пошкодження пристрою. Ніхто не несе відповідальнісь у випадку виникнення проблем. Подальше використання цієї функції здійснюйте на власний ризик.</string>
     <string name="dfu_connect_charger_text">Колонка повинна бути підключена до зарядного пристрою протягом усього процесу перепрошивання.</string>
     <string name="dfu_connect_charger_title_connected">Не від’єднуйте колонку від зарядного пристрою</string>
 </resources>
