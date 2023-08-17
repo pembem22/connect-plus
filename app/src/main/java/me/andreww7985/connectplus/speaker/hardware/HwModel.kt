@@ -21,6 +21,7 @@ enum class HwModel(val modelName: String) {
 
     BOOMBOX("boombox"),
     BOOMBOX2("boombox2"),
+    BOOMBOX3("boombox3"),
 
     UNKNOWN("unknown");
 
@@ -42,6 +43,7 @@ enum class HwModel(val modelName: String) {
             0x2040 /* VIMICRO */ -> CHARGE5
             0x204F /* VIMICRO */ -> FLIP6
             0x2050 /* VIMICRO */ -> PULSE5
+            0x206D /* VIMICRO */ -> BOOMBOX3
             else -> UNKNOWN
         }
     }

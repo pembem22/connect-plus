@@ -43,6 +43,37 @@ enum class HwColor {
                     9 -> MALTA
                     else -> UNKNOWN
                 }
+
+                HwModel.CHARGE4 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> RED
+                    3 -> BLUE
+                    4 -> WHITE
+                    5 -> GREEN
+                    6 -> YELLOW
+                    7 -> GRAY
+                    8 -> DESERT
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x11 -> SQUAD
+                    0x12 -> MAGENTA
+                    0x13 -> CAMO
+                    else -> UNKNOWN
+                }
+
+                HwModel.CHARGE5 -> when (speakerColor) {
+                    1 -> BLACK
+                    2 -> RED
+                    3 -> BLUE
+                    4 -> WHITE
+                    5 -> GREEN
+                    7 -> GRAY
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x13 -> SQUAD
+                    else -> UNKNOWN
+                }
+
                 HwModel.FLIP3 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
@@ -59,6 +90,7 @@ enum class HwColor {
                     13 -> MOSAIC
                     else -> UNKNOWN
                 }
+
                 HwModel.FLIP4 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
@@ -76,6 +108,7 @@ enum class HwColor {
                     0x0B -> MOSAIC
                     else -> UNKNOWN
                 }
+
                 HwModel.FLIP5 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
@@ -95,27 +128,20 @@ enum class HwColor {
                     0x16 -> CAMO
                     else -> UNKNOWN
                 }
-                HwModel.BOOMBOX -> when (speakerColor) {
+
+                HwModel.FLIP6 -> when (speakerColor)  {
                     0, 1 -> BLACK
-                    2 -> GREEN
-                    8 -> SQUAD
+                    2 -> RED
+                    3 -> BLUE
+                    4 -> WHITE
+                    5 -> GREEN
+                    7 -> GRAY
+                    9 -> TEAL
+                    0x10 -> PINK
+                    0x13 -> SQUAD
                     else -> UNKNOWN
                 }
-                HwModel.BOOMBOX2 -> when (speakerColor) {
-                    0, 1 -> BLACK
-                    8 -> SQUAD
-                    else -> UNKNOWN
-                }
-                HwModel.PULSE2 -> when (speakerColor) {
-                    0, 1 -> BLACK
-                    2 -> WHITE
-                    else -> UNKNOWN
-                }
-                HwModel.PULSE3 -> when (speakerColor) {
-                    0, 1 -> BLACK
-                    2 -> WHITE
-                    else -> UNKNOWN
-                }
+
                 HwModel.XTREME -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
@@ -124,6 +150,7 @@ enum class HwColor {
                     5 -> MALTA
                     else -> UNKNOWN
                 }
+
                 HwModel.XTREME2 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> RED
@@ -133,27 +160,7 @@ enum class HwColor {
                     0x12 -> GUN_METAL
                     else -> UNKNOWN
                 }
-                HwModel.CHARGE4 -> when (speakerColor) {
-                    0, 1 -> BLACK
-                    2 -> RED
-                    3 -> BLUE
-                    4 -> WHITE
-                    5 -> GREEN
-                    6 -> YELLOW
-                    7 -> GRAY
-                    8 -> DESERT
-                    9 -> TEAL
-                    0x10 -> PINK
-                    0x11 -> SQUAD
-                    0x12 -> MAGENTA
-                    0x13 -> CAMO
-                    else -> UNKNOWN
-                }
-                HwModel.PULSE4 -> when (speakerColor) {
-                    0, 1 -> BLACK
-                    2 -> WHITE
-                    else -> UNKNOWN
-                }
+
                 HwModel.XTREME3 -> when (speakerColor) {
                     0, 1 -> BLACK
                     3 -> BLUE
@@ -161,42 +168,50 @@ enum class HwColor {
                     8 -> SQUAD
                     else -> UNKNOWN
                 }
-                HwModel.CHARGE5 -> when (speakerColor) {
-                    1 -> BLACK
-                    2 -> RED
-                    3 -> BLUE
-                    4 -> WHITE
-                    5 -> GREEN
-                    7 -> GRAY
-                    9 -> TEAL
-                    0x10 -> PINK
-                    0x13 -> SQUAD
+
+                HwModel.BOOMBOX -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> GREEN
+                    8 -> SQUAD
                     else -> UNKNOWN
                 }
-                HwModel.PULSE5 -> when (speakerColor) {
-                    1 -> BLACK
+
+                HwModel.BOOMBOX2 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    8 -> SQUAD
+                    else -> UNKNOWN
+                }
+
+                HwModel.BOOMBOX3 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    8 -> SQUAD
+                    else -> UNKNOWN
+                }
+
+                HwModel.PULSE2 -> when (speakerColor) {
+                    0, 1 -> BLACK
                     2 -> WHITE
                     else -> UNKNOWN
                 }
-                HwModel.FLIP6 -> when (speakerColor) {
-                    1 -> BLACK
-                    2 -> RED
-                    3 -> BLUE
-                    4 -> WHITE
-                    5 -> GREEN
-                    6 -> YELLOW
-                    7 -> GRAY
-                    8 -> DESERT
-                    9 -> TEAL
-                    0x10 -> PINK
-                    0x11 -> BLACKSTAR
-                    0x12 -> TOMORROWLAND
-                    0x13 -> SQUAD
-                    0x14 -> ECO_BLUE
-                    0x15 -> ECO_GREEN
-                    0x16 -> CAMO
+
+                HwModel.PULSE3 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> WHITE
                     else -> UNKNOWN
                 }
+
+                HwModel.PULSE4 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> WHITE
+                    else -> UNKNOWN
+                }
+
+                HwModel.PULSE5 -> when (speakerColor) {
+                    0, 1 -> BLACK
+                    2 -> WHITE
+                    else -> UNKNOWN
+                }
+
                 HwModel.UNKNOWN -> UNKNOWN
             }
         }
