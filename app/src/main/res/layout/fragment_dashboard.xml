@@ -81,7 +81,7 @@
             android:paddingTop="9.5dp"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,47 +169,47 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/dashboard_pause_action_feature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingTop="@dimen/card_vertical_border"
-            android:paddingEnd="16dp"
-            android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="gone">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/dashboard_pause_action_feature"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingTop="@dimen/card_vertical_border"-->
+<!--            android:paddingEnd="16dp"-->
+<!--            android:paddingBottom="@dimen/card_vertical_border"-->
+<!--            android:visibility="gone">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:text="Play/Pause button action"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Play/Pause button action"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat" />-->
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:selectionRequired="true"
-                app:singleSelection="true">
+<!--            <com.google.android.material.button.MaterialButtonToggleGroup-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:selectionRequired="true"-->
+<!--                app:singleSelection="true">-->
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Play/Pause"
-                    app:icon="@drawable/ic_pause" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Play/Pause"-->
+<!--                    app:icon="@drawable/ic_pause" />-->
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Voice assistant"
-                    app:icon="@drawable/ic_voice" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Voice assistant"-->
+<!--                    app:icon="@drawable/ic_voice" />-->
+<!--            </com.google.android.material.button.MaterialButtonToggleGroup>-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/dashboard_feedback_sounds_feature"
@@ -218,7 +218,7 @@
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -242,7 +242,7 @@
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -268,7 +268,7 @@
             android:paddingTop="@dimen/card_vertical_border"
             android:paddingEnd="16dp"
             android:paddingBottom="@dimen/card_vertical_border"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -393,39 +393,5 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggle_button_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
     </LinearLayout>
 </ScrollView>
