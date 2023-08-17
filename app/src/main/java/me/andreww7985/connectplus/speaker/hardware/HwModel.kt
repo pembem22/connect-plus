@@ -40,8 +40,8 @@ enum class HwModel(val modelName: String) {
             0x1F56 /* VIMICRO */ -> PULSE4
             0x202F /* VIMICRO */ -> XTREME3
             0x2040 /* VIMICRO */ -> CHARGE5
-            0x204FF /* VIMICRO */ -> FLIP6
-            0x2050F /* VIMICRO */ -> PULSE5
+            0x204F /* VIMICRO */ -> FLIP6
+            0x2050 /* VIMICRO */ -> PULSE5
             else -> UNKNOWN
         }
     }
