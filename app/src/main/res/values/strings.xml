@@ -67,7 +67,7 @@
     <string name="settings_source_code_title">Source code</string>
     <string name="settings_source_code_summary">Tap to open in browser.</string>
     <string name="settings_app_version_title">App version</string>
-    <string name="settings_app_version_summary" translatable="false">1.2.0-pre01</string>
+    <string name="settings_app_version_summary" translatable="false">1.2</string>
     <string name="speaker_left_channel">Left</string>
     <string name="speaker_right_channel">Right</string>
     <string name="speaker_both_channel">Stereo</string>
