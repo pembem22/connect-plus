@@ -6,8 +6,8 @@ ConnectPlus is an Android app for connecting to and configuring JBL Bluetooth sp
  - Set audio channel for each speaker individually 
  - Flash custom firmware files
 
-| <img src="images/demo1.jpg"> | <img src="images/demo2.jpg"> | <img src="images/demo3.jpg"> | <img src="images/demo4.jpg"> |
-| --- | --- | --- | --- |
+| <img src="images/demo1.png"> | <img src="images/demo2.png"> | <img src="images/demo3.png"> |
+|------------------------------|------------------------------|------------------------------|
 
  
 ## Flashing firmware
@@ -22,5 +22,5 @@ Note: Firmware flashing was only tested on speakers with CSR chipsets and may no
 4. After that, the speaker will start flashing the received file to its memory. Do not disable/reboot/unplug it in this stage, even if it seems nothing is happening, as that can brick the speaker. The app is not needed anymore and can be safely closed.
 5. After a few minutes, the speaker should turn on with the new firmware.
 
-| <img src="images/dfu1.jpg"> | <img src="images/dfu2.jpg"> | <img src="images/dfu3.jpg"> |
-| --- | --- | --- |
+| <img src="images/dfu1.png"> | <img src="images/dfu2.png"> | <img src="images/dfu3.png"> | <img src="images/dfu4.png"> |
+|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
