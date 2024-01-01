@@ -60,6 +60,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
             BleOperationManager.operationComplete()
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?) {
             characteristic ?: return
 
