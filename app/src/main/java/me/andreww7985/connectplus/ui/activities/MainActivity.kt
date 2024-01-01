@@ -3,9 +3,9 @@ package me.andreww7985.connectplus.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.databinding.ActivityMainBinding
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
 
@@ -32,10 +33,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setSupportActionBar(binding.toolbar)
-        UIHelper.updateSystemBarsAppearance(this, hasNavbar = true)
 
         if (model.selectedNavbarItem == 0) {
             updateCurrentFragment(R.id.nav_dashboard)

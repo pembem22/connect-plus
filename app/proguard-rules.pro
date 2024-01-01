@@ -16,6 +16,7 @@
 # debugging stack traces.
 -keepattributes LineNumberTable
 -keepnames class me.andreww7985.connectplus.**
+-keepclasseswithmembers class me.andreww7985.connectplus.**
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.

@@ -9,10 +9,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
@@ -37,14 +37,13 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     private lateinit var binding: ActivityDiscoveryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         binding = ActivityDiscoveryBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        UIHelper.updateSystemBarsAppearance(this)
         setContentView(R.layout.activity_discovery)
         setSupportActionBar(binding.toolbar)
 
