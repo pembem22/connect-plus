@@ -35,7 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         App.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(p0: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, key: String?) {
         if (key == "dark_theme") {
             App.instance.updateDarkTheme()
         }

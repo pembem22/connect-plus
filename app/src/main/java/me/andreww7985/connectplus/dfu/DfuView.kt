@@ -11,16 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.fragment_dfu.*
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.databinding.FragmentDfuBinding
 import me.andreww7985.connectplus.helpers.HexHelper.toHexString
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
 
 class DfuView : Fragment(), BaseView {
+    private var _binding: FragmentDfuBinding? = null
+    private val binding get() = _binding!!
+
 
     private val presenter = PresenterManager.getPresenter(DfuPresenter::class.java) as DfuPresenter
 
@@ -38,7 +41,7 @@ class DfuView : Fragment(), BaseView {
 
     fun updateUi(dfu: DfuModel, isSpeakerCharging: Boolean) {
         lifecycleScope.launch {
-            dfu_battery_warning_title.text =
+            binding.dfuBatteryWarningTitle.text =
                 if (!isSpeakerCharging)
                     getString(R.string.dfu_connect_charger_title)
                 else
@@ -46,113 +49,113 @@ class DfuView : Fragment(), BaseView {
 
             when (dfu.state) {
                 DfuModel.State.FILE_NOT_SELECTED -> {
-                    dfu_file_selector_card.visibility = View.VISIBLE
-                    dfu_file_selector_text.text = getString(R.string.dfu_state_file_not_selected)
-                    dfu_file_selector_button.isEnabled = true
+                    binding.dfuFileSelectorCard.visibility = View.VISIBLE
+                    binding.dfuFileSelectorText.text = getString(R.string.dfu_state_file_not_selected)
+                    binding.dfuFileSelectorButton.isEnabled = true
 
-                    dfu_file_info_card.visibility = View.GONE
+                    binding.dfuFileInfoCard.visibility = View.GONE
 
-                    dfu_flash_card.visibility = View.GONE
+                    binding.dfuFlashCard.visibility = View.GONE
                 }
 
                 DfuModel.State.LOADING_FILE -> {
-                    dfu_file_selector_card.visibility = View.VISIBLE
-                    dfu_file_selector_text.text = getString(R.string.dfu_state_loading_file)
-                    dfu_file_selector_button.isEnabled = false
+                    binding.dfuFileSelectorCard.visibility = View.VISIBLE
+                    binding.dfuFileSelectorText.text = getString(R.string.dfu_state_loading_file)
+                    binding.dfuFileSelectorButton.isEnabled = false
 
-                    dfu_file_info_card.visibility = View.GONE
+                    binding.dfuFileInfoCard.visibility = View.GONE
 
-                    dfu_flash_card.visibility = View.GONE
+                    binding.dfuFlashCard.visibility = View.GONE
                 }
 
                 DfuModel.State.READY -> {
-                    dfu_file_selector_text.text = dfu.filename!!
-                    dfu_file_selector_button.isEnabled = true
+                    binding.dfuFileSelectorText.text = dfu.filename!!
+                    binding.dfuFileSelectorButton.isEnabled = true
 
-                    dfu_file_info_card.visibility = View.VISIBLE
-                    dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
+                    binding.dfuFileInfoCard.visibility = View.VISIBLE
+                    binding.dfuFileInfoSizeValue.text = dfu.fileSize.toString()
+                    binding.dfuFileInfoChecksumValue.text = dfu.checksum!!.toHexString()
 
-                    dfu_flash_card.visibility = if (isSpeakerCharging) View.VISIBLE else View.GONE
+                    binding.dfuFlashCard.visibility = if (isSpeakerCharging) View.VISIBLE else View.GONE
                     if (isSpeakerCharging) {
-                        dfu_flash_card.visibility = View.VISIBLE
+                        binding.dfuFlashCard.visibility = View.VISIBLE
 
-                        dfu_flash_progressbar.visibility = View.GONE
+                        binding.dfuFlashProgressbar.visibility = View.GONE
 
-                        dfu_flash_button.isEnabled = true
-                        dfu_flash_button.text = getString(R.string.dfu_button_flash)
+                        binding.dfuFlashButton.isEnabled = true
+                        binding.dfuFlashButton.text = getString(R.string.dfu_button_flash)
 
-                        dfu_flash_text.text = getString(R.string.dfu_state_ready)
+                        binding.dfuFlashText.text = getString(R.string.dfu_state_ready)
 
-                        dfu_flash_button.setOnClickListener {
+                        binding.dfuFlashButton.setOnClickListener {
                             presenter.startDfu()
                         }
                     }
                 }
 
                 DfuModel.State.INITIALIZING_DFU -> {
-                    dfu_file_selector_text.text = dfu.filename!!
-                    dfu_file_selector_button.isEnabled = false
+                    binding.dfuFileSelectorText.text = dfu.filename!!
+                    binding.dfuFileSelectorButton.isEnabled = false
 
-                    dfu_file_info_card.visibility = View.VISIBLE
-                    dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
+                    binding.dfuFileInfoCard.visibility = View.VISIBLE
+                    binding.dfuFileInfoSizeValue.text = dfu.fileSize.toString()
+                    binding.dfuFileInfoChecksumValue.text = dfu.checksum!!.toHexString()
 
-                    dfu_flash_card.visibility = View.VISIBLE
+                    binding.dfuFlashCard.visibility = View.VISIBLE
 
-                    dfu_flash_progressbar.isIndeterminate = true
-                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    binding.dfuFlashProgressbar.isIndeterminate = true
+                    binding.dfuFlashProgressbar.visibility = View.VISIBLE
 
-                    dfu_flash_button.isEnabled = false
-                    dfu_flash_button.text = getString(R.string.dfu_button_flash)
+                    binding.dfuFlashButton.isEnabled = false
+                    binding.dfuFlashButton.text = getString(R.string.dfu_button_flash)
 
-                    dfu_flash_text.text = getString(R.string.dfu_state_initializing_dfu)
+                    binding.dfuFlashText.text = getString(R.string.dfu_state_initializing_dfu)
                 }
 
                 DfuModel.State.FLASHING_DFU -> {
-                    dfu_file_selector_text.text = dfu.filename!!
-                    dfu_file_selector_button.isEnabled = false
+                    binding.dfuFileSelectorText.text = dfu.filename!!
+                    binding.dfuFileSelectorButton.isEnabled = false
 
-                    dfu_file_info_card.visibility = View.VISIBLE
-                    dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
+                    binding.dfuFileInfoCard.visibility = View.VISIBLE
+                    binding.dfuFileInfoSizeValue.text = dfu.fileSize.toString()
+                    binding.dfuFileInfoChecksumValue.text = dfu.checksum!!.toHexString()
 
-                    dfu_flash_card.visibility = View.VISIBLE
+                    binding.dfuFlashCard.visibility = View.VISIBLE
 
                     val progress = dfu.getProgress()
-                    dfu_flash_progressbar.visibility = View.VISIBLE
-                    dfu_flash_progressbar.isIndeterminate = false
-                    dfu_flash_progressbar.progress = (progress * 1e5f).toInt()
+                    binding.dfuFlashProgressbar.visibility = View.VISIBLE
+                    binding.dfuFlashProgressbar.isIndeterminate = false
+                    binding.dfuFlashProgressbar.progress = (progress * 1e5f).toInt()
 
-                    dfu_flash_button.isEnabled = true
-                    dfu_flash_button.text = getString(R.string.dfu_button_cancel)
+                    binding.dfuFlashButton.isEnabled = true
+                    binding.dfuFlashButton.text = getString(R.string.dfu_button_cancel)
 
-                    dfu_flash_text.text = getString(R.string.dfu_state_flashing, progress * 100f)
+                    binding.dfuFlashText.text = getString(R.string.dfu_state_flashing, progress * 100f)
 
-                    dfu_flash_button.setOnClickListener {
+                    binding.dfuFlashButton.setOnClickListener {
                         presenter.cancelDfu()
                     }
                 }
 
                 DfuModel.State.WAITING_REBOOT -> {
-                    dfu_file_selector_text.text = dfu.filename!!
-                    dfu_file_selector_button.isEnabled = false
+                    binding.dfuFileSelectorText.text = dfu.filename!!
+                    binding.dfuFileSelectorButton.isEnabled = false
 
-                    dfu_file_info_card.visibility = View.VISIBLE
-                    dfu_file_info_size_value.text = dfu.fileSize.toString()
-                    dfu_file_info_checksum_value.text = dfu.checksum!!.toHexString()
+                    binding.dfuFileInfoCard.visibility = View.VISIBLE
+                    binding.dfuFileInfoSizeValue.text = dfu.fileSize.toString()
+                    binding.dfuFileInfoChecksumValue.text = dfu.checksum!!.toHexString()
 
-                    dfu_flash_card.visibility = View.VISIBLE
+                    binding.dfuFlashCard.visibility = View.VISIBLE
 
                     /* Cannot switch to indeterminate mode while the progress indicator is visible. */
-                    dfu_flash_progressbar.visibility = View.GONE
-                    dfu_flash_progressbar.isIndeterminate = true
-                    dfu_flash_progressbar.visibility = View.VISIBLE
+                    binding.dfuFlashProgressbar.visibility = View.GONE
+                    binding.dfuFlashProgressbar.isIndeterminate = true
+                    binding.dfuFlashProgressbar.visibility = View.VISIBLE
 
-                    dfu_flash_button.isEnabled = false
-                    dfu_flash_button.text = getString(R.string.dfu_button_cancel)
+                    binding.dfuFlashButton.isEnabled = false
+                    binding.dfuFlashButton.text = getString(R.string.dfu_button_cancel)
 
-                    dfu_flash_text.text = when (dfu.status) {
+                    binding.dfuFlashText.text = when (dfu.status) {
                         DfuModel.Status.SUCCESS -> getString(R.string.dfu_state_done)
                         DfuModel.Status.ERROR -> getString(R.string.dfu_state_error)
                         DfuModel.Status.CANCELED -> getString(R.string.dfu_state_canceled)
@@ -163,11 +166,17 @@ class DfuView : Fragment(), BaseView {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_dfu, container, false)
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDfuBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -191,7 +200,7 @@ class DfuView : Fragment(), BaseView {
                 }.show()
         }
 
-        dfu_file_selector_button.setOnClickListener {
+        binding.dfuFileSelectorButton.setOnClickListener {
             val intent = Intent()
             intent.type = "*/*"
             intent.action = Intent.ACTION_GET_CONTENT

@@ -6,10 +6,9 @@ import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import kotlinx.android.synthetic.main.activity_main.nav_menu
-import kotlinx.android.synthetic.main.activity_main.toolbar
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.databinding.ActivityMainBinding
 import me.andreww7985.connectplus.dfu.DfuView
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.SpeakerManager
@@ -22,24 +21,32 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val model: MainActivityViewModel by viewModels()
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         UIHelper.updateSystemBarsAppearance(this, hasNavbar = true)
 
         if (model.selectedNavbarItem == 0) {
             updateCurrentFragment(R.id.nav_dashboard)
         }
 
-        nav_menu.setOnItemSelectedListener { item ->
+        binding.navMenu.setOnItemSelectedListener { item ->
             updateCurrentFragment(item.itemId)
             true
         }
 
-        toolbar.setOnMenuItemClickListener { item ->
+        binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.nav_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -55,10 +62,10 @@ class MainActivity : AppCompatActivity() {
 
         /* Only show DFU flash menu on known supported CSR models. */
         if (speaker.hardware.platform != HwPlatform.CSR) {
-            nav_menu.menu.removeItem(R.id.nav_flash_dfu)
+            binding.navMenu.menu.removeItem(R.id.nav_flash_dfu)
         }
 
-        nav_menu.menu.findItem(R.id.nav_connect).apply {
+        binding.navMenu.menu.findItem(R.id.nav_connect).apply {
             val connect = HwConnect.from(speaker.hardware.model)
             setIcon(connect.iconId)
             setTitle(connect.nameId)
@@ -72,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         model.selectedNavbarItem = selectedItemId
-        nav_menu.selectedItemId = selectedItemId
+        binding.navMenu.selectedItemId = selectedItemId
 
         val fragment = when (selectedItemId) {
             R.id.nav_dashboard -> SpeakerView()

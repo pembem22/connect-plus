@@ -7,33 +7,46 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_connect.*
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.databinding.FragmentConnectBinding
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.SpeakerManager
 import me.andreww7985.connectplus.mvp.BaseView
 import me.andreww7985.connectplus.ui.SpeakersAdapter
 
 class ConnectFragment : Fragment(), BaseView {
+    private var _binding: FragmentConnectBinding? = null
+    private val binding get() = _binding
+
+
     private var linkUpdatedEventListener: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_connect, container, false)
+        _binding = FragmentConnectBinding.inflate(inflater, container, false)
+        return binding!!.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        linkUpdatedEventListener?.also {
+            SpeakerManager.speakerFoundEvent.unsubscribe(it)
+        }
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        connect_list.layoutManager = LinearLayoutManager(context)
-        connect_list.adapter = SpeakersAdapter(SpeakerManager.speakerList)
+        binding!!.connectList.layoutManager = LinearLayoutManager(context)
+        binding!!.connectList.adapter = SpeakersAdapter(SpeakerManager.speakerList)
 
         linkUpdatedEventListener = {
             lifecycleScope.launch {
-                connect_list?.adapter?.notifyDataSetChanged()
+                binding?.connectList?.adapter?.notifyDataSetChanged()
             }
         }
         SpeakerManager.linkUpdatedEvent.subscribe(linkUpdatedEventListener!!)
 
-        connect_scan_button.setOnClickListener {
+        binding!!.connectScanButton.setOnClickListener {
             if (BleScanManager.isScanning) {
                 BleScanManager.stopScan()
             } else {
@@ -47,21 +60,15 @@ class ConnectFragment : Fragment(), BaseView {
     }
 
     private fun updateUi() {
+        val binding = binding!!
         if (BleScanManager.isScanning) {
-            connect_scan_progressbar.visibility = View.VISIBLE
-            connect_scan_value.text = getString(R.string.connect_searching_on)
-            connect_scan_button.text = getString(R.string.connect_button_stop)
+            binding.connectScanProgressbar.visibility = View.VISIBLE
+            binding.connectScanValue.text = getString(R.string.connect_searching_on)
+            binding.connectScanButton.text = getString(R.string.connect_button_stop)
         } else {
-            connect_scan_progressbar.visibility = View.GONE
-            connect_scan_value.text = getString(R.string.connect_searching_off)
-            connect_scan_button.text = getString(R.string.connect_button_search)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        linkUpdatedEventListener?.also {
-            SpeakerManager.speakerFoundEvent.unsubscribe(it)
+            binding.connectScanProgressbar.visibility = View.GONE
+            binding.connectScanValue.text = getString(R.string.connect_searching_off)
+            binding.connectScanButton.text = getString(R.string.connect_button_search)
         }
     }
 }

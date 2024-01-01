@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_speaker.view.*
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.databinding.ItemSpeakerBinding
 import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.speaker.Feature
 import me.andreww7985.connectplus.speaker.SpeakerModel
@@ -25,19 +25,19 @@ class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.A
                 speaker.hardware.color.name.lowercase()
             ), "drawable", context.packageName
         )
-        if (speakerDrawableId != 0) holder.speakerImage.setImageResource(speakerDrawableId)
+        if (speakerDrawableId != 0) holder.binding.speakerImage.setImageResource(speakerDrawableId)
 
-        holder.soundButton.setOnClickListener { speaker.playSound() }
+        holder.binding.speakerSoundButton.setOnClickListener { speaker.playSound() }
 
-        holder.nameLabel.text = speaker.getFeature<Feature.BatteryName>().deviceName
+        holder.binding.speakerNameValue.text = speaker.getFeature<Feature.BatteryName>().deviceName
 
-        holder.channelButtons.check(when (speaker.audioChannel) {
+        holder.binding.speakerChannelButtons.check(when (speaker.audioChannel) {
             AudioChannel.LEFT -> R.id.speaker_left_button
             AudioChannel.RIGHT -> R.id.speaker_right_button
             AudioChannel.STEREO -> R.id.speaker_stereo_button
         })
 
-        holder.channelButtons.addOnButtonCheckedListener { _, checkedId, isChecked ->
+        holder.binding.speakerChannelButtons.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 speaker.updateAudioChannel(when (checkedId) {
                     R.id.speaker_left_button -> AudioChannel.LEFT
@@ -53,8 +53,5 @@ class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.A
 }
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val speakerImage = view.speaker_image!!
-    val nameLabel = view.speaker_name_value!!
-    val soundButton = view.speaker_sound_button!!
-    val channelButtons = view.speaker_channel_buttons!!
+    val binding = ItemSpeakerBinding.bind(view)
 }

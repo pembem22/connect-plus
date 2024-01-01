@@ -14,9 +14,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
+import me.andreww7985.connectplus.databinding.ActivityDiscoveryBinding
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.PresenterManager
@@ -34,14 +34,21 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     private val presenter =
         PresenterManager.getPresenter(DiscoveryPresenter::class.java) as DiscoveryPresenter
 
+    private lateinit var binding: ActivityDiscoveryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityDiscoveryBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         UIHelper.updateSystemBarsAppearance(this)
         setContentView(R.layout.activity_discovery)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
-        toolbar.setOnMenuItemClickListener { item ->
+        binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.nav_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -56,7 +63,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     fun showConnecting(name: String) {
         lifecycleScope.launch {
-            discovery_text.text = getString(R.string.discovery_connecting, name)
+            binding.discoveryText.text = getString(R.string.discovery_connecting, name)
         }
     }
 

@@ -8,9 +8,9 @@ import timber.log.Timber
 object PresenterManager {
     private val presenters = HashMap<Class<out BasePresenter<out BaseView, out BaseModel>>, BasePresenter<out BaseView, out BaseModel>>()
 
-    fun getPresenter(presenterClass: Class<out BasePresenter<out BaseView, out BaseModel>>) =
+    fun getPresenter(presenterClass: Class<out BasePresenter<out BaseView, out BaseModel>>): BasePresenter<out BaseView, out BaseModel> =
             presenters[presenterClass] ?: run {
-                val presenter = presenterClass.newInstance()
+                val presenter = presenterClass.getDeclaredConstructor().newInstance()
                 presenters[presenterClass] = presenter
                 presenter
             }
