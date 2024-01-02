@@ -44,7 +44,6 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         val view = binding.root
         setContentView(view)
 
-        setContentView(R.layout.activity_discovery)
         setSupportActionBar(binding.toolbar)
 
         binding.toolbar.setOnMenuItemClickListener { item ->
