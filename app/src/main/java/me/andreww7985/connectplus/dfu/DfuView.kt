@@ -187,7 +187,7 @@ class DfuView : Fragment(), BaseView {
 
             MaterialAlertDialogBuilder(
                 requireContext(),
-                R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
+                com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
             ).setCancelable(false)
                 .setIcon(R.drawable.ic_warning)
                 .setTitle(getString(R.string.dialog_dfu_warning_title))
