@@ -48,16 +48,10 @@ object SpeakerManager : BaseModel {
         linkUpdated()
     }
 
-//    fun speakerDisconnected() {
-//
-//    }
-
     fun linkUpdated() {
         speakerList.clear()
         speakerList.addAll(speakers.values.filter { it.isDiscovered })
 
         linkUpdatedEvent.fire()
     }
-
-//    fun getSpeaker(index: Int) = speakers.values.filter { it.index == index }.firstOrNull()
 }

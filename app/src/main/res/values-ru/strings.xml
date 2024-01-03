@@ -65,4 +65,5 @@
     <string name="settings_dark_theme_enabled">Тёмная</string>
     <string name="settings_dark_theme_system">Использовать системные настройки</string>
     <string name="dfu_warning_dont_show">Больше не показывать</string>
+    <string name="ble_not_supported">Bluetooth LE не поддерживается на этом устройстве</string>
 </resources>

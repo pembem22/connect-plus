@@ -8,7 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
-import android.widget.Toast
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.databinding.ActivityDiscoveryBinding
-import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.BleScanManager
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
@@ -65,10 +64,23 @@ class DiscoveryView : AppCompatActivity(), BaseView {
         }
     }
 
+    private fun showNotSupported() {
+        lifecycleScope.launch {
+            binding.discoveryUi.visibility = View.GONE
+            binding.notSupportedUi.visibility = View.VISIBLE
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
         presenter.attachView(this)
+
+        if (!BleScanManager.isBleSupported()) {
+            showNotSupported()
+            return
+        }
+
         checkPermissions()
     }
 
@@ -119,13 +131,6 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
     private fun checkBluetooth() {
         Timber.d("checkBluetooth")
-
-        if (!BleScanManager.isBleSupported()) {
-            UIHelper.showToast(findViewById(android.R.id.content), "Bluetooth Low Energy not supported on this device", Toast.LENGTH_LONG)
-            Timber.d("checkBluetooth BLE not supported")
-            finish()
-            return
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val bluetoothConnectGranted = ContextCompat.checkSelfPermission(

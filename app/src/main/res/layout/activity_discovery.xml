@@ -31,15 +31,44 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
+        <LinearLayout
+            android:id="@+id/discovery_ui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminate="true" />
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
 
-        <TextView
-            android:id="@+id/discovery_text"
+            <TextView
+                android:id="@+id/discovery_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discovery_searching" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/not_supported_ui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/discovery_searching" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <androidx.appcompat.widget.AppCompatImageView
+                app:srcCompat="@drawable/ic_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:gravity="center"
+                android:text="@string/ble_not_supported" />
+        </LinearLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>
