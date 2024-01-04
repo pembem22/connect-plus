@@ -87,7 +87,7 @@
                         <TextView
                             android:id="@+id/dfu_battery_warning_title"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:text="@string/dfu_connect_charger_title"
@@ -125,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/dfu_state_file_not_selected" />
 
             <com.google.android.material.button.MaterialButton
@@ -164,7 +165,7 @@
                     android:id="@+id/dfu_file_info_size_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="123456"
+                    tools:text="123456"
                     android:typeface="monospace" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -184,7 +185,7 @@
                     android:id="@+id/dfu_file_info_checksum_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12AB34DE"
+                    tools:text="12AB34DE"
                     android:typeface="monospace" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
