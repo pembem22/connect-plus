@@ -1,6 +1,7 @@
 package me.andreww7985.connectplus.manager
 
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
@@ -12,7 +13,8 @@ import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.bluetooth.BluetoothProtocol
 
 object BleScanManager {
-    private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
+    private val adapter: BluetoothAdapter? by lazy { (App.instance.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter }
+    private val scanner by lazy { adapter?.bluetoothLeScanner }
 
     private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
@@ -26,7 +28,7 @@ object BleScanManager {
 
     fun startScan() {
         isScanning = true
-        bleScanner.startScan(null,
+        scanner?.startScan(null,
                 ScanSettings.Builder()
                         .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                         .build(),
@@ -35,10 +37,10 @@ object BleScanManager {
 
     fun stopScan() {
         isScanning = false
-        bleScanner.stopScan(scanCallback)
+        scanner?.stopScan(scanCallback)
     }
 
-    fun isBleSupported() = BluetoothAdapter.getDefaultAdapter() != null && App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE)
-    fun isBluetoothEnabled() = BluetoothAdapter.getDefaultAdapter().isEnabled
+    fun isBleSupported() = App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE) && scanner != null
+    fun isBluetoothEnabled() = adapter?.isEnabled ?: false
     fun isLocationEnabled() = LocationManagerCompat.isLocationEnabled(App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager)
 }

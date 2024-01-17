@@ -85,5 +85,5 @@
     <string name="dfu_connect_charger_text">The speaker must be connected to a charger during the entire flashing process.</string>
     <string name="dfu_connect_charger_title_connected">Do not disconnect the speaker from the charger</string>
     <string name="dfu_state_done">Done! Do not press any buttons on the speaker nor unplug it, otherwise you\'ll get a brick! The speaker will automatically reboot in a few minutes. You may close this app.</string>
-    <string name="ble_not_supported">Bluetooth LE is not supported on this device</string>
+    <string name="ble_not_supported">Bluetooth LE is not supported on this device or Bluetooth is disabled</string>
 </resources>
