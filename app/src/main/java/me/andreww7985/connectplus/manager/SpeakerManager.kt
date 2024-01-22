@@ -35,10 +35,13 @@ object SpeakerManager : BaseModel {
     fun speakerConnected(speaker: SpeakerModel) {
         Timber.d("speakerConnected MAC = ${speaker.mac}")
 
-        App.analytics.logSpeakerEvent("speaker_connected") {
-            putString("speaker_model", speaker.hardware.model.name)
-            putString("speaker_color", speaker.hardware.color.name)
-            putString("speaker_data", speaker.scanRecord)
+        App.analytics.logEvent("speaker_connected") {
+            if (App.analytics.sendSpeakerData) {
+                putString("speaker_model", speaker.hardware.model.name)
+                putString("speaker_color", speaker.hardware.color.name)
+                putString("speaker_platform", speaker.hardware.platform.name)
+                putString("speaker_data", speaker.scanRecord)
+            }
         }
 
         if (speaker == selectedSpeaker) {

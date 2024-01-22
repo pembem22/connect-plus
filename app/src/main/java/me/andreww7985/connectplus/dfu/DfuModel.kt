@@ -110,6 +110,8 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
         ))
 
         modelChangedEvent.fire()
+
+        App.analytics.logEvent("dfu_cancelled")
     }
 
     fun sendNextPacket() {
@@ -130,6 +132,8 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
     fun dfuStarted() {
         state = State.FLASHING_DFU
         sendNextPacket()
+
+        App.analytics.logEvent("dfu_started")
     }
 
     fun requestDfu() {
@@ -147,6 +151,8 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
         ))
 
         modelChangedEvent.fire()
+
+        App.analytics.logEvent("dfu_requested")
     }
 
     fun dfuFinished(status: Status) {
@@ -155,7 +161,7 @@ class DfuModel(val speaker: SpeakerModel) : BaseModel {
 
         modelChangedEvent.fire()
 
-        App.analytics.logSpeakerEvent("dfu_state_finished") {
+        App.analytics.logEvent("dfu_state_finished") {
             putString("status", status.name)
         }
     }

@@ -5,9 +5,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class Analytics {
     private val firebaseAnalytics = FirebaseAnalytics.getInstance(App.instance)
+    val sendSpeakerData: Boolean
+        get() = App.sharedPreferences.getBoolean("send_speaker_data", true)
 
     fun logSpeakerEvent(eventName: String, log: Bundle.() -> Unit = {}) {
-        if (App.sharedPreferences.getBoolean("send_speaker_data", true)) {
+        if (sendSpeakerData) {
             logEvent(eventName, log)
         }
     }

@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.R
 import me.andreww7985.connectplus.databinding.ActivityDiscoveryBinding
 import me.andreww7985.connectplus.manager.BleScanManager
@@ -78,6 +79,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
 
         if (!BleScanManager.isBleSupported()) {
             showNotSupported()
+            App.analytics.logEvent("ble_not_supported")
             return
         }
 
@@ -122,6 +124,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_CODE_PERMISSION
                 )
+                App.analytics.logEvent("asking_for_location_permission")
                 return
             }
         }
@@ -151,6 +154,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
                     ),
                     REQUEST_CODE_PERMISSION
                 )
+                App.analytics.logEvent("asking_for_bluetooth_permission")
                 return
             }
         }
@@ -160,6 +164,7 @@ class DiscoveryView : AppCompatActivity(), BaseView {
                 Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
                 REQUEST_CODE_BLUETOOTH
             )
+            App.analytics.logEvent("asking_to_enable_bluetooth")
             return
         }
 
@@ -167,11 +172,13 @@ class DiscoveryView : AppCompatActivity(), BaseView {
     }
 
     private fun checkLocation() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && !BleScanManager.isLocationEnabled())
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && !BleScanManager.isLocationEnabled()) {
             startActivityForResult(
                 Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),
                 REQUEST_CODE_LOCATION
             )
+            App.analytics.logEvent("asking_to_enable_location")
+        }
         else
             BleScanManager.startScan()
     }

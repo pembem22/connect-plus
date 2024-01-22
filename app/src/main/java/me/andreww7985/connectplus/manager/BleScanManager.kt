@@ -33,11 +33,13 @@ object BleScanManager {
                         .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                         .build(),
                 scanCallback)
+        App.analytics.logEvent("scan_started")
     }
 
     fun stopScan() {
         isScanning = false
         scanner?.stopScan(scanCallback)
+        App.analytics.logEvent("scan_stopped")
     }
 
     fun isBleSupported() = App.instance.packageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE) && scanner != null
