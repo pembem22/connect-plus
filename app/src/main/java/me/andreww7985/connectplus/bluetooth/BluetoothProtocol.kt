@@ -22,38 +22,46 @@ object BluetoothProtocol {
         val scanRecord = scanResult.scanRecord ?: return
         if (SpeakerManager.speakers.containsKey(scanResult.device.address)) return
 
-        val scanRecordBytes = scanRecord.bytes
+        try {
+            val scanRecordBytes = scanRecord.bytes
 
-        val manufacturerData = SparseArray<ByteArray>()
-        var currentPos = 0
-        while (currentPos < scanRecordBytes.size) {
-            val currentPos2 = currentPos + 1
-            val length = scanRecordBytes[currentPos].toInt() and 0xFF
-            if (length == 0) {
-                break
+            val manufacturerData = SparseArray<ByteArray>()
+            var currentPos = 0
+            while (currentPos < scanRecordBytes.size) {
+                val currentPos2 = currentPos + 1
+                val length = scanRecordBytes[currentPos].toInt() and 0xFF
+                if (length == 0) {
+                    break
+                }
+                val dataLength = length - 1
+                currentPos = currentPos2 + 1
+
+                if (scanRecordBytes[currentPos2].toInt() and 0xFF == 0xFF) {
+                    manufacturerData.put(
+                        (scanRecordBytes[currentPos + 1].toInt() and 0xFF shl 8) + (scanRecordBytes[currentPos].toInt() and 0xFF),
+                        scanRecordBytes.copyOfRange(currentPos + 2, currentPos + 2 + dataLength)
+                    )
+                }
+
+                currentPos += dataLength
             }
-            val dataLength = length - 1
-            currentPos = currentPos2 + 1
 
-            if (scanRecordBytes[currentPos2].toInt() and 0xFF == 0xFF) {
-                manufacturerData.put((scanRecordBytes[currentPos + 1].toInt() and 0xFF shl 8) + (scanRecordBytes[currentPos].toInt() and 0xFF),
-                        scanRecordBytes.copyOfRange(currentPos + 2, currentPos + 2 + dataLength))
-            }
+            val speakerData = manufacturerData[87] ?: return
 
-            currentPos += dataLength
+            Timber.d("connect parsed ${speakerData.toHexString()}")
+
+            val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
+
+            val modelId =
+                (speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt() and 0xFF)
+            val colorId = speakerData[2].toInt() and 0xFF
+            speaker.hardware = SpeakerHardware.from(modelId, colorId)
+
+            SpeakerManager.speakerFound(speaker)
+        } catch (e: Exception) {
+            Timber.e(e, "failed to parse scan record")
+            App.analytics.logEvent("bluetooth_parse_failed")
         }
-
-        val speakerData = manufacturerData[87] ?: return
-
-        Timber.d("connect parsed ${speakerData.toHexString()}")
-
-        val speaker = SpeakerModel(scanResult.device, speakerData.toHexString())
-
-        val modelId = (speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt() and 0xFF)
-        val colorId = speakerData[2].toInt() and 0xFF
-        speaker.hardware = SpeakerHardware.from(modelId, colorId)
-
-        SpeakerManager.speakerFound(speaker)
     }
 
     fun onPacket(speaker: SpeakerModel, packet: Packet) {
