@@ -192,7 +192,7 @@ object BluetoothProtocol {
             PacketType.RES_BASS_LEVEL -> {
                 val feature = speaker.getOrCreateFeature<Feature.BassLevel>()
 
-                feature.level = payload[0].toInt() and 0xFF
+                feature.level = (payload[0].toInt() and 0xFF) - 1
                 speaker.featuresChanged()
             }
             PacketType.RES_ANALYTICS_DATA -> {
