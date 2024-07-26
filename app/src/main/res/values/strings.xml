@@ -86,5 +86,5 @@
     <string name="dfu_state_done">Done! Do not press any buttons on the speaker nor unplug it, otherwise you\'ll get a brick! The speaker will automatically reboot in a few minutes. You may close this app.</string>
     <string name="ble_not_supported">Bluetooth LE is not supported on this device or Bluetooth is disabled</string>
 
-    <string name="settings_app_version_summary" translatable="false">1.2.1</string>
+    <string name="settings_app_version_summary" translatable="false">1.2.2</string>
 </resources>
