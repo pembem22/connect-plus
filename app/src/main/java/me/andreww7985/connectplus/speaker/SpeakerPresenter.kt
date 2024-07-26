@@ -45,46 +45,48 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
                 BATTERY_NAME -> {
                     val batteryName = feature as Feature.BatteryName
 
-                    view.showBatteryNameFeature(batteryName.deviceName!!, batteryName.batteryLevel!!, batteryName.batteryCharging!!)
+                    view.showBatteryNameFeature(batteryName.deviceName,
+                        batteryName.batteryLevel, batteryName.batteryCharging
+                    )
                 }
                 FEEDBACK_SOUNDS -> {
                     val feedbackSounds = feature as Feature.FeedbackSounds
 
-                    view.showFeedbackSoundsFeature(feedbackSounds.enabled!!)
+                    view.showFeedbackSoundsFeature(feedbackSounds.enabled)
                 }
                 FIRMWARE_VERSION -> {
                     val firmwareVersion = feature as Feature.FirmwareVersion
 
-                    view.showFirmwareVersionFeature(firmwareVersion.minor!!, firmwareVersion.major!!, firmwareVersion.build)
+                    view.showFirmwareVersionFeature(firmwareVersion.minor,
+                        firmwareVersion.major, firmwareVersion.build)
                 }
                 SPEAKERPHONE_MODE -> {
                     val speakerphoneMode = feature as Feature.SpeakerphoneMode
 
-                    view.showSpeakerphoneModeFeature(speakerphoneMode.enabled!!)
+                    view.showSpeakerphoneModeFeature(speakerphoneMode.enabled)
                 }
                 BASS_LEVEL -> {
                     val bassLevel = feature as Feature.BassLevel
 
-                    view.showBassLevelFeature(bassLevel.level!!)
+                    view.showBassLevelFeature(bassLevel.level)
                 }
             }
         }
     }
 
     fun onRenamePressed() {
-        view?.showRenameAlertDialog(model.getFeature<Feature.BatteryName>().deviceName!!)
+        view?.showRenameAlertDialog(model.getFeatureOrThrow<Feature.BatteryName>().deviceName)
     }
 
     fun onRenameDialogConfirmed(name: String) {
-        model.getFeature<Feature.BatteryName>().deviceName = name
+        model.getFeatureOrThrow<Feature.BatteryName>().deviceName = name
         model.setName(name)
     }
 
     fun onPlaySoundPressed() {
         model.requestAnalyticsData()
 
-        val audioFeedback = model.getFeature<Feature.FeedbackSounds>().enabled
-                ?: true
+        val audioFeedback = model.getFeatureOrNull<Feature.FeedbackSounds>()?.enabled ?: true
         if (audioFeedback) {
             model.playSound()
         } else {
@@ -93,7 +95,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onSpeakerphoneModeChanged(value: Boolean) {
-        val speakerphoneMode = model.getFeature<Feature.SpeakerphoneMode>()
+        val speakerphoneMode = model.getFeatureOrThrow<Feature.SpeakerphoneMode>()
 
         if (speakerphoneMode.enabled == value) return
 
@@ -103,7 +105,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onFeedbackSoundsChanged(value: Boolean) {
-        val feedbackSounds = model.getFeature<Feature.FeedbackSounds>()
+        val feedbackSounds = model.getFeatureOrThrow<Feature.FeedbackSounds>()
 
         if (feedbackSounds.enabled == value) return
 
@@ -113,7 +115,7 @@ class SpeakerPresenter : BasePresenter<SpeakerView, SpeakerModel>(SpeakerManager
     }
 
     fun onBassLevelChanged(level: Int) {
-        val bassLevel = model.getFeature<Feature.BassLevel>()
+        val bassLevel = model.getFeatureOrThrow<Feature.BassLevel>()
 
         if (bassLevel.level == level) return
 

@@ -29,7 +29,7 @@ class SpeakersAdapter(private val speakers: List<SpeakerModel>) : RecyclerView.A
 
         holder.binding.speakerSoundButton.setOnClickListener { speaker.playSound() }
 
-        holder.binding.speakerNameValue.text = speaker.getFeature<Feature.BatteryName>().deviceName
+        holder.binding.speakerNameValue.text = speaker.getFeatureOrNull<Feature.BatteryName>()?.deviceName ?: "Unknown"
 
         holder.binding.speakerChannelButtons.check(when (speaker.audioChannel) {
             AudioChannel.LEFT -> R.id.speaker_left_button

@@ -27,8 +27,7 @@ class DfuPresenter : BasePresenter<DfuView, DfuModel>(SpeakerManager.selectedSpe
     }
 
     private fun isSpeakerCharging() =
-        model.speaker.getFeature<Feature.BatteryName>().batteryCharging
-            ?: false
+        model.speaker.getFeatureOrNull<Feature.BatteryName>()?.batteryCharging ?: false
 
 
     private fun updateView() {

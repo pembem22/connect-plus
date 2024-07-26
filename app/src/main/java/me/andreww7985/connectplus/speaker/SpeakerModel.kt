@@ -127,17 +127,16 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         }
     }
 
-    inline fun <reified T : Feature> getOrCreateFeature(): T =
-            (features.values.firstOrNull { feature -> feature is T }
-                    ?: run {
-                        val type = Feature.Type.fromClass(T::class.java)
-                        val feature = type.clazz.getDeclaredConstructor().newInstance()
-                        features[type] = feature
-                        feature
-                    }) as T
+    inline fun <reified T : Feature> updateFeature(updated: T) {
+        val type = Feature.Type.fromClass(T::class.java)
+        features[type] = updated
+    }
 
-    inline fun <reified T : Feature> getFeature(): T =
-            features.values.firstOrNull { feature -> feature is T } as T?
+    inline fun <reified T : Feature> getFeatureOrNull(): T? =
+        features.values.firstOrNull { feature -> feature is T } as T?
+
+    inline fun <reified T : Feature> getFeatureOrThrow(): T =
+        getFeatureOrNull<T>()
                     ?: throw IllegalArgumentException("Feature ${T::class.java.simpleName} does not exist")
 }
 

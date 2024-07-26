@@ -9,31 +9,17 @@ abstract class Feature {
         BASS_LEVEL(BassLevel::class.java);
 
         companion object {
-            fun fromClass(clazz: Class<out Feature>): Type = values().first { type -> type.clazz == clazz }
+            fun fromClass(clazz: Class<out Feature>): Type = entries.first { type -> type.clazz == clazz }
         }
     }
 
-    class BatteryName : Feature() {
-        var batteryLevel: Int? = null
-        var batteryCharging: Boolean? = null
-        var deviceName: String? = null
-    }
+    class BatteryName(var batteryLevel: Int, var batteryCharging: Boolean, var deviceName: String) : Feature()
 
-    class FeedbackSounds : Feature() {
-        var enabled: Boolean? = null
-    }
+    class FeedbackSounds(var enabled: Boolean) : Feature()
 
-    class FirmwareVersion : Feature() {
-        var major: Int? = null
-        var minor: Int? = null
-        var build: Int? = null
-    }
+    class FirmwareVersion(var major: Int, var minor: Int, var build: Int?) : Feature()
 
-    class SpeakerphoneMode : Feature() {
-        var enabled: Boolean? = null
-    }
+    class SpeakerphoneMode(var enabled: Boolean) : Feature()
 
-    class BassLevel : Feature() {
-        var level: Int? = null
-    }
+    class BassLevel(var level: Int) : Feature()
 }

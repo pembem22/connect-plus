@@ -76,10 +76,10 @@ object BluetoothProtocol {
             PacketType.RES_SPEAKER_INFO -> {
                 speaker.index = payload[0].toInt() and 0xFF
 
-                val feature = speaker.getOrCreateFeature<Feature.BatteryName>()
-                var name = feature.deviceName
-                var batteryCharging = feature.batteryCharging
-                var batteryLevel = feature.batteryLevel
+                val feature = speaker.getFeatureOrNull<Feature.BatteryName>()
+                var name = feature?.deviceName
+                var batteryCharging = feature?.batteryCharging
+                var batteryLevel = feature?.batteryLevel
 
                 var modelId: Int? = null
                 var colorId: Int? = null
@@ -136,10 +136,7 @@ object BluetoothProtocol {
                 }
 
                 if (name != null && batteryLevel != null && batteryCharging != null) {
-                    feature.batteryCharging = batteryCharging
-                    feature.batteryLevel = batteryLevel
-                    feature.deviceName = name
-
+                    speaker.updateFeature(Feature.BatteryName(batteryLevel, batteryCharging, name))
                     speaker.featuresChanged()
                 }
 
@@ -152,30 +149,34 @@ object BluetoothProtocol {
                 }
             }
             PacketType.RES_FIRMWARE_VERSION -> {
-                val feature = speaker.getOrCreateFeature<Feature.FirmwareVersion>()
+                val major: Int?
+                val minor: Int?
+                val build: Int?
 
                 if (payload.size <= 2) {
-                    feature.major = payload[0].toInt() shr 4 and 0xF
-                    feature.minor = payload[0].toInt() and 0xF
-                    feature.build = null
+                    major = payload[0].toInt() shr 4 and 0xF
+                    minor = payload[0].toInt() and 0xF
+                    build = null
                 } else {
-                    feature.major = payload[0].toInt() and 0xFF
-                    feature.minor = payload[1].toInt() and 0xFF
-                    feature.build = payload[2].toInt() and 0xFF
+                    major = payload[0].toInt() and 0xFF
+                    minor = payload[1].toInt() and 0xFF
+                    build = payload[2].toInt() and 0xFF
                 }
 
                 App.analytics.logSpeakerEvent("speaker_firmware") {
-                    putString("speaker_firmware", "${feature.major}.${feature.minor}${if (feature.build != null) ".${feature.build}" else ""}")
+                    putString("speaker_firmware", "${major}.${minor}${if (build != null) ".${build}" else ""}")
                 }
+
+                speaker.updateFeature(Feature.FirmwareVersion(major, minor, build))
 
                 speaker.featuresChanged()
             }
             PacketType.RES_FEEDBACK_SOUNDS -> {
-                speaker.getOrCreateFeature<Feature.FeedbackSounds>().enabled = payload[0] == 1.toByte()
+                speaker.updateFeature(Feature.FeedbackSounds(payload[0] == 1.toByte()))
                 speaker.featuresChanged()
             }
             PacketType.RES_SPEAKERPHONE_MODE -> {
-                speaker.getOrCreateFeature<Feature.SpeakerphoneMode>().enabled = payload[0] == 1.toByte()
+                speaker.updateFeature(Feature.SpeakerphoneMode(payload[0] == 1.toByte()))
                 speaker.featuresChanged()
             }
             PacketType.RES_DFU_STATUS_CHANGE -> {
@@ -190,9 +191,7 @@ object BluetoothProtocol {
                 }
             }
             PacketType.RES_BASS_LEVEL -> {
-                val feature = speaker.getOrCreateFeature<Feature.BassLevel>()
-
-                feature.level = (payload[0].toInt() and 0xFF) - 1
+                speaker.updateFeature(Feature.BassLevel(payload[0].toInt() and 0xFF))
                 speaker.featuresChanged()
             }
             PacketType.RES_ANALYTICS_DATA -> {
