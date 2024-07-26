@@ -16,6 +16,9 @@ import me.andreww7985.connectplus.databinding.FragmentDashboardBinding
 import me.andreww7985.connectplus.helpers.UIHelper
 import me.andreww7985.connectplus.manager.PresenterManager
 import me.andreww7985.connectplus.mvp.BaseView
+import timber.log.Timber
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 class SpeakerView : BaseView, Fragment() {
@@ -117,9 +120,15 @@ class SpeakerView : BaseView, Fragment() {
         }
     }
 
-    fun showBassLevelFeature(level: Int) {
+    fun showBassLevelFeature(value: Int) {
         lifecycleScope.launch {
-            binding.dashboardBassLevelSlider.value = level.toFloat()
+            val slider = binding.dashboardBassLevelSlider
+
+            if (!(slider.valueFrom <= value && value <= slider.valueTo)) {
+                Timber.w("bass level $value is outside the [${slider.valueFrom}; ${slider.valueTo}] range")
+            }
+
+            binding.dashboardBassLevelSlider.value = min(slider.valueTo, max(slider.valueFrom, value.toFloat()))
             binding.dashboardBassLevelFeature.visibility = View.VISIBLE
         }
     }
