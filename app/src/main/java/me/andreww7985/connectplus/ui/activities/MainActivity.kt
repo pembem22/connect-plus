@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
 
         val enableQCCFlash = App.sharedPreferences.getBoolean("enable_qcc_flash", true)
 
-        /* Only show DFU flash menu on known supported CSR models or if QCC flashing is enabled. */
+        /* Only show DFU flash menu on known supported CSR models or if QCC flashing is enabled.
+         * Protocol 4 (Boombox 4, Xtreme 5) flashing is supported; Vimicro still isn't. */
         if ((speaker.hardware.platform == HwPlatform.QCC && !enableQCCFlash)
             || speaker.hardware.platform == HwPlatform.VIMICRO
             || speaker.hardware.platform == HwPlatform.UNKNOWN) {

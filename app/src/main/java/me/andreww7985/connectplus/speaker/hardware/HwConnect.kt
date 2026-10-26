@@ -11,7 +11,8 @@ enum class HwConnect(@StringRes val nameId: Int, @DrawableRes val iconId: Int) {
 
     companion object {
         fun from(hwModel: HwModel) = when (hwModel) {
-            HwModel.FLIP3, HwModel.PULSE2, HwModel.XTREME, HwModel.UNKNOWN -> CONNECT
+            // ponytail: Boombox 4 links via Auracast, which isn't supported yet; label it plain Connect until it is
+            HwModel.FLIP3, HwModel.PULSE2, HwModel.XTREME, HwModel.BOOMBOX4, HwModel.XTREME5, HwModel.UNKNOWN -> CONNECT
 
             HwModel.CHARGE3, HwModel.CHARGE4, HwModel.FLIP4, HwModel.BOOMBOX, HwModel.XTREME2,
             HwModel.PULSE3 -> CONNECT_PLUS

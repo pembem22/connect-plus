@@ -11,6 +11,7 @@ import me.andreww7985.connectplus.manager.bleoperations.RequestMtuOperation
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
 import me.andreww7985.connectplus.speaker.SpeakerModel
+import me.andreww7985.connectplus.speaker.hardware.HwPlatform
 import timber.log.Timber
 import java.util.*
 
@@ -19,6 +20,7 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         val UUID_RX_TX_SERVICE = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0000")!!
         val UUID_READ_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0002")!!
         val UUID_WRITE_CHARACTERISTIC = UUID.fromString("65786365-6c70-6f69-6e74-2e636f6d0001")!!
+        val UUID_CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")!!
     }
 
     var gatt: BluetoothGatt? = null
@@ -53,6 +55,12 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
             BleOperationManager.operationComplete()
             BleOperationManager.request(DiscoverOperation(this@BleConnection))
+        }
+
+        override fun onDescriptorWrite(gatt: BluetoothGatt?, descriptor: BluetoothGattDescriptor?, status: Int) {
+            // Only Protocol 4 speakers write a descriptor (the CCCD in setNotification)
+            BleOperationManager.operationComplete()
+            speaker.requestProtocol4Info()
         }
 
         override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
@@ -97,6 +105,18 @@ class BleConnection(private val bluetoothDevice: BluetoothDevice, private val sp
         val gatt = gatt ?: throw IllegalStateException("enableNotification when gatt is null")
 
         gatt.setCharacteristicNotification(characteristic, value)
+
+        if (speaker.hardware.platform == HwPlatform.PROTOCOL4) {
+            // Also enable notifications on the speaker (CCCD), like the JBL app does; continues in onDescriptorWrite
+            characteristic.getDescriptor(UUID_CCCD)?.let { cccd ->
+                cccd.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                if (gatt.writeDescriptor(cccd)) return
+            }
+            BleOperationManager.operationComplete()
+            speaker.requestProtocol4Info()
+            return
+        }
+
         BleOperationManager.operationComplete()
 
         speaker.sendPacket(Packet(PacketType.REQ_SPEAKER_INFO))

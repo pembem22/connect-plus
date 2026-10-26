@@ -15,6 +15,8 @@ import me.andreww7985.connectplus.protocol.AudioChannel
 import me.andreww7985.connectplus.protocol.DataToken
 import me.andreww7985.connectplus.protocol.Packet
 import me.andreww7985.connectplus.protocol.PacketType
+import me.andreww7985.connectplus.protocol.Protocol4
+import me.andreww7985.connectplus.speaker.hardware.HwPlatform
 import timber.log.Timber
 import java.util.concurrent.ConcurrentHashMap
 
@@ -45,10 +47,12 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
         Timber.d("$mac discovered")
         isDiscovered = true
 
-        sendPacket(Packet(PacketType.REQ_FEEDBACK_SOUNDS))
-        sendPacket(Packet(PacketType.REQ_FIRMWARE_VERSION))
-        sendPacket(Packet(PacketType.REQ_SPEAKERPHONE_MODE))
-        sendPacket(Packet(PacketType.REQ_BASS_LEVEL))
+        if (hardware.platform != HwPlatform.PROTOCOL4) {
+            sendPacket(Packet(PacketType.REQ_FEEDBACK_SOUNDS))
+            sendPacket(Packet(PacketType.REQ_FIRMWARE_VERSION))
+            sendPacket(Packet(PacketType.REQ_SPEAKERPHONE_MODE))
+            sendPacket(Packet(PacketType.REQ_BASS_LEVEL))
+        }
 
         SpeakerManager.speakerConnected(this)
     }
@@ -59,6 +63,7 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
     }
 
     fun onPacket(bytes: ByteArray) {
+        if (hardware.platform == HwPlatform.PROTOCOL4) return onProtocol4Packet(bytes)
         if (bytes[0] != 0xAA.toByte()) return
 
         val length = bytes[2].toInt() and 0xFF
@@ -71,6 +76,43 @@ class SpeakerModel(bluetoothDevice: BluetoothDevice, val scanRecord: String) : B
 
         BluetoothProtocol.onPacket(this, Packet(PacketType.from(bytes[1]), payload))
     }
+
+    private fun onProtocol4Packet(bytes: ByteArray) {
+        Timber.d("$mac onProtocol4Packet ${bytes.toHexString()}")
+
+        // During a flash the speaker drives us with OTA notifications and an OTA-info reply
+        Protocol4.parseOtaNotification(bytes)?.let { dfuModel.onProtocol4OtaNotification(it); return }
+
+        val features = Protocol4.parseFeatures(bytes) ?: return
+
+        if (features.containsKey(Protocol4.FEATURE_OTA_MAX_SIZE)) {
+            dfuModel.onProtocol4OtaInfo()
+            return
+        }
+
+        features[Protocol4.FEATURE_FIRMWARE_VERSION]?.takeIf { it.size >= 2 }?.let { v ->
+            updateFeature(Feature.FirmwareVersion(v[0].toInt() and 0xFF, v[1].toInt() and 0xFF, v.getOrNull(2)?.let { it.toInt() and 0xFF }))
+        }
+
+        val name = features[Protocol4.FEATURE_DEVICE_NAME]?.let { String(it) }
+        val battery = features[Protocol4.FEATURE_BATTERY_STATUS]?.firstOrNull()?.let { it.toInt() and 0xFF }
+        if (name != null && battery != null) {
+            // Same encoding as the older speakers: >= 128 means charging
+            updateFeature(Feature.BatteryName(battery % 128, battery >= 128, name))
+        }
+
+        featuresChanged()
+        if (!isDiscovered) discovered()
+    }
+
+    fun sendProtocol4(bytes: ByteArray) {
+        val writeCharacteristic = writeCharacteristic ?: return Timber.w("sendProtocol4 when writeCharacteristic is null")
+        Timber.d("$mac sendProtocol4 ${bytes.toHexString()}")
+        BleOperationManager.request(WriteCharacteristicOperation(bleConnection, writeCharacteristic, bytes))
+    }
+
+    fun requestProtocol4Info() =
+        sendProtocol4(Protocol4.getDeviceInfo(Protocol4.FEATURE_DEVICE_NAME, Protocol4.FEATURE_BATTERY_STATUS, Protocol4.FEATURE_FIRMWARE_VERSION))
 
     fun updateAudioChannel(audioChannel: AudioChannel) {
         if (this.audioChannel == audioChannel) {
