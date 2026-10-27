@@ -1,6 +1,7 @@
 package me.andreww7985.connectplus.bluetooth
 
 import android.bluetooth.le.ScanResult
+import android.os.ParcelUuid
 import android.util.SparseArray
 import me.andreww7985.connectplus.App
 import me.andreww7985.connectplus.dfu.DfuModel
@@ -16,6 +17,8 @@ import me.andreww7985.connectplus.speaker.SpeakerModel
 import timber.log.Timber
 
 object BluetoothProtocol {
+    private val HARMAN_SERVICE_DATA_PROTOCOL4 = ParcelUuid.fromString("0000fddf-0000-1000-8000-00805f9b34fb")
+
     fun connect(scanResult: ScanResult) {
         Timber.d("connect ${scanResult.device.address} ${scanResult.device.name}")
 
@@ -46,7 +49,10 @@ object BluetoothProtocol {
                 currentPos += dataLength
             }
 
-            val speakerData = manufacturerData[87] ?: return
+            // Protocol 4 speakers may advertise only Harman service data, where the colour sits at byte 4 instead of 2
+            val serviceData = scanRecord.getServiceData(HARMAN_SERVICE_DATA_PROTOCOL4)
+            val speakerData = manufacturerData[87] ?: serviceData ?: return
+            val colorIndex = if (manufacturerData[87] != null) 2 else 4
 
             Timber.d("connect parsed ${speakerData.toHexString()}")
 
@@ -54,7 +60,7 @@ object BluetoothProtocol {
 
             val modelId =
                 (speakerData[1].toInt() and 0xFF shl 8) + (speakerData[0].toInt() and 0xFF)
-            val colorId = speakerData[2].toInt() and 0xFF
+            val colorId = speakerData[colorIndex].toInt() and 0xFF
             speaker.hardware = SpeakerHardware.from(modelId, colorId)
 
             SpeakerManager.speakerFound(speaker)

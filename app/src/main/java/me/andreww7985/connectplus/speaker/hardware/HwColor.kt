@@ -13,6 +13,7 @@ enum class HwColor {
     MOSAIC,
     ORANGE,
     PINK,
+    PURPLE,
     RED,
     SQUAD,
     TEAL,
@@ -209,6 +210,24 @@ enum class HwColor {
                 HwModel.PULSE5 -> when (speakerColor) {
                     0, 1 -> BLACK
                     2 -> WHITE
+                    else -> UNKNOWN
+                }
+
+                HwModel.BOOMBOX4 -> when (speakerColor) {
+                    0x00 -> BLACK
+                    0x01 -> WHITE
+                    0x02 -> BLUE
+                    0x1A -> SQUAD
+                    0x1F -> ORANGE
+                    else -> UNKNOWN
+                }
+
+                HwModel.XTREME5 -> when (speakerColor) {
+                    0x00 -> BLACK
+                    0x01 -> WHITE
+                    0x02 -> BLUE
+                    0x05 -> PURPLE
+                    0x1A -> SQUAD
                     else -> UNKNOWN
                 }
 
